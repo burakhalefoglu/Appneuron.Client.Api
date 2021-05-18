@@ -30,6 +30,7 @@ namespace WebAPI
                     .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                     .ConfigureWebHostDefaults(webBuilder =>
                     {
+                        webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
                         webBuilder.UseStartup<Startup>();
                     })
         .ConfigureLogging(logging =>

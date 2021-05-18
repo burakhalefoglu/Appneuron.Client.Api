@@ -75,7 +75,7 @@ namespace WebAPI
                                                     ValidateAudience = true,
                                                     ValidateLifetime = true,
                                                     ValidIssuer = tokenOptions.Issuer,
-                                                    ValidAudience = tokenOptions.Audience,
+                                                    ValidAudiences = tokenOptions.Audience,
                                                     ValidateIssuerSigningKey = true,
                                                     IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey),
                                                     ClockSkew = TimeSpan.Zero
@@ -118,6 +118,13 @@ namespace WebAPI
                 case ApplicationMode.Production:
                     break;
             }
+
+            //güvenlik için gerekli...
+            app.UseHsts();
+            //güvenlik için gerekli...
+            app.UseSecurityHeaders();
+
+
 
             app.UseDeveloperExceptionPage();
 
