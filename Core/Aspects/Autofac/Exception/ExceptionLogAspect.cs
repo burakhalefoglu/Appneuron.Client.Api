@@ -17,11 +17,11 @@ namespace Core.Aspects.Autofac.Exception
     /// <summary>
     /// ExceptionLogAspect
     /// </summary>
-    public class ExceptionLogAspect : MethodInterception
+    public class ExceptionLogAspectAttribute : MethodInterceptionAttribute
     {
         private readonly LoggerServiceBase _loggerServiceBase;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public ExceptionLogAspect(Type loggerService)
+        public ExceptionLogAspectAttribute(Type loggerService)
         {
             if (loggerService.BaseType != typeof(LoggerServiceBase))
             {

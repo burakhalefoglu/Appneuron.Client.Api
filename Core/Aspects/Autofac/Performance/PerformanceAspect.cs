@@ -9,12 +9,12 @@ namespace Core.Aspects.Autofac.Performance
     /// <summary>
     /// PerformanceAspect
     /// </summary>
-    public class PerformanceAspect : MethodInterception
+    public class PerformanceAspectAttribute : MethodInterceptionAttribute
     {
         private readonly int _interval;
         private readonly Stopwatch _stopwatch;
 
-        public PerformanceAspect(int interval)
+        public PerformanceAspectAttribute(int interval)
         {
             _interval = interval;
             _stopwatch = ServiceTool.ServiceProvider.GetService<Stopwatch>();
