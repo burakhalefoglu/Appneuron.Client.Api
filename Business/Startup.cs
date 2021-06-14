@@ -99,6 +99,14 @@ namespace Business
         {
 
             ConfigureServices(services);
+            services.AddTransient<ILevelBaseSessionDataRepository>(x=> new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
+            services.AddTransient<IGameSessionEveryLoginDataRepository>(x=> new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
+            services.AddTransient<IDailySessionDataRepository>(x=> new DailySessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.DailySessionDatas));
+            services.AddTransient<ILevelBaseDieDataRepository>(x=> new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
+            services.AddTransient<IEveryLoginLevelDataRepository>(x=> new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
+            services.AddTransient<IGeneralDataRepository>(x=> new GeneralDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GeneralDatas));
+            services.AddTransient<IBuyingEventRepository>(x=> new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
+            services.AddTransient<IAdvEventRepository>(x=> new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
             services.AddTransient<ITestRepository>(x=> new TestRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Tests));
             services.AddTransient<ILogRepository, LogRepository>();
 
@@ -115,6 +123,14 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<ILevelBaseSessionDataRepository>(x=> new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
+            services.AddTransient<IGameSessionEveryLoginDataRepository>(x=> new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
+            services.AddTransient<IDailySessionDataRepository>(x=> new DailySessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.DailySessionDatas));
+            services.AddTransient<ILevelBaseDieDataRepository>(x=> new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
+            services.AddTransient<IEveryLoginLevelDataRepository>(x=> new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
+            services.AddTransient<IGeneralDataRepository>(x=> new GeneralDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GeneralDatas));
+            services.AddTransient<IBuyingEventRepository>(x=> new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
+            services.AddTransient<IAdvEventRepository>(x=> new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
             services.AddTransient<ITestRepository>(x=> new TestRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Tests));
             services.AddTransient<ILogRepository, LogRepository>();
 
@@ -132,6 +148,14 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<ILevelBaseSessionDataRepository>(x=> new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
+            services.AddTransient<IGameSessionEveryLoginDataRepository>(x=> new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
+            services.AddTransient<IDailySessionDataRepository>(x=> new DailySessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.DailySessionDatas));
+            services.AddTransient<ILevelBaseDieDataRepository>(x=> new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
+            services.AddTransient<IEveryLoginLevelDataRepository>(x=> new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
+            services.AddTransient<IGeneralDataRepository>(x=> new GeneralDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GeneralDatas));
+            services.AddTransient<IBuyingEventRepository>(x=> new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
+            services.AddTransient<IAdvEventRepository>(x=> new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
             services.AddTransient<ITestRepository>(x=> new TestRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Tests));
             services.AddTransient<ILogRepository, LogRepository>();
 
