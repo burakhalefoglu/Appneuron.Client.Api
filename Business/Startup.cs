@@ -99,6 +99,17 @@ namespace Business
         {
 
             ConfigureServices(services);
+            services.AddTransient<IProjectBaseBuyingCountWithDifficultyRepository>(x=> new ProjectBaseBuyingCountWithDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseBuyingCountWithDifficulties));
+            services.AddTransient<IProjectBaseSuccessAttemptRateRepository>(x=> new ProjectBaseSuccessAttemptRateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseSuccessAttemptRates));
+            services.AddTransient<IProjectBaseTotalDieWithDifficultyRepository>(x=> new ProjectBaseTotalDieWithDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseTotalDieWithDifficulties));
+            services.AddTransient<IProjectBaseAdvClickRepository>(x=> new ProjectBaseAdvClickRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseAdvClicks));
+            services.AddTransient<IProjectBasePowerUsageByDifficultyRepository>(x=> new ProjectBasePowerUsageByDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBasePowerUsageByDifficulties));
+            services.AddTransient<IPlayerListByDayRepository>(x=> new PlayerListByDayRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayerListByDays));
+            services.AddTransient<IChallengeBasedSegmentationRepository>(x=> new ChallengeBasedSegmentationRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChallengeBasedSegmentations));
+            services.AddTransient<IPlayersOnDifficultyLevelRepository>(x=> new PlayersOnDifficultyLevelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayersOnDifficultyLevels));
+            services.AddTransient<IPlayersOnLevelRepository>(x=> new PlayersOnLevelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayersOnLevels));
+            services.AddTransient<IRevenueRepository>(x=> new RevenueRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Revenues));
+            services.AddTransient<IStatisticsByNumberRepository>(x=> new StatisticsByNumberRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.StatisticsByNumbers));
             services.AddTransient<ILevelBaseSessionDataRepository>(x=> new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x=> new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
             services.AddTransient<IDailySessionDataRepository>(x=> new DailySessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.DailySessionDatas));
@@ -123,6 +134,17 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IProjectBaseBuyingCountWithDifficultyRepository>(x=> new ProjectBaseBuyingCountWithDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseBuyingCountWithDifficulties));
+            services.AddTransient<IProjectBaseSuccessAttemptRateRepository>(x=> new ProjectBaseSuccessAttemptRateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseSuccessAttemptRates));
+            services.AddTransient<IProjectBaseTotalDieWithDifficultyRepository>(x=> new ProjectBaseTotalDieWithDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseTotalDieWithDifficulties));
+            services.AddTransient<IProjectBaseAdvClickRepository>(x=> new ProjectBaseAdvClickRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseAdvClicks));
+            services.AddTransient<IProjectBasePowerUsageByDifficultyRepository>(x=> new ProjectBasePowerUsageByDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBasePowerUsageByDifficulties));
+            services.AddTransient<IPlayerListByDayRepository>(x=> new PlayerListByDayRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayerListByDays));
+            services.AddTransient<IChallengeBasedSegmentationRepository>(x=> new ChallengeBasedSegmentationRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChallengeBasedSegmentations));
+            services.AddTransient<IPlayersOnDifficultyLevelRepository>(x=> new PlayersOnDifficultyLevelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayersOnDifficultyLevels));
+            services.AddTransient<IPlayersOnLevelRepository>(x=> new PlayersOnLevelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayersOnLevels));
+            services.AddTransient<IRevenueRepository>(x=> new RevenueRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Revenues));
+            services.AddTransient<IStatisticsByNumberRepository>(x=> new StatisticsByNumberRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.StatisticsByNumbers));
             services.AddTransient<ILevelBaseSessionDataRepository>(x=> new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x=> new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
             services.AddTransient<IDailySessionDataRepository>(x=> new DailySessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.DailySessionDatas));
@@ -148,6 +170,17 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IProjectBaseBuyingCountWithDifficultyRepository>(x=> new ProjectBaseBuyingCountWithDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseBuyingCountWithDifficulties));
+            services.AddTransient<IProjectBaseSuccessAttemptRateRepository>(x=> new ProjectBaseSuccessAttemptRateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseSuccessAttemptRates));
+            services.AddTransient<IProjectBaseTotalDieWithDifficultyRepository>(x=> new ProjectBaseTotalDieWithDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseTotalDieWithDifficulties));
+            services.AddTransient<IProjectBaseAdvClickRepository>(x=> new ProjectBaseAdvClickRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBaseAdvClicks));
+            services.AddTransient<IProjectBasePowerUsageByDifficultyRepository>(x=> new ProjectBasePowerUsageByDifficultyRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ProjectBasePowerUsageByDifficulties));
+            services.AddTransient<IPlayerListByDayRepository>(x=> new PlayerListByDayRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayerListByDays));
+            services.AddTransient<IChallengeBasedSegmentationRepository>(x=> new ChallengeBasedSegmentationRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChallengeBasedSegmentations));
+            services.AddTransient<IPlayersOnDifficultyLevelRepository>(x=> new PlayersOnDifficultyLevelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayersOnDifficultyLevels));
+            services.AddTransient<IPlayersOnLevelRepository>(x=> new PlayersOnLevelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.PlayersOnLevels));
+            services.AddTransient<IRevenueRepository>(x=> new RevenueRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Revenues));
+            services.AddTransient<IStatisticsByNumberRepository>(x=> new StatisticsByNumberRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.StatisticsByNumbers));
             services.AddTransient<ILevelBaseSessionDataRepository>(x=> new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x=> new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
             services.AddTransient<IDailySessionDataRepository>(x=> new DailySessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.DailySessionDatas));
