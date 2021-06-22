@@ -48,7 +48,7 @@ namespace Business.Handlers.ChallengeBasedSegmentations.Commands
 
 
 
-                var challengeBasedSegmentation = new ProjectAndChallengeBasedSegmentation();
+                var challengeBasedSegmentation = new ChallengeBasedSegmentation();
                 challengeBasedSegmentation.ProjectId = request.ProjectId;
                 challengeBasedSegmentation.CompetitiveClientCount = request.CompetitiveClientCount;
                 challengeBasedSegmentation.NonCompetitiveClientCount = request.NonCompetitiveClientCount;

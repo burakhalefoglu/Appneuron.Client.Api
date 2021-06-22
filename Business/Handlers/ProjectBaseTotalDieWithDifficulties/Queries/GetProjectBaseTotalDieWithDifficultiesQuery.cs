@@ -16,9 +16,9 @@ using Entities.Concrete.ChartModels;
 namespace Business.Handlers.ProjectBaseTotalDieWithDifficulties.Queries
 {
 
-    public class GetProjectBaseTotalDieWithDifficultiesQuery : IRequest<IDataResult<IEnumerable<ProjectBaseTotalDieWithDifficulty>>>
+    public class GetProjectBaseTotalDieWithDifficultiesQuery : IRequest<IDataResult<IEnumerable<ProjectTotalDieWithDifficulty>>>
     {
-        public class GetProjectBaseTotalDieWithDifficultiesQueryHandler : IRequestHandler<GetProjectBaseTotalDieWithDifficultiesQuery, IDataResult<IEnumerable<ProjectBaseTotalDieWithDifficulty>>>
+        public class GetProjectBaseTotalDieWithDifficultiesQueryHandler : IRequestHandler<GetProjectBaseTotalDieWithDifficultiesQuery, IDataResult<IEnumerable<ProjectTotalDieWithDifficulty>>>
         {
             private readonly IProjectBaseTotalDieWithDifficultyRepository _projectBaseTotalDieWithDifficultyRepository;
             private readonly IMediator _mediator;
@@ -33,9 +33,9 @@ namespace Business.Handlers.ProjectBaseTotalDieWithDifficulties.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ProjectBaseTotalDieWithDifficulty>>> Handle(GetProjectBaseTotalDieWithDifficultiesQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<ProjectTotalDieWithDifficulty>>> Handle(GetProjectBaseTotalDieWithDifficultiesQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<ProjectBaseTotalDieWithDifficulty>>(await _projectBaseTotalDieWithDifficultyRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<ProjectTotalDieWithDifficulty>>(await _projectBaseTotalDieWithDifficultyRepository.GetListAsync());
             }
         }
     }

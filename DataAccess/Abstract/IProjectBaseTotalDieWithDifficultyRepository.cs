@@ -6,7 +6,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Abstract
 {
-    public interface IProjectBaseTotalDieWithDifficultyRepository : IDocumentDbRepository<ProjectBaseTotalDieWithDifficulty>
+    public interface IProjectBaseTotalDieWithDifficultyRepository : IDocumentDbRepository<ProjectTotalDieWithDifficulty>
     {
     }
 }

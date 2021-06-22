@@ -9,7 +9,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Concrete.MongoDb
 {
-    public class StatisticsByNumberRepository : MongoDbRepositoryBase<ProjectBaseStatisticsByNumber>, IStatisticsByNumberRepository
+    public class StatisticsByNumberRepository : MongoDbRepositoryBase<StatisticsByNumber>, IStatisticsByNumberRepository
     {
         public StatisticsByNumberRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
         {

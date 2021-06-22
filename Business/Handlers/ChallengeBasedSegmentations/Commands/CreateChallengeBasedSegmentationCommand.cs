@@ -49,7 +49,7 @@ namespace Business.Handlers.ChallengeBasedSegmentations.Commands
                 if (isThereChallengeBasedSegmentationRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedChallengeBasedSegmentation = new ProjectAndChallengeBasedSegmentation
+                var addedChallengeBasedSegmentation = new ChallengeBasedSegmentation
                 {
                     ProjectId = request.ProjectId,
                     CompetitiveClientCount = request.CompetitiveClientCount,

@@ -49,7 +49,7 @@ namespace Business.Handlers.ProjectBaseAdvClicks.Commands
                 if (isThereProjectBaseAdvClickRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedProjectBaseAdvClick = new ProjectBaseAdvClick
+                var addedProjectBaseAdvClick = new AdvClick
                 {
                     ProjectId = request.ProjectId,
                     AdvClickWithDifficulty = request.AdvClickWithDifficulty

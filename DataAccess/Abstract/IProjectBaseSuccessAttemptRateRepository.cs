@@ -6,7 +6,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Abstract
 {
-    public interface IProjectBaseSuccessAttemptRateRepository : IDocumentDbRepository<ProjectBaseSuccessAttemptRate>
+    public interface IProjectBaseSuccessAttemptRateRepository : IDocumentDbRepository<SuccessAttemptRate>
     {
     }
 }

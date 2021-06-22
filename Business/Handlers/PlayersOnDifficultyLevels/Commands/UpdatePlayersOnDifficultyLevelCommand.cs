@@ -12,12 +12,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Core.Aspects.Autofac.Validation;
-using Business.Handlers.PlayersOnDifficultyLevels.ValidationRules;
+using Business.Handlers.PlayerCountOnDifficultyLevels.ValidationRules;
 using MongoDB.Bson;
 using Entities.Concrete.ChartModels;
 using Entities.Concrete.ChartModels.OneToOne;
 
-namespace Business.Handlers.PlayersOnDifficultyLevels.Commands
+namespace Business.Handlers.PlayerCountOnDifficultyLevels.Commands
 {
 
 
@@ -30,10 +30,10 @@ namespace Business.Handlers.PlayersOnDifficultyLevels.Commands
 
         public class UpdatePlayersOnDifficultyLevelCommandHandler : IRequestHandler<UpdatePlayersOnDifficultyLevelCommand, IResult>
         {
-            private readonly IPlayersOnDifficultyLevelRepository _playersOnDifficultyLevelRepository;
+            private readonly IPlayerCountOnDifficultyLevelRepository _playersOnDifficultyLevelRepository;
             private readonly IMediator _mediator;
 
-            public UpdatePlayersOnDifficultyLevelCommandHandler(IPlayersOnDifficultyLevelRepository playersOnDifficultyLevelRepository, IMediator mediator)
+            public UpdatePlayersOnDifficultyLevelCommandHandler(IPlayerCountOnDifficultyLevelRepository playersOnDifficultyLevelRepository, IMediator mediator)
             {
                 _playersOnDifficultyLevelRepository = playersOnDifficultyLevelRepository;
                 _mediator = mediator;
@@ -48,7 +48,7 @@ namespace Business.Handlers.PlayersOnDifficultyLevels.Commands
 
 
 
-                var playersOnDifficultyLevel = new ProjectBasePlayerCountOnDifficultyLevel();
+                var playersOnDifficultyLevel = new PlayerCountOnDifficultyLevel();
                 playersOnDifficultyLevel.ProjectId = request.ProjectId;
                 playersOnDifficultyLevel.PlayerCountOnDifficulty = request.PlayerCountOnDifficulty;
 

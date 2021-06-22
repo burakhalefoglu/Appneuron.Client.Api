@@ -16,9 +16,9 @@ using Entities.Concrete.ChartModels;
 namespace Business.Handlers.ProjectBaseSuccessAttemptRates.Queries
 {
 
-    public class GetProjectBaseSuccessAttemptRatesQuery : IRequest<IDataResult<IEnumerable<ProjectBaseSuccessAttemptRate>>>
+    public class GetProjectBaseSuccessAttemptRatesQuery : IRequest<IDataResult<IEnumerable<SuccessAttemptRate>>>
     {
-        public class GetProjectBaseSuccessAttemptRatesQueryHandler : IRequestHandler<GetProjectBaseSuccessAttemptRatesQuery, IDataResult<IEnumerable<ProjectBaseSuccessAttemptRate>>>
+        public class GetProjectBaseSuccessAttemptRatesQueryHandler : IRequestHandler<GetProjectBaseSuccessAttemptRatesQuery, IDataResult<IEnumerable<SuccessAttemptRate>>>
         {
             private readonly IProjectBaseSuccessAttemptRateRepository _projectBaseSuccessAttemptRateRepository;
             private readonly IMediator _mediator;
@@ -33,9 +33,9 @@ namespace Business.Handlers.ProjectBaseSuccessAttemptRates.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ProjectBaseSuccessAttemptRate>>> Handle(GetProjectBaseSuccessAttemptRatesQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<SuccessAttemptRate>>> Handle(GetProjectBaseSuccessAttemptRatesQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<ProjectBaseSuccessAttemptRate>>(await _projectBaseSuccessAttemptRateRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<SuccessAttemptRate>>(await _projectBaseSuccessAttemptRateRepository.GetListAsync());
             }
         }
     }

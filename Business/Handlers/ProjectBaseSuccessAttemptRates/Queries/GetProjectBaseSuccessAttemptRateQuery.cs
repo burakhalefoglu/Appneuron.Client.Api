@@ -13,12 +13,12 @@ using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.ProjectBaseSuccessAttemptRates.Queries
 {
-    public class GetProjectBaseSuccessAttemptRateQuery : IRequest<IDataResult<ProjectBaseSuccessAttemptRate>>
+    public class GetProjectBaseSuccessAttemptRateQuery : IRequest<IDataResult<SuccessAttemptRate>>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
 
-        public class GetProjectBaseSuccessAttemptRateQueryHandler : IRequestHandler<GetProjectBaseSuccessAttemptRateQuery, IDataResult<ProjectBaseSuccessAttemptRate>>
+        public class GetProjectBaseSuccessAttemptRateQueryHandler : IRequestHandler<GetProjectBaseSuccessAttemptRateQuery, IDataResult<SuccessAttemptRate>>
         {
             private readonly IProjectBaseSuccessAttemptRateRepository _projectBaseSuccessAttemptRateRepository;
             private readonly IMediator _mediator;
@@ -30,10 +30,10 @@ namespace Business.Handlers.ProjectBaseSuccessAttemptRates.Queries
             }
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<ProjectBaseSuccessAttemptRate>> Handle(GetProjectBaseSuccessAttemptRateQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<SuccessAttemptRate>> Handle(GetProjectBaseSuccessAttemptRateQuery request, CancellationToken cancellationToken)
             {
                 var projectBaseSuccessAttemptRate = await _projectBaseSuccessAttemptRateRepository.GetByIdAsync(request.Id);
-                return new SuccessDataResult<ProjectBaseSuccessAttemptRate>(projectBaseSuccessAttemptRate);
+                return new SuccessDataResult<SuccessAttemptRate>(projectBaseSuccessAttemptRate);
             }
         }
     }

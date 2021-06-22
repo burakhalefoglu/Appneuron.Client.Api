@@ -9,7 +9,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Concrete.MongoDb
 {
-    public class PlayersOnDifficultyLevelRepository : MongoDbRepositoryBase<ProjectBasePlayerCountOnDifficultyLevel>, IPlayersOnDifficultyLevelRepository
+    public class PlayersOnDifficultyLevelRepository : MongoDbRepositoryBase<PlayerCountOnDifficultyLevel>, IPlayerCountOnDifficultyLevelRepository
     {
         public PlayersOnDifficultyLevelRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
         {

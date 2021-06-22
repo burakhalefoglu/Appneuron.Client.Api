@@ -26,12 +26,12 @@ namespace Tests.Business.HandlersTest
     [TestFixture]
     public class PlayersOnDifficultyLevelHandlerTests
     {
-        Mock<IPlayersOnDifficultyLevelRepository> _playersOnDifficultyLevelRepository;
+        Mock<IPlayerCountOnDifficultyLevelRepository> _playersOnDifficultyLevelRepository;
         Mock<IMediator> _mediator;
         [SetUp]
         public void Setup()
         {
-            _playersOnDifficultyLevelRepository = new Mock<IPlayersOnDifficultyLevelRepository>();
+            _playersOnDifficultyLevelRepository = new Mock<IPlayerCountOnDifficultyLevelRepository>();
             _mediator = new Mock<IMediator>();
         }
 
@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetPlayersOnDifficultyLevelQuery();
 
-            _playersOnDifficultyLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBasePlayerCountOnDifficultyLevel()
+            _playersOnDifficultyLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new PlayerCountOnDifficultyLevel()
 //propertyler buraya yazılacak
 //{																		
 //PlayersOnDifficultyLevelId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetPlayersOnDifficultyLevelsQuery();
 
-            _playersOnDifficultyLevelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBasePlayerCountOnDifficultyLevel, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBasePlayerCountOnDifficultyLevel> { new ProjectBasePlayerCountOnDifficultyLevel() { /*TODO:propertyler buraya yazılacak PlayersOnDifficultyLevelId = 1, PlayersOnDifficultyLevelName = "test"*/ } }.AsQueryable());
+            _playersOnDifficultyLevelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<PlayerCountOnDifficultyLevel, bool>>>()))
+                        .ReturnsAsync(new List<PlayerCountOnDifficultyLevel> { new PlayerCountOnDifficultyLevel() { /*TODO:propertyler buraya yazılacak PlayersOnDifficultyLevelId = 1, PlayersOnDifficultyLevelName = "test"*/ } }.AsQueryable());
 
             var handler = new GetPlayersOnDifficultyLevelsQueryHandler(_playersOnDifficultyLevelRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBasePlayerCountOnDifficultyLevel>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<PlayerCountOnDifficultyLevel>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task PlayersOnDifficultyLevel_CreateCommand_Success()
         {
-            ProjectBasePlayerCountOnDifficultyLevel rt = null;
+            PlayerCountOnDifficultyLevel rt = null;
             //Arrange
             var command = new CreatePlayersOnDifficultyLevelCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _playersOnDifficultyLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _playersOnDifficultyLevelRepository.Setup(x => x.Add(It.IsAny<ProjectBasePlayerCountOnDifficultyLevel>()));
+            _playersOnDifficultyLevelRepository.Setup(x => x.Add(It.IsAny<PlayerCountOnDifficultyLevel>()));
 
             var handler = new CreatePlayersOnDifficultyLevelCommandHandler(_playersOnDifficultyLevelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.PlayersOnDifficultyLevelName = "test";
 
-            _playersOnDifficultyLevelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBasePlayerCountOnDifficultyLevel, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBasePlayerCountOnDifficultyLevel> { new ProjectBasePlayerCountOnDifficultyLevel() { /*TODO:propertyler buraya yazılacak PlayersOnDifficultyLevelId = 1, PlayersOnDifficultyLevelName = "test"*/ } }.AsQueryable());
+            _playersOnDifficultyLevelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<PlayerCountOnDifficultyLevel, bool>>>()))
+                                           .ReturnsAsync(new List<PlayerCountOnDifficultyLevel> { new PlayerCountOnDifficultyLevel() { /*TODO:propertyler buraya yazılacak PlayersOnDifficultyLevelId = 1, PlayersOnDifficultyLevelName = "test"*/ } }.AsQueryable());
 
-            _playersOnDifficultyLevelRepository.Setup(x => x.Add(It.IsAny<ProjectBasePlayerCountOnDifficultyLevel>()));
+            _playersOnDifficultyLevelRepository.Setup(x => x.Add(It.IsAny<PlayerCountOnDifficultyLevel>()));
 
             var handler = new CreatePlayersOnDifficultyLevelCommandHandler(_playersOnDifficultyLevelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.PlayersOnDifficultyLevelName = "test";
 
             _playersOnDifficultyLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBasePlayerCountOnDifficultyLevel() { /*TODO:propertyler buraya yazılacak PlayersOnDifficultyLevelId = 1, PlayersOnDifficultyLevelName = "deneme"*/ });
+                        .ReturnsAsync(new PlayerCountOnDifficultyLevel() { /*TODO:propertyler buraya yazılacak PlayersOnDifficultyLevelId = 1, PlayersOnDifficultyLevelName = "deneme"*/ });
 
-            _playersOnDifficultyLevelRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBasePlayerCountOnDifficultyLevel>()));
+            _playersOnDifficultyLevelRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<PlayerCountOnDifficultyLevel>()));
 
             var handler = new UpdatePlayersOnDifficultyLevelCommandHandler(_playersOnDifficultyLevelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeletePlayersOnDifficultyLevelCommand();
 
             _playersOnDifficultyLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBasePlayerCountOnDifficultyLevel() { /*TODO:propertyler buraya yazılacak PlayersOnDifficultyLevelId = 1, PlayersOnDifficultyLevelName = "deneme"*/});
+                        .ReturnsAsync(new PlayerCountOnDifficultyLevel() { /*TODO:propertyler buraya yazılacak PlayersOnDifficultyLevelId = 1, PlayersOnDifficultyLevelName = "deneme"*/});
 
-            _playersOnDifficultyLevelRepository.Setup(x => x.Delete(It.IsAny<ProjectBasePlayerCountOnDifficultyLevel>()));
+            _playersOnDifficultyLevelRepository.Setup(x => x.Delete(It.IsAny<PlayerCountOnDifficultyLevel>()));
 
             var handler = new DeletePlayersOnDifficultyLevelCommandHandler(_playersOnDifficultyLevelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

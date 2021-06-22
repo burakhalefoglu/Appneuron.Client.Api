@@ -12,11 +12,11 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
-using Business.Handlers.PlayersOnDifficultyLevels.ValidationRules;
+using Business.Handlers.PlayerCountOnDifficultyLevels.ValidationRules;
 using Entities.Concrete.ChartModels;
 using Entities.Concrete.ChartModels.OneToOne;
 
-namespace Business.Handlers.PlayersOnDifficultyLevels.Commands
+namespace Business.Handlers.PlayerCountOnDifficultyLevels.Commands
 {
     /// <summary>
     /// 
@@ -29,9 +29,9 @@ namespace Business.Handlers.PlayersOnDifficultyLevels.Commands
 
         public class CreatePlayersOnDifficultyLevelCommandHandler : IRequestHandler<CreatePlayersOnDifficultyLevelCommand, IResult>
         {
-            private readonly IPlayersOnDifficultyLevelRepository _playersOnDifficultyLevelRepository;
+            private readonly IPlayerCountOnDifficultyLevelRepository _playersOnDifficultyLevelRepository;
             private readonly IMediator _mediator;
-            public CreatePlayersOnDifficultyLevelCommandHandler(IPlayersOnDifficultyLevelRepository playersOnDifficultyLevelRepository, IMediator mediator)
+            public CreatePlayersOnDifficultyLevelCommandHandler(IPlayerCountOnDifficultyLevelRepository playersOnDifficultyLevelRepository, IMediator mediator)
             {
                 _playersOnDifficultyLevelRepository = playersOnDifficultyLevelRepository;
                 _mediator = mediator;
@@ -48,7 +48,7 @@ namespace Business.Handlers.PlayersOnDifficultyLevels.Commands
                 if (isTherePlayersOnDifficultyLevelRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedPlayersOnDifficultyLevel = new ProjectBasePlayerCountOnDifficultyLevel
+                var addedPlayersOnDifficultyLevel = new PlayerCountOnDifficultyLevel
                 {
                     ProjectId = request.ProjectId,
                     PlayerCountOnDifficulty = request.PlayerCountOnDifficulty

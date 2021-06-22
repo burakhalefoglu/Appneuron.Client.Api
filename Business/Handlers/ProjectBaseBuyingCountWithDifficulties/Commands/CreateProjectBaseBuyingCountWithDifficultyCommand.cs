@@ -49,7 +49,7 @@ namespace Business.Handlers.ProjectBaseBuyingCountWithDifficulties.Commands
                 if (isThereProjectBaseBuyingCountWithDifficultyRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedProjectBaseBuyingCountWithDifficulty = new ProjectBaseBuyingCountWithDifficulty
+                var addedProjectBaseBuyingCountWithDifficulty = new ProjectBuyingCountWithDifficulty
                 {
                     ProjectId = request.ProjectId,
                     BuyingCountWithDifficulty = request.BuyingCountWithDifficulty

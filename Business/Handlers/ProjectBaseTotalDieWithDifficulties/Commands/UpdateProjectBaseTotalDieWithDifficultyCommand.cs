@@ -49,7 +49,7 @@ namespace Business.Handlers.ProjectBaseTotalDieWithDifficulties.Commands
 
 
 
-                var projectBaseTotalDieWithDifficulty = new ProjectBaseTotalDieWithDifficulty();
+                var projectBaseTotalDieWithDifficulty = new ProjectTotalDieWithDifficulty();
                 projectBaseTotalDieWithDifficulty.ProjectId = request.ProjectId;
                 projectBaseTotalDieWithDifficulty.TotalDieWithDifficulty = request.TotalDieWithDifficulty;
 

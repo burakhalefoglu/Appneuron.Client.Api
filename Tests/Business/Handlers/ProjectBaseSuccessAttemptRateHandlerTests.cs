@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBaseSuccessAttemptRateQuery();
 
-            _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBaseSuccessAttemptRate()
+            _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new SuccessAttemptRate()
 //propertyler buraya yazılacak
 //{																		
 //ProjectBaseSuccessAttemptRateId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBaseSuccessAttemptRatesQuery();
 
-            _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseSuccessAttemptRate, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBaseSuccessAttemptRate> { new ProjectBaseSuccessAttemptRate() { /*TODO:propertyler buraya yazılacak ProjectBaseSuccessAttemptRateId = 1, ProjectBaseSuccessAttemptRateName = "test"*/ } }.AsQueryable());
+            _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<SuccessAttemptRate, bool>>>()))
+                        .ReturnsAsync(new List<SuccessAttemptRate> { new SuccessAttemptRate() { /*TODO:propertyler buraya yazılacak ProjectBaseSuccessAttemptRateId = 1, ProjectBaseSuccessAttemptRateName = "test"*/ } }.AsQueryable());
 
             var handler = new GetProjectBaseSuccessAttemptRatesQueryHandler(_projectBaseSuccessAttemptRateRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBaseSuccessAttemptRate>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<SuccessAttemptRate>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task ProjectBaseSuccessAttemptRate_CreateCommand_Success()
         {
-            ProjectBaseSuccessAttemptRate rt = null;
+            SuccessAttemptRate rt = null;
             //Arrange
             var command = new CreateProjectBaseSuccessAttemptRateCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _projectBaseSuccessAttemptRateRepository.Setup(x => x.Add(It.IsAny<ProjectBaseSuccessAttemptRate>()));
+            _projectBaseSuccessAttemptRateRepository.Setup(x => x.Add(It.IsAny<SuccessAttemptRate>()));
 
             var handler = new CreateProjectBaseSuccessAttemptRateCommandHandler(_projectBaseSuccessAttemptRateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.ProjectBaseSuccessAttemptRateName = "test";
 
-            _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseSuccessAttemptRate, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBaseSuccessAttemptRate> { new ProjectBaseSuccessAttemptRate() { /*TODO:propertyler buraya yazılacak ProjectBaseSuccessAttemptRateId = 1, ProjectBaseSuccessAttemptRateName = "test"*/ } }.AsQueryable());
+            _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<SuccessAttemptRate, bool>>>()))
+                                           .ReturnsAsync(new List<SuccessAttemptRate> { new SuccessAttemptRate() { /*TODO:propertyler buraya yazılacak ProjectBaseSuccessAttemptRateId = 1, ProjectBaseSuccessAttemptRateName = "test"*/ } }.AsQueryable());
 
-            _projectBaseSuccessAttemptRateRepository.Setup(x => x.Add(It.IsAny<ProjectBaseSuccessAttemptRate>()));
+            _projectBaseSuccessAttemptRateRepository.Setup(x => x.Add(It.IsAny<SuccessAttemptRate>()));
 
             var handler = new CreateProjectBaseSuccessAttemptRateCommandHandler(_projectBaseSuccessAttemptRateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.ProjectBaseSuccessAttemptRateName = "test";
 
             _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseSuccessAttemptRate() { /*TODO:propertyler buraya yazılacak ProjectBaseSuccessAttemptRateId = 1, ProjectBaseSuccessAttemptRateName = "deneme"*/ });
+                        .ReturnsAsync(new SuccessAttemptRate() { /*TODO:propertyler buraya yazılacak ProjectBaseSuccessAttemptRateId = 1, ProjectBaseSuccessAttemptRateName = "deneme"*/ });
 
-            _projectBaseSuccessAttemptRateRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBaseSuccessAttemptRate>()));
+            _projectBaseSuccessAttemptRateRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<SuccessAttemptRate>()));
 
             var handler = new UpdateProjectBaseSuccessAttemptRateCommandHandler(_projectBaseSuccessAttemptRateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteProjectBaseSuccessAttemptRateCommand();
 
             _projectBaseSuccessAttemptRateRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseSuccessAttemptRate() { /*TODO:propertyler buraya yazılacak ProjectBaseSuccessAttemptRateId = 1, ProjectBaseSuccessAttemptRateName = "deneme"*/});
+                        .ReturnsAsync(new SuccessAttemptRate() { /*TODO:propertyler buraya yazılacak ProjectBaseSuccessAttemptRateId = 1, ProjectBaseSuccessAttemptRateName = "deneme"*/});
 
-            _projectBaseSuccessAttemptRateRepository.Setup(x => x.Delete(It.IsAny<ProjectBaseSuccessAttemptRate>()));
+            _projectBaseSuccessAttemptRateRepository.Setup(x => x.Delete(It.IsAny<SuccessAttemptRate>()));
 
             var handler = new DeleteProjectBaseSuccessAttemptRateCommandHandler(_projectBaseSuccessAttemptRateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

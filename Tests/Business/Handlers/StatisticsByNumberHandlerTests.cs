@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetStatisticsByNumberQuery();
 
-            _statisticsByNumberRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBaseStatisticsByNumber()
+            _statisticsByNumberRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new StatisticsByNumber()
 //propertyler buraya yazılacak
 //{																		
 //StatisticsByNumberId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetStatisticsByNumbersQuery();
 
-            _statisticsByNumberRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseStatisticsByNumber, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBaseStatisticsByNumber> { new ProjectBaseStatisticsByNumber() { /*TODO:propertyler buraya yazılacak StatisticsByNumberId = 1, StatisticsByNumberName = "test"*/ } }.AsQueryable());
+            _statisticsByNumberRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<StatisticsByNumber, bool>>>()))
+                        .ReturnsAsync(new List<StatisticsByNumber> { new StatisticsByNumber() { /*TODO:propertyler buraya yazılacak StatisticsByNumberId = 1, StatisticsByNumberName = "test"*/ } }.AsQueryable());
 
             var handler = new GetStatisticsByNumbersQueryHandler(_statisticsByNumberRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBaseStatisticsByNumber>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<StatisticsByNumber>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task StatisticsByNumber_CreateCommand_Success()
         {
-            ProjectBaseStatisticsByNumber rt = null;
+            StatisticsByNumber rt = null;
             //Arrange
             var command = new CreateStatisticsByNumberCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _statisticsByNumberRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _statisticsByNumberRepository.Setup(x => x.Add(It.IsAny<ProjectBaseStatisticsByNumber>()));
+            _statisticsByNumberRepository.Setup(x => x.Add(It.IsAny<StatisticsByNumber>()));
 
             var handler = new CreateStatisticsByNumberCommandHandler(_statisticsByNumberRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.StatisticsByNumberName = "test";
 
-            _statisticsByNumberRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseStatisticsByNumber, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBaseStatisticsByNumber> { new ProjectBaseStatisticsByNumber() { /*TODO:propertyler buraya yazılacak StatisticsByNumberId = 1, StatisticsByNumberName = "test"*/ } }.AsQueryable());
+            _statisticsByNumberRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<StatisticsByNumber, bool>>>()))
+                                           .ReturnsAsync(new List<StatisticsByNumber> { new StatisticsByNumber() { /*TODO:propertyler buraya yazılacak StatisticsByNumberId = 1, StatisticsByNumberName = "test"*/ } }.AsQueryable());
 
-            _statisticsByNumberRepository.Setup(x => x.Add(It.IsAny<ProjectBaseStatisticsByNumber>()));
+            _statisticsByNumberRepository.Setup(x => x.Add(It.IsAny<StatisticsByNumber>()));
 
             var handler = new CreateStatisticsByNumberCommandHandler(_statisticsByNumberRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.StatisticsByNumberName = "test";
 
             _statisticsByNumberRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseStatisticsByNumber() { /*TODO:propertyler buraya yazılacak StatisticsByNumberId = 1, StatisticsByNumberName = "deneme"*/ });
+                        .ReturnsAsync(new StatisticsByNumber() { /*TODO:propertyler buraya yazılacak StatisticsByNumberId = 1, StatisticsByNumberName = "deneme"*/ });
 
-            _statisticsByNumberRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBaseStatisticsByNumber>()));
+            _statisticsByNumberRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<StatisticsByNumber>()));
 
             var handler = new UpdateStatisticsByNumberCommandHandler(_statisticsByNumberRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteStatisticsByNumberCommand();
 
             _statisticsByNumberRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseStatisticsByNumber() { /*TODO:propertyler buraya yazılacak StatisticsByNumberId = 1, StatisticsByNumberName = "deneme"*/});
+                        .ReturnsAsync(new StatisticsByNumber() { /*TODO:propertyler buraya yazılacak StatisticsByNumberId = 1, StatisticsByNumberName = "deneme"*/});
 
-            _statisticsByNumberRepository.Setup(x => x.Delete(It.IsAny<ProjectBaseStatisticsByNumber>()));
+            _statisticsByNumberRepository.Setup(x => x.Delete(It.IsAny<StatisticsByNumber>()));
 
             var handler = new DeleteStatisticsByNumberCommandHandler(_statisticsByNumberRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

@@ -13,12 +13,12 @@ using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.ProjectBaseTotalDieWithDifficulties.Queries
 {
-    public class GetProjectBaseTotalDieWithDifficultyQuery : IRequest<IDataResult<ProjectBaseTotalDieWithDifficulty>>
+    public class GetProjectBaseTotalDieWithDifficultyQuery : IRequest<IDataResult<ProjectTotalDieWithDifficulty>>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
 
-        public class GetProjectBaseTotalDieWithDifficultyQueryHandler : IRequestHandler<GetProjectBaseTotalDieWithDifficultyQuery, IDataResult<ProjectBaseTotalDieWithDifficulty>>
+        public class GetProjectBaseTotalDieWithDifficultyQueryHandler : IRequestHandler<GetProjectBaseTotalDieWithDifficultyQuery, IDataResult<ProjectTotalDieWithDifficulty>>
         {
             private readonly IProjectBaseTotalDieWithDifficultyRepository _projectBaseTotalDieWithDifficultyRepository;
             private readonly IMediator _mediator;
@@ -30,10 +30,10 @@ namespace Business.Handlers.ProjectBaseTotalDieWithDifficulties.Queries
             }
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<ProjectBaseTotalDieWithDifficulty>> Handle(GetProjectBaseTotalDieWithDifficultyQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<ProjectTotalDieWithDifficulty>> Handle(GetProjectBaseTotalDieWithDifficultyQuery request, CancellationToken cancellationToken)
             {
                 var projectBaseTotalDieWithDifficulty = await _projectBaseTotalDieWithDifficultyRepository.GetByIdAsync(request.Id);
-                return new SuccessDataResult<ProjectBaseTotalDieWithDifficulty>(projectBaseTotalDieWithDifficulty);
+                return new SuccessDataResult<ProjectTotalDieWithDifficulty>(projectBaseTotalDieWithDifficulty);
             }
         }
     }

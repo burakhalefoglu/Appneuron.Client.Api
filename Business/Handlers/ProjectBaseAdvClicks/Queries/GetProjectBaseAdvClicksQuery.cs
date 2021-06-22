@@ -16,9 +16,9 @@ using Entities.Concrete.ChartModels;
 namespace Business.Handlers.ProjectBaseAdvClicks.Queries
 {
 
-    public class GetProjectBaseAdvClicksQuery : IRequest<IDataResult<IEnumerable<ProjectBaseAdvClick>>>
+    public class GetProjectBaseAdvClicksQuery : IRequest<IDataResult<IEnumerable<AdvClick>>>
     {
-        public class GetProjectBaseAdvClicksQueryHandler : IRequestHandler<GetProjectBaseAdvClicksQuery, IDataResult<IEnumerable<ProjectBaseAdvClick>>>
+        public class GetProjectBaseAdvClicksQueryHandler : IRequestHandler<GetProjectBaseAdvClicksQuery, IDataResult<IEnumerable<AdvClick>>>
         {
             private readonly IProjectBaseAdvClickRepository _projectBaseAdvClickRepository;
             private readonly IMediator _mediator;
@@ -33,9 +33,9 @@ namespace Business.Handlers.ProjectBaseAdvClicks.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ProjectBaseAdvClick>>> Handle(GetProjectBaseAdvClicksQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<AdvClick>>> Handle(GetProjectBaseAdvClicksQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<ProjectBaseAdvClick>>(await _projectBaseAdvClickRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<AdvClick>>(await _projectBaseAdvClickRepository.GetListAsync());
             }
         }
     }

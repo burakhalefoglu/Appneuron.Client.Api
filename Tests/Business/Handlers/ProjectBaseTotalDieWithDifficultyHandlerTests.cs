@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBaseTotalDieWithDifficultyQuery();
 
-            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBaseTotalDieWithDifficulty()
+            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectTotalDieWithDifficulty()
 //propertyler buraya yazılacak
 //{																		
 //ProjectBaseTotalDieWithDifficultyId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBaseTotalDieWithDifficultiesQuery();
 
-            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseTotalDieWithDifficulty, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBaseTotalDieWithDifficulty> { new ProjectBaseTotalDieWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseTotalDieWithDifficultyId = 1, ProjectBaseTotalDieWithDifficultyName = "test"*/ } }.AsQueryable());
+            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectTotalDieWithDifficulty, bool>>>()))
+                        .ReturnsAsync(new List<ProjectTotalDieWithDifficulty> { new ProjectTotalDieWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseTotalDieWithDifficultyId = 1, ProjectBaseTotalDieWithDifficultyName = "test"*/ } }.AsQueryable());
 
             var handler = new GetProjectBaseTotalDieWithDifficultiesQueryHandler(_projectBaseTotalDieWithDifficultyRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBaseTotalDieWithDifficulty>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<ProjectTotalDieWithDifficulty>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task ProjectBaseTotalDieWithDifficulty_CreateCommand_Success()
         {
-            ProjectBaseTotalDieWithDifficulty rt = null;
+            ProjectTotalDieWithDifficulty rt = null;
             //Arrange
             var command = new CreateProjectBaseTotalDieWithDifficultyCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectBaseTotalDieWithDifficulty>()));
+            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectTotalDieWithDifficulty>()));
 
             var handler = new CreateProjectBaseTotalDieWithDifficultyCommandHandler(_projectBaseTotalDieWithDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.ProjectBaseTotalDieWithDifficultyName = "test";
 
-            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseTotalDieWithDifficulty, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBaseTotalDieWithDifficulty> { new ProjectBaseTotalDieWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseTotalDieWithDifficultyId = 1, ProjectBaseTotalDieWithDifficultyName = "test"*/ } }.AsQueryable());
+            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectTotalDieWithDifficulty, bool>>>()))
+                                           .ReturnsAsync(new List<ProjectTotalDieWithDifficulty> { new ProjectTotalDieWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseTotalDieWithDifficultyId = 1, ProjectBaseTotalDieWithDifficultyName = "test"*/ } }.AsQueryable());
 
-            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectBaseTotalDieWithDifficulty>()));
+            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectTotalDieWithDifficulty>()));
 
             var handler = new CreateProjectBaseTotalDieWithDifficultyCommandHandler(_projectBaseTotalDieWithDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.ProjectBaseTotalDieWithDifficultyName = "test";
 
             _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseTotalDieWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseTotalDieWithDifficultyId = 1, ProjectBaseTotalDieWithDifficultyName = "deneme"*/ });
+                        .ReturnsAsync(new ProjectTotalDieWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseTotalDieWithDifficultyId = 1, ProjectBaseTotalDieWithDifficultyName = "deneme"*/ });
 
-            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBaseTotalDieWithDifficulty>()));
+            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectTotalDieWithDifficulty>()));
 
             var handler = new UpdateProjectBaseTotalDieWithDifficultyCommandHandler(_projectBaseTotalDieWithDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteProjectBaseTotalDieWithDifficultyCommand();
 
             _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseTotalDieWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseTotalDieWithDifficultyId = 1, ProjectBaseTotalDieWithDifficultyName = "deneme"*/});
+                        .ReturnsAsync(new ProjectTotalDieWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseTotalDieWithDifficultyId = 1, ProjectBaseTotalDieWithDifficultyName = "deneme"*/});
 
-            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.Delete(It.IsAny<ProjectBaseTotalDieWithDifficulty>()));
+            _projectBaseTotalDieWithDifficultyRepository.Setup(x => x.Delete(It.IsAny<ProjectTotalDieWithDifficulty>()));
 
             var handler = new DeleteProjectBaseTotalDieWithDifficultyCommandHandler(_projectBaseTotalDieWithDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

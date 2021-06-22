@@ -26,12 +26,12 @@ namespace Tests.Business.HandlersTest
     [TestFixture]
     public class PlayersOnLevelHandlerTests
     {
-        Mock<IPlayersOnLevelRepository> _playersOnLevelRepository;
+        Mock<IPlayerCountsOnLevelRepository> _playersOnLevelRepository;
         Mock<IMediator> _mediator;
         [SetUp]
         public void Setup()
         {
-            _playersOnLevelRepository = new Mock<IPlayersOnLevelRepository>();
+            _playersOnLevelRepository = new Mock<IPlayerCountsOnLevelRepository>();
             _mediator = new Mock<IMediator>();
         }
 
@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetPlayersOnLevelQuery();
 
-            _playersOnLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBasePlayerCountsOnLevel()
+            _playersOnLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new PlayerCountsOnLevel()
 //propertyler buraya yazılacak
 //{																		
 //PlayersOnLevelId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetPlayersOnLevelsQuery();
 
-            _playersOnLevelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBasePlayerCountsOnLevel, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBasePlayerCountsOnLevel> { new ProjectBasePlayerCountsOnLevel() { /*TODO:propertyler buraya yazılacak PlayersOnLevelId = 1, PlayersOnLevelName = "test"*/ } }.AsQueryable());
+            _playersOnLevelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<PlayerCountsOnLevel, bool>>>()))
+                        .ReturnsAsync(new List<PlayerCountsOnLevel> { new PlayerCountsOnLevel() { /*TODO:propertyler buraya yazılacak PlayersOnLevelId = 1, PlayersOnLevelName = "test"*/ } }.AsQueryable());
 
             var handler = new GetPlayersOnLevelsQueryHandler(_playersOnLevelRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBasePlayerCountsOnLevel>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<PlayerCountsOnLevel>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task PlayersOnLevel_CreateCommand_Success()
         {
-            ProjectBasePlayerCountsOnLevel rt = null;
+            PlayerCountsOnLevel rt = null;
             //Arrange
             var command = new CreatePlayersOnLevelCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _playersOnLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _playersOnLevelRepository.Setup(x => x.Add(It.IsAny<ProjectBasePlayerCountsOnLevel>()));
+            _playersOnLevelRepository.Setup(x => x.Add(It.IsAny<PlayerCountsOnLevel>()));
 
             var handler = new CreatePlayersOnLevelCommandHandler(_playersOnLevelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.PlayersOnLevelName = "test";
 
-            _playersOnLevelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBasePlayerCountsOnLevel, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBasePlayerCountsOnLevel> { new ProjectBasePlayerCountsOnLevel() { /*TODO:propertyler buraya yazılacak PlayersOnLevelId = 1, PlayersOnLevelName = "test"*/ } }.AsQueryable());
+            _playersOnLevelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<PlayerCountsOnLevel, bool>>>()))
+                                           .ReturnsAsync(new List<PlayerCountsOnLevel> { new PlayerCountsOnLevel() { /*TODO:propertyler buraya yazılacak PlayersOnLevelId = 1, PlayersOnLevelName = "test"*/ } }.AsQueryable());
 
-            _playersOnLevelRepository.Setup(x => x.Add(It.IsAny<ProjectBasePlayerCountsOnLevel>()));
+            _playersOnLevelRepository.Setup(x => x.Add(It.IsAny<PlayerCountsOnLevel>()));
 
             var handler = new CreatePlayersOnLevelCommandHandler(_playersOnLevelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.PlayersOnLevelName = "test";
 
             _playersOnLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBasePlayerCountsOnLevel() { /*TODO:propertyler buraya yazılacak PlayersOnLevelId = 1, PlayersOnLevelName = "deneme"*/ });
+                        .ReturnsAsync(new PlayerCountsOnLevel() { /*TODO:propertyler buraya yazılacak PlayersOnLevelId = 1, PlayersOnLevelName = "deneme"*/ });
 
-            _playersOnLevelRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBasePlayerCountsOnLevel>()));
+            _playersOnLevelRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<PlayerCountsOnLevel>()));
 
             var handler = new UpdatePlayersOnLevelCommandHandler(_playersOnLevelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeletePlayersOnLevelCommand();
 
             _playersOnLevelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBasePlayerCountsOnLevel() { /*TODO:propertyler buraya yazılacak PlayersOnLevelId = 1, PlayersOnLevelName = "deneme"*/});
+                        .ReturnsAsync(new PlayerCountsOnLevel() { /*TODO:propertyler buraya yazılacak PlayersOnLevelId = 1, PlayersOnLevelName = "deneme"*/});
 
-            _playersOnLevelRepository.Setup(x => x.Delete(It.IsAny<ProjectBasePlayerCountsOnLevel>()));
+            _playersOnLevelRepository.Setup(x => x.Delete(It.IsAny<PlayerCountsOnLevel>()));
 
             var handler = new DeletePlayersOnLevelCommandHandler(_playersOnLevelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

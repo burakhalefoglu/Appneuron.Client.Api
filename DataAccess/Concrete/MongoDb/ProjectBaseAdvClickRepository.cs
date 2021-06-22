@@ -9,7 +9,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Concrete.MongoDb
 {
-    public class ProjectBaseAdvClickRepository : MongoDbRepositoryBase<ProjectBaseAdvClick>, IProjectBaseAdvClickRepository
+    public class ProjectBaseAdvClickRepository : MongoDbRepositoryBase<AdvClick>, IProjectBaseAdvClickRepository
     {
         public ProjectBaseAdvClickRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
         {

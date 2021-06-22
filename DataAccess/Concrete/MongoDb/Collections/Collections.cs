@@ -23,6 +23,13 @@ namespace DataAccess.Concrete.MongoDb.Collections
         public static string ProjectBaseTotalDieWithDifficulties => "projectBaseTotalDieWithDifficulties";
         public static string ProjectBaseSuccessAttemptRates => "projectBaseSuccessAttemptRates";
         public static string ProjectBaseBuyingCountWithDifficulties => "projectBaseBuyingCountWithDifficulties";
+        public static string ProjectBaseDetaildSessions => "projectBaseDetaildSessions";
+        public static string ProjectBaseDailySessions => "projectBaseDailySessions";
+        public static string ProjectBaseDieCountWithLevels => "projectBaseDieCountWithLevels";
+        public static string ProjectBaseFinishingScoreWithLevels => "projectBaseFinishingScoreWithLevels";
+        public static string ConversionRates => "conversionRates";
+        public static string Arpus => "arpus";
+        public static string Arppus => "arppus";
 
     }
 }

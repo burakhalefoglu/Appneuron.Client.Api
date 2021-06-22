@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBaseBuyingCountWithDifficultyQuery();
 
-            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBaseBuyingCountWithDifficulty()
+            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBuyingCountWithDifficulty()
 //propertyler buraya yazılacak
 //{																		
 //ProjectBaseBuyingCountWithDifficultyId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBaseBuyingCountWithDifficultiesQuery();
 
-            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseBuyingCountWithDifficulty, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBaseBuyingCountWithDifficulty> { new ProjectBaseBuyingCountWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseBuyingCountWithDifficultyId = 1, ProjectBaseBuyingCountWithDifficultyName = "test"*/ } }.AsQueryable());
+            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBuyingCountWithDifficulty, bool>>>()))
+                        .ReturnsAsync(new List<ProjectBuyingCountWithDifficulty> { new ProjectBuyingCountWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseBuyingCountWithDifficultyId = 1, ProjectBaseBuyingCountWithDifficultyName = "test"*/ } }.AsQueryable());
 
             var handler = new GetProjectBaseBuyingCountWithDifficultiesQueryHandler(_projectBaseBuyingCountWithDifficultyRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBaseBuyingCountWithDifficulty>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<ProjectBuyingCountWithDifficulty>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task ProjectBaseBuyingCountWithDifficulty_CreateCommand_Success()
         {
-            ProjectBaseBuyingCountWithDifficulty rt = null;
+            ProjectBuyingCountWithDifficulty rt = null;
             //Arrange
             var command = new CreateProjectBaseBuyingCountWithDifficultyCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectBaseBuyingCountWithDifficulty>()));
+            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectBuyingCountWithDifficulty>()));
 
             var handler = new CreateProjectBaseBuyingCountWithDifficultyCommandHandler(_projectBaseBuyingCountWithDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.ProjectBaseBuyingCountWithDifficultyName = "test";
 
-            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseBuyingCountWithDifficulty, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBaseBuyingCountWithDifficulty> { new ProjectBaseBuyingCountWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseBuyingCountWithDifficultyId = 1, ProjectBaseBuyingCountWithDifficultyName = "test"*/ } }.AsQueryable());
+            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBuyingCountWithDifficulty, bool>>>()))
+                                           .ReturnsAsync(new List<ProjectBuyingCountWithDifficulty> { new ProjectBuyingCountWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseBuyingCountWithDifficultyId = 1, ProjectBaseBuyingCountWithDifficultyName = "test"*/ } }.AsQueryable());
 
-            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectBaseBuyingCountWithDifficulty>()));
+            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectBuyingCountWithDifficulty>()));
 
             var handler = new CreateProjectBaseBuyingCountWithDifficultyCommandHandler(_projectBaseBuyingCountWithDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.ProjectBaseBuyingCountWithDifficultyName = "test";
 
             _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseBuyingCountWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseBuyingCountWithDifficultyId = 1, ProjectBaseBuyingCountWithDifficultyName = "deneme"*/ });
+                        .ReturnsAsync(new ProjectBuyingCountWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseBuyingCountWithDifficultyId = 1, ProjectBaseBuyingCountWithDifficultyName = "deneme"*/ });
 
-            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBaseBuyingCountWithDifficulty>()));
+            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBuyingCountWithDifficulty>()));
 
             var handler = new UpdateProjectBaseBuyingCountWithDifficultyCommandHandler(_projectBaseBuyingCountWithDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteProjectBaseBuyingCountWithDifficultyCommand();
 
             _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseBuyingCountWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseBuyingCountWithDifficultyId = 1, ProjectBaseBuyingCountWithDifficultyName = "deneme"*/});
+                        .ReturnsAsync(new ProjectBuyingCountWithDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBaseBuyingCountWithDifficultyId = 1, ProjectBaseBuyingCountWithDifficultyName = "deneme"*/});
 
-            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.Delete(It.IsAny<ProjectBaseBuyingCountWithDifficulty>()));
+            _projectBaseBuyingCountWithDifficultyRepository.Setup(x => x.Delete(It.IsAny<ProjectBuyingCountWithDifficulty>()));
 
             var handler = new DeleteProjectBaseBuyingCountWithDifficultyCommandHandler(_projectBaseBuyingCountWithDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

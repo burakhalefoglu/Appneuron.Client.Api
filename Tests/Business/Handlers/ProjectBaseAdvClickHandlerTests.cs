@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBaseAdvClickQuery();
 
-            _projectBaseAdvClickRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBaseAdvClick()
+            _projectBaseAdvClickRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new AdvClick()
 //propertyler buraya yazılacak
 //{																		
 //ProjectBaseAdvClickId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBaseAdvClicksQuery();
 
-            _projectBaseAdvClickRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseAdvClick, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBaseAdvClick> { new ProjectBaseAdvClick() { /*TODO:propertyler buraya yazılacak ProjectBaseAdvClickId = 1, ProjectBaseAdvClickName = "test"*/ } }.AsQueryable());
+            _projectBaseAdvClickRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<AdvClick, bool>>>()))
+                        .ReturnsAsync(new List<AdvClick> { new AdvClick() { /*TODO:propertyler buraya yazılacak ProjectBaseAdvClickId = 1, ProjectBaseAdvClickName = "test"*/ } }.AsQueryable());
 
             var handler = new GetProjectBaseAdvClicksQueryHandler(_projectBaseAdvClickRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBaseAdvClick>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<AdvClick>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task ProjectBaseAdvClick_CreateCommand_Success()
         {
-            ProjectBaseAdvClick rt = null;
+            AdvClick rt = null;
             //Arrange
             var command = new CreateProjectBaseAdvClickCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _projectBaseAdvClickRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _projectBaseAdvClickRepository.Setup(x => x.Add(It.IsAny<ProjectBaseAdvClick>()));
+            _projectBaseAdvClickRepository.Setup(x => x.Add(It.IsAny<AdvClick>()));
 
             var handler = new CreateProjectBaseAdvClickCommandHandler(_projectBaseAdvClickRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.ProjectBaseAdvClickName = "test";
 
-            _projectBaseAdvClickRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBaseAdvClick, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBaseAdvClick> { new ProjectBaseAdvClick() { /*TODO:propertyler buraya yazılacak ProjectBaseAdvClickId = 1, ProjectBaseAdvClickName = "test"*/ } }.AsQueryable());
+            _projectBaseAdvClickRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<AdvClick, bool>>>()))
+                                           .ReturnsAsync(new List<AdvClick> { new AdvClick() { /*TODO:propertyler buraya yazılacak ProjectBaseAdvClickId = 1, ProjectBaseAdvClickName = "test"*/ } }.AsQueryable());
 
-            _projectBaseAdvClickRepository.Setup(x => x.Add(It.IsAny<ProjectBaseAdvClick>()));
+            _projectBaseAdvClickRepository.Setup(x => x.Add(It.IsAny<AdvClick>()));
 
             var handler = new CreateProjectBaseAdvClickCommandHandler(_projectBaseAdvClickRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.ProjectBaseAdvClickName = "test";
 
             _projectBaseAdvClickRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseAdvClick() { /*TODO:propertyler buraya yazılacak ProjectBaseAdvClickId = 1, ProjectBaseAdvClickName = "deneme"*/ });
+                        .ReturnsAsync(new AdvClick() { /*TODO:propertyler buraya yazılacak ProjectBaseAdvClickId = 1, ProjectBaseAdvClickName = "deneme"*/ });
 
-            _projectBaseAdvClickRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBaseAdvClick>()));
+            _projectBaseAdvClickRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<AdvClick>()));
 
             var handler = new UpdateProjectBaseAdvClickCommandHandler(_projectBaseAdvClickRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteProjectBaseAdvClickCommand();
 
             _projectBaseAdvClickRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBaseAdvClick() { /*TODO:propertyler buraya yazılacak ProjectBaseAdvClickId = 1, ProjectBaseAdvClickName = "deneme"*/});
+                        .ReturnsAsync(new AdvClick() { /*TODO:propertyler buraya yazılacak ProjectBaseAdvClickId = 1, ProjectBaseAdvClickName = "deneme"*/});
 
-            _projectBaseAdvClickRepository.Setup(x => x.Delete(It.IsAny<ProjectBaseAdvClick>()));
+            _projectBaseAdvClickRepository.Setup(x => x.Delete(It.IsAny<AdvClick>()));
 
             var handler = new DeleteProjectBaseAdvClickCommandHandler(_projectBaseAdvClickRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

@@ -137,7 +137,7 @@ namespace WebAPI
                 c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture");
 
             });
-            app.UseCors("AllowOrigin");
+            app.UseCors(builder => builder.WithOrigins("https://localhost:4200").AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

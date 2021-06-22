@@ -1,8 +1,8 @@
 ﻿
-using Business.Handlers.PlayersOnDifficultyLevels.Commands;
+using Business.Handlers.PlayerCountOnDifficultyLevels.Commands;
 using FluentValidation;
 
-namespace Business.Handlers.PlayersOnDifficultyLevels.ValidationRules
+namespace Business.Handlers.PlayerCountOnDifficultyLevels.ValidationRules
 {
 
     public class CreatePlayersOnDifficultyLevelValidator : AbstractValidator<CreatePlayersOnDifficultyLevelCommand>

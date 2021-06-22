@@ -26,7 +26,6 @@ namespace Business.Handlers.StatisticsByNumbers.Commands
         private ObjectId Id => new ObjectId(this.ObjectId);
         public string ProjectID { get; set; }
         public long TotalPlayer { get; set; }
-        public long PaidPlayer { get; set; }
         public PlayerCountOnDate[] PlayerCountOnDate { get; set; }
 
         public class UpdateStatisticsByNumberCommandHandler : IRequestHandler<UpdateStatisticsByNumberCommand, IResult>
@@ -49,10 +48,9 @@ namespace Business.Handlers.StatisticsByNumbers.Commands
 
 
 
-                var statisticsByNumber = new ProjectBaseStatisticsByNumber();
+                var statisticsByNumber = new StatisticsByNumber();
                 statisticsByNumber.ProjectID = request.ProjectID;
                 statisticsByNumber.TotalPlayer = request.TotalPlayer;
-                statisticsByNumber.PaidPlayer = request.PaidPlayer;
                 statisticsByNumber.PlayerCountOnDate = request.PlayerCountOnDate;
 
 

@@ -13,12 +13,12 @@ using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.ProjectBaseBuyingCountWithDifficulties.Queries
 {
-    public class GetProjectBaseBuyingCountWithDifficultyQuery : IRequest<IDataResult<ProjectBaseBuyingCountWithDifficulty>>
+    public class GetProjectBaseBuyingCountWithDifficultyQuery : IRequest<IDataResult<ProjectBuyingCountWithDifficulty>>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
 
-        public class GetProjectBaseBuyingCountWithDifficultyQueryHandler : IRequestHandler<GetProjectBaseBuyingCountWithDifficultyQuery, IDataResult<ProjectBaseBuyingCountWithDifficulty>>
+        public class GetProjectBaseBuyingCountWithDifficultyQueryHandler : IRequestHandler<GetProjectBaseBuyingCountWithDifficultyQuery, IDataResult<ProjectBuyingCountWithDifficulty>>
         {
             private readonly IProjectBaseBuyingCountWithDifficultyRepository _projectBaseBuyingCountWithDifficultyRepository;
             private readonly IMediator _mediator;
@@ -30,10 +30,10 @@ namespace Business.Handlers.ProjectBaseBuyingCountWithDifficulties.Queries
             }
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<ProjectBaseBuyingCountWithDifficulty>> Handle(GetProjectBaseBuyingCountWithDifficultyQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<ProjectBuyingCountWithDifficulty>> Handle(GetProjectBaseBuyingCountWithDifficultyQuery request, CancellationToken cancellationToken)
             {
                 var projectBaseBuyingCountWithDifficulty = await _projectBaseBuyingCountWithDifficultyRepository.GetByIdAsync(request.Id);
-                return new SuccessDataResult<ProjectBaseBuyingCountWithDifficulty>(projectBaseBuyingCountWithDifficulty);
+                return new SuccessDataResult<ProjectBuyingCountWithDifficulty>(projectBaseBuyingCountWithDifficulty);
             }
         }
     }

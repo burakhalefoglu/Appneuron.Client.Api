@@ -6,7 +6,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Abstract
 {
-    public interface IChallengeBasedSegmentationRepository : IDocumentDbRepository<ProjectAndChallengeBasedSegmentation>
+    public interface IChallengeBasedSegmentationRepository : IDocumentDbRepository<ChallengeBasedSegmentation>
     {
     }
 }

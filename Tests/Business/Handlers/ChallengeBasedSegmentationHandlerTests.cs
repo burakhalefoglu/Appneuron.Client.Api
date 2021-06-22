@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetChallengeBasedSegmentationQuery();
 
-            _challengeBasedSegmentationRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectAndChallengeBasedSegmentation()
+            _challengeBasedSegmentationRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ChallengeBasedSegmentation()
 //propertyler buraya yazılacak
 //{																		
 //ChallengeBasedSegmentationId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetChallengeBasedSegmentationsQuery();
 
-            _challengeBasedSegmentationRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectAndChallengeBasedSegmentation, bool>>>()))
-                        .ReturnsAsync(new List<ProjectAndChallengeBasedSegmentation> { new ProjectAndChallengeBasedSegmentation() { /*TODO:propertyler buraya yazılacak ChallengeBasedSegmentationId = 1, ChallengeBasedSegmentationName = "test"*/ } }.AsQueryable());
+            _challengeBasedSegmentationRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ChallengeBasedSegmentation, bool>>>()))
+                        .ReturnsAsync(new List<ChallengeBasedSegmentation> { new ChallengeBasedSegmentation() { /*TODO:propertyler buraya yazılacak ChallengeBasedSegmentationId = 1, ChallengeBasedSegmentationName = "test"*/ } }.AsQueryable());
 
             var handler = new GetChallengeBasedSegmentationsQueryHandler(_challengeBasedSegmentationRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectAndChallengeBasedSegmentation>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<ChallengeBasedSegmentation>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task ChallengeBasedSegmentation_CreateCommand_Success()
         {
-            ProjectAndChallengeBasedSegmentation rt = null;
+            ChallengeBasedSegmentation rt = null;
             //Arrange
             var command = new CreateChallengeBasedSegmentationCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _challengeBasedSegmentationRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _challengeBasedSegmentationRepository.Setup(x => x.Add(It.IsAny<ProjectAndChallengeBasedSegmentation>()));
+            _challengeBasedSegmentationRepository.Setup(x => x.Add(It.IsAny<ChallengeBasedSegmentation>()));
 
             var handler = new CreateChallengeBasedSegmentationCommandHandler(_challengeBasedSegmentationRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.ChallengeBasedSegmentationName = "test";
 
-            _challengeBasedSegmentationRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectAndChallengeBasedSegmentation, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectAndChallengeBasedSegmentation> { new ProjectAndChallengeBasedSegmentation() { /*TODO:propertyler buraya yazılacak ChallengeBasedSegmentationId = 1, ChallengeBasedSegmentationName = "test"*/ } }.AsQueryable());
+            _challengeBasedSegmentationRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ChallengeBasedSegmentation, bool>>>()))
+                                           .ReturnsAsync(new List<ChallengeBasedSegmentation> { new ChallengeBasedSegmentation() { /*TODO:propertyler buraya yazılacak ChallengeBasedSegmentationId = 1, ChallengeBasedSegmentationName = "test"*/ } }.AsQueryable());
 
-            _challengeBasedSegmentationRepository.Setup(x => x.Add(It.IsAny<ProjectAndChallengeBasedSegmentation>()));
+            _challengeBasedSegmentationRepository.Setup(x => x.Add(It.IsAny<ChallengeBasedSegmentation>()));
 
             var handler = new CreateChallengeBasedSegmentationCommandHandler(_challengeBasedSegmentationRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.ChallengeBasedSegmentationName = "test";
 
             _challengeBasedSegmentationRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectAndChallengeBasedSegmentation() { /*TODO:propertyler buraya yazılacak ChallengeBasedSegmentationId = 1, ChallengeBasedSegmentationName = "deneme"*/ });
+                        .ReturnsAsync(new ChallengeBasedSegmentation() { /*TODO:propertyler buraya yazılacak ChallengeBasedSegmentationId = 1, ChallengeBasedSegmentationName = "deneme"*/ });
 
-            _challengeBasedSegmentationRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectAndChallengeBasedSegmentation>()));
+            _challengeBasedSegmentationRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ChallengeBasedSegmentation>()));
 
             var handler = new UpdateChallengeBasedSegmentationCommandHandler(_challengeBasedSegmentationRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteChallengeBasedSegmentationCommand();
 
             _challengeBasedSegmentationRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectAndChallengeBasedSegmentation() { /*TODO:propertyler buraya yazılacak ChallengeBasedSegmentationId = 1, ChallengeBasedSegmentationName = "deneme"*/});
+                        .ReturnsAsync(new ChallengeBasedSegmentation() { /*TODO:propertyler buraya yazılacak ChallengeBasedSegmentationId = 1, ChallengeBasedSegmentationName = "deneme"*/});
 
-            _challengeBasedSegmentationRepository.Setup(x => x.Delete(It.IsAny<ProjectAndChallengeBasedSegmentation>()));
+            _challengeBasedSegmentationRepository.Setup(x => x.Delete(It.IsAny<ChallengeBasedSegmentation>()));
 
             var handler = new DeleteChallengeBasedSegmentationCommandHandler(_challengeBasedSegmentationRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

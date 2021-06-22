@@ -16,9 +16,9 @@ using Entities.Concrete.ChartModels;
 namespace Business.Handlers.StatisticsByNumbers.Queries
 {
 
-    public class GetStatisticsByNumbersQuery : IRequest<IDataResult<IEnumerable<ProjectBaseStatisticsByNumber>>>
+    public class GetStatisticsByNumbersQuery : IRequest<IDataResult<IEnumerable<StatisticsByNumber>>>
     {
-        public class GetStatisticsByNumbersQueryHandler : IRequestHandler<GetStatisticsByNumbersQuery, IDataResult<IEnumerable<ProjectBaseStatisticsByNumber>>>
+        public class GetStatisticsByNumbersQueryHandler : IRequestHandler<GetStatisticsByNumbersQuery, IDataResult<IEnumerable<StatisticsByNumber>>>
         {
             private readonly IStatisticsByNumberRepository _statisticsByNumberRepository;
             private readonly IMediator _mediator;
@@ -33,9 +33,9 @@ namespace Business.Handlers.StatisticsByNumbers.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ProjectBaseStatisticsByNumber>>> Handle(GetStatisticsByNumbersQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<StatisticsByNumber>>> Handle(GetStatisticsByNumbersQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<ProjectBaseStatisticsByNumber>>(await _statisticsByNumberRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<StatisticsByNumber>>(await _statisticsByNumberRepository.GetListAsync());
             }
         }
     }

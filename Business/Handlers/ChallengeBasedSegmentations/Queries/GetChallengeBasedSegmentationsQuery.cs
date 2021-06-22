@@ -16,9 +16,9 @@ using Entities.Concrete.ChartModels;
 namespace Business.Handlers.ChallengeBasedSegmentations.Queries
 {
 
-    public class GetChallengeBasedSegmentationsQuery : IRequest<IDataResult<IEnumerable<ProjectAndChallengeBasedSegmentation>>>
+    public class GetChallengeBasedSegmentationsQuery : IRequest<IDataResult<IEnumerable<ChallengeBasedSegmentation>>>
     {
-        public class GetChallengeBasedSegmentationsQueryHandler : IRequestHandler<GetChallengeBasedSegmentationsQuery, IDataResult<IEnumerable<ProjectAndChallengeBasedSegmentation>>>
+        public class GetChallengeBasedSegmentationsQueryHandler : IRequestHandler<GetChallengeBasedSegmentationsQuery, IDataResult<IEnumerable<ChallengeBasedSegmentation>>>
         {
             private readonly IChallengeBasedSegmentationRepository _challengeBasedSegmentationRepository;
             private readonly IMediator _mediator;
@@ -33,9 +33,9 @@ namespace Business.Handlers.ChallengeBasedSegmentations.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ProjectAndChallengeBasedSegmentation>>> Handle(GetChallengeBasedSegmentationsQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<ChallengeBasedSegmentation>>> Handle(GetChallengeBasedSegmentationsQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<ProjectAndChallengeBasedSegmentation>>(await _challengeBasedSegmentationRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<ChallengeBasedSegmentation>>(await _challengeBasedSegmentationRepository.GetListAsync());
             }
         }
     }

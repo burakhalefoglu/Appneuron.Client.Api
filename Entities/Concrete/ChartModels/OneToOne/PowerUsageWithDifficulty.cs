@@ -8,5 +8,6 @@ namespace Entities.Concrete.ChartModels.OneToOne
     {
         public int DifficultyLevel { get; set; }
         public long PowerUsageCount { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

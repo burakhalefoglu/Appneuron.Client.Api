@@ -13,12 +13,12 @@ using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.ProjectBaseAdvClicks.Queries
 {
-    public class GetProjectBaseAdvClickQuery : IRequest<IDataResult<ProjectBaseAdvClick>>
+    public class GetProjectBaseAdvClickQuery : IRequest<IDataResult<AdvClick>>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
 
-        public class GetProjectBaseAdvClickQueryHandler : IRequestHandler<GetProjectBaseAdvClickQuery, IDataResult<ProjectBaseAdvClick>>
+        public class GetProjectBaseAdvClickQueryHandler : IRequestHandler<GetProjectBaseAdvClickQuery, IDataResult<AdvClick>>
         {
             private readonly IProjectBaseAdvClickRepository _projectBaseAdvClickRepository;
             private readonly IMediator _mediator;
@@ -30,10 +30,10 @@ namespace Business.Handlers.ProjectBaseAdvClicks.Queries
             }
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<ProjectBaseAdvClick>> Handle(GetProjectBaseAdvClickQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<AdvClick>> Handle(GetProjectBaseAdvClickQuery request, CancellationToken cancellationToken)
             {
                 var projectBaseAdvClick = await _projectBaseAdvClickRepository.GetByIdAsync(request.Id);
-                return new SuccessDataResult<ProjectBaseAdvClick>(projectBaseAdvClick);
+                return new SuccessDataResult<AdvClick>(projectBaseAdvClick);
             }
         }
     }

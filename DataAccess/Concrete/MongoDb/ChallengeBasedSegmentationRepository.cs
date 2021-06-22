@@ -9,7 +9,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Concrete.MongoDb
 {
-    public class ChallengeBasedSegmentationRepository : MongoDbRepositoryBase<ProjectAndChallengeBasedSegmentation>, IChallengeBasedSegmentationRepository
+    public class ChallengeBasedSegmentationRepository : MongoDbRepositoryBase<ChallengeBasedSegmentation>, IChallengeBasedSegmentationRepository
     {
         public ChallengeBasedSegmentationRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
         {

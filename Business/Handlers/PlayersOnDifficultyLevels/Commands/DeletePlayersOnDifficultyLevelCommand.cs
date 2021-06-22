@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 
-namespace Business.Handlers.PlayersOnDifficultyLevels.Commands
+namespace Business.Handlers.PlayerCountOnDifficultyLevels.Commands
 {
     /// <summary>
     /// 
@@ -23,10 +23,10 @@ namespace Business.Handlers.PlayersOnDifficultyLevels.Commands
 
         public class DeletePlayersOnDifficultyLevelCommandHandler : IRequestHandler<DeletePlayersOnDifficultyLevelCommand, IResult>
         {
-            private readonly IPlayersOnDifficultyLevelRepository _playersOnDifficultyLevelRepository;
+            private readonly IPlayerCountOnDifficultyLevelRepository _playersOnDifficultyLevelRepository;
             private readonly IMediator _mediator;
 
-            public DeletePlayersOnDifficultyLevelCommandHandler(IPlayersOnDifficultyLevelRepository playersOnDifficultyLevelRepository, IMediator mediator)
+            public DeletePlayersOnDifficultyLevelCommandHandler(IPlayerCountOnDifficultyLevelRepository playersOnDifficultyLevelRepository, IMediator mediator)
             {
                 _playersOnDifficultyLevelRepository = playersOnDifficultyLevelRepository;
                 _mediator = mediator;

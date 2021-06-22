@@ -6,7 +6,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Abstract
 {
-    public interface IProjectBaseAdvClickRepository : IDocumentDbRepository<ProjectBaseAdvClick>
+    public interface IProjectBaseAdvClickRepository : IDocumentDbRepository<AdvClick>
     {
     }
 }

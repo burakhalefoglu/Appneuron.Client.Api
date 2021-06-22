@@ -13,12 +13,12 @@ using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.ChallengeBasedSegmentations.Queries
 {
-    public class GetChallengeBasedSegmentationQuery : IRequest<IDataResult<ProjectAndChallengeBasedSegmentation>>
+    public class GetChallengeBasedSegmentationQuery : IRequest<IDataResult<ChallengeBasedSegmentation>>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
 
-        public class GetChallengeBasedSegmentationQueryHandler : IRequestHandler<GetChallengeBasedSegmentationQuery, IDataResult<ProjectAndChallengeBasedSegmentation>>
+        public class GetChallengeBasedSegmentationQueryHandler : IRequestHandler<GetChallengeBasedSegmentationQuery, IDataResult<ChallengeBasedSegmentation>>
         {
             private readonly IChallengeBasedSegmentationRepository _challengeBasedSegmentationRepository;
             private readonly IMediator _mediator;
@@ -30,10 +30,10 @@ namespace Business.Handlers.ChallengeBasedSegmentations.Queries
             }
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<ProjectAndChallengeBasedSegmentation>> Handle(GetChallengeBasedSegmentationQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<ChallengeBasedSegmentation>> Handle(GetChallengeBasedSegmentationQuery request, CancellationToken cancellationToken)
             {
                 var challengeBasedSegmentation = await _challengeBasedSegmentationRepository.GetByIdAsync(request.Id);
-                return new SuccessDataResult<ProjectAndChallengeBasedSegmentation>(challengeBasedSegmentation);
+                return new SuccessDataResult<ChallengeBasedSegmentation>(challengeBasedSegmentation);
             }
         }
     }

@@ -49,7 +49,7 @@ namespace Business.Handlers.ProjectBaseSuccessAttemptRates.Commands
                 if (isThereProjectBaseSuccessAttemptRateRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedProjectBaseSuccessAttemptRate = new ProjectBaseSuccessAttemptRate
+                var addedProjectBaseSuccessAttemptRate = new SuccessAttemptRate
                 {
                     ProjectId = request.ProjectId,
                     SuccessAttemptWithDifficulty = request.SuccessAttemptWithDifficulty

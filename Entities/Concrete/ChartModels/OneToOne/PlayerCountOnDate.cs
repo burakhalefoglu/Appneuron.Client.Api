@@ -9,5 +9,7 @@ namespace Entities.Concrete.ChartModels
     {
         public DateTime CreatedDate { get; set; }
         public long ClientCount { get; set; }
+        public long PaidPlayer { get; set; }
+
     }
 }

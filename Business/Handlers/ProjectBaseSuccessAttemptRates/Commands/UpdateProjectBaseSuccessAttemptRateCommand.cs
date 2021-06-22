@@ -48,7 +48,7 @@ namespace Business.Handlers.ProjectBaseSuccessAttemptRates.Commands
 
 
 
-                var projectBaseSuccessAttemptRate = new ProjectBaseSuccessAttemptRate();
+                var projectBaseSuccessAttemptRate = new SuccessAttemptRate();
                 projectBaseSuccessAttemptRate.ProjectId = request.ProjectId;
                 projectBaseSuccessAttemptRate.SuccessAttemptWithDifficulty = request.SuccessAttemptWithDifficulty;
 

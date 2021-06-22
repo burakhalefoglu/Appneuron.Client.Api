@@ -13,17 +13,17 @@ using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Aspects.Autofac.Caching;
 using Entities.Concrete.ChartModels;
 
-namespace Business.Handlers.PlayersOnDifficultyLevels.Queries
+namespace Business.Handlers.PlayerCountOnDifficultyLevels.Queries
 {
 
-    public class GetPlayersOnDifficultyLevelsQuery : IRequest<IDataResult<IEnumerable<ProjectBasePlayerCountOnDifficultyLevel>>>
+    public class GetPlayersOnDifficultyLevelsQuery : IRequest<IDataResult<IEnumerable<PlayerCountOnDifficultyLevel>>>
     {
-        public class GetPlayersOnDifficultyLevelsQueryHandler : IRequestHandler<GetPlayersOnDifficultyLevelsQuery, IDataResult<IEnumerable<ProjectBasePlayerCountOnDifficultyLevel>>>
+        public class GetPlayersOnDifficultyLevelsQueryHandler : IRequestHandler<GetPlayersOnDifficultyLevelsQuery, IDataResult<IEnumerable<PlayerCountOnDifficultyLevel>>>
         {
-            private readonly IPlayersOnDifficultyLevelRepository _playersOnDifficultyLevelRepository;
+            private readonly IPlayerCountOnDifficultyLevelRepository _playersOnDifficultyLevelRepository;
             private readonly IMediator _mediator;
 
-            public GetPlayersOnDifficultyLevelsQueryHandler(IPlayersOnDifficultyLevelRepository playersOnDifficultyLevelRepository, IMediator mediator)
+            public GetPlayersOnDifficultyLevelsQueryHandler(IPlayerCountOnDifficultyLevelRepository playersOnDifficultyLevelRepository, IMediator mediator)
             {
                 _playersOnDifficultyLevelRepository = playersOnDifficultyLevelRepository;
                 _mediator = mediator;
@@ -33,9 +33,9 @@ namespace Business.Handlers.PlayersOnDifficultyLevels.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ProjectBasePlayerCountOnDifficultyLevel>>> Handle(GetPlayersOnDifficultyLevelsQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<PlayerCountOnDifficultyLevel>>> Handle(GetPlayersOnDifficultyLevelsQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<ProjectBasePlayerCountOnDifficultyLevel>>(await _playersOnDifficultyLevelRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<PlayerCountOnDifficultyLevel>>(await _playersOnDifficultyLevelRepository.GetListAsync());
             }
         }
     }

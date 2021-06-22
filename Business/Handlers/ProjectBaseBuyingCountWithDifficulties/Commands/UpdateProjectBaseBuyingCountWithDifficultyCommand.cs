@@ -26,7 +26,7 @@ namespace Business.Handlers.ProjectBaseBuyingCountWithDifficulties.Commands
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
         public string ProjectId { get; set; }
-        public BuyingCountWithDifficulty[] BuyingCountWithDifficulty { get; set; }
+        public Entities.Concrete.ChartModels.OneToOne.BuyingCountWithDifficulty[] BuyingCountWithDifficulty { get; set; }
 
         public class UpdateProjectBaseBuyingCountWithDifficultyCommandHandler : IRequestHandler<UpdateProjectBaseBuyingCountWithDifficultyCommand, IResult>
         {
@@ -48,7 +48,7 @@ namespace Business.Handlers.ProjectBaseBuyingCountWithDifficulties.Commands
 
 
 
-                var projectBaseBuyingCountWithDifficulty = new ProjectBaseBuyingCountWithDifficulty();
+                var projectBaseBuyingCountWithDifficulty = new ProjectBuyingCountWithDifficulty();
                 projectBaseBuyingCountWithDifficulty.ProjectId = request.ProjectId;
                 projectBaseBuyingCountWithDifficulty.BuyingCountWithDifficulty = request.BuyingCountWithDifficulty;
 

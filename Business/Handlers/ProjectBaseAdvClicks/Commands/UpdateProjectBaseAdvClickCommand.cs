@@ -49,7 +49,7 @@ namespace Business.Handlers.ProjectBaseAdvClicks.Commands
 
 
 
-                var projectBaseAdvClick = new ProjectBaseAdvClick();
+                var projectBaseAdvClick = new AdvClick();
                 projectBaseAdvClick.ProjectId = request.ProjectId;
                 projectBaseAdvClick.AdvClickWithDifficulty = request.AdvClickWithDifficulty;
 

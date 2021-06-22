@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBasePowerUsageByDifficultyQuery();
 
-            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBasePowerUsageByDifficulty()
+            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new PowerUsageByDifficulty()
 //propertyler buraya yazılacak
 //{																		
 //ProjectBasePowerUsageByDifficultyId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetProjectBasePowerUsageByDifficultiesQuery();
 
-            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBasePowerUsageByDifficulty, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBasePowerUsageByDifficulty> { new ProjectBasePowerUsageByDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBasePowerUsageByDifficultyId = 1, ProjectBasePowerUsageByDifficultyName = "test"*/ } }.AsQueryable());
+            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<PowerUsageByDifficulty, bool>>>()))
+                        .ReturnsAsync(new List<PowerUsageByDifficulty> { new PowerUsageByDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBasePowerUsageByDifficultyId = 1, ProjectBasePowerUsageByDifficultyName = "test"*/ } }.AsQueryable());
 
             var handler = new GetProjectBasePowerUsageByDifficultiesQueryHandler(_projectBasePowerUsageByDifficultyRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBasePowerUsageByDifficulty>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<PowerUsageByDifficulty>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task ProjectBasePowerUsageByDifficulty_CreateCommand_Success()
         {
-            ProjectBasePowerUsageByDifficulty rt = null;
+            PowerUsageByDifficulty rt = null;
             //Arrange
             var command = new CreateProjectBasePowerUsageByDifficultyCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectBasePowerUsageByDifficulty>()));
+            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.Add(It.IsAny<PowerUsageByDifficulty>()));
 
             var handler = new CreateProjectBasePowerUsageByDifficultyCommandHandler(_projectBasePowerUsageByDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.ProjectBasePowerUsageByDifficultyName = "test";
 
-            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBasePowerUsageByDifficulty, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBasePowerUsageByDifficulty> { new ProjectBasePowerUsageByDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBasePowerUsageByDifficultyId = 1, ProjectBasePowerUsageByDifficultyName = "test"*/ } }.AsQueryable());
+            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<PowerUsageByDifficulty, bool>>>()))
+                                           .ReturnsAsync(new List<PowerUsageByDifficulty> { new PowerUsageByDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBasePowerUsageByDifficultyId = 1, ProjectBasePowerUsageByDifficultyName = "test"*/ } }.AsQueryable());
 
-            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.Add(It.IsAny<ProjectBasePowerUsageByDifficulty>()));
+            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.Add(It.IsAny<PowerUsageByDifficulty>()));
 
             var handler = new CreateProjectBasePowerUsageByDifficultyCommandHandler(_projectBasePowerUsageByDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.ProjectBasePowerUsageByDifficultyName = "test";
 
             _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBasePowerUsageByDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBasePowerUsageByDifficultyId = 1, ProjectBasePowerUsageByDifficultyName = "deneme"*/ });
+                        .ReturnsAsync(new PowerUsageByDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBasePowerUsageByDifficultyId = 1, ProjectBasePowerUsageByDifficultyName = "deneme"*/ });
 
-            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBasePowerUsageByDifficulty>()));
+            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<PowerUsageByDifficulty>()));
 
             var handler = new UpdateProjectBasePowerUsageByDifficultyCommandHandler(_projectBasePowerUsageByDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteProjectBasePowerUsageByDifficultyCommand();
 
             _projectBasePowerUsageByDifficultyRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBasePowerUsageByDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBasePowerUsageByDifficultyId = 1, ProjectBasePowerUsageByDifficultyName = "deneme"*/});
+                        .ReturnsAsync(new PowerUsageByDifficulty() { /*TODO:propertyler buraya yazılacak ProjectBasePowerUsageByDifficultyId = 1, ProjectBasePowerUsageByDifficultyName = "deneme"*/});
 
-            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.Delete(It.IsAny<ProjectBasePowerUsageByDifficulty>()));
+            _projectBasePowerUsageByDifficultyRepository.Setup(x => x.Delete(It.IsAny<PowerUsageByDifficulty>()));
 
             var handler = new DeleteProjectBasePowerUsageByDifficultyCommandHandler(_projectBasePowerUsageByDifficultyRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

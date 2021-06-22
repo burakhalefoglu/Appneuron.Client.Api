@@ -16,9 +16,9 @@ using Entities.Concrete.ChartModels;
 namespace Business.Handlers.ProjectBaseBuyingCountWithDifficulties.Queries
 {
 
-    public class GetProjectBaseBuyingCountWithDifficultiesQuery : IRequest<IDataResult<IEnumerable<ProjectBaseBuyingCountWithDifficulty>>>
+    public class GetProjectBaseBuyingCountWithDifficultiesQuery : IRequest<IDataResult<IEnumerable<ProjectBuyingCountWithDifficulty>>>
     {
-        public class GetProjectBaseBuyingCountWithDifficultiesQueryHandler : IRequestHandler<GetProjectBaseBuyingCountWithDifficultiesQuery, IDataResult<IEnumerable<ProjectBaseBuyingCountWithDifficulty>>>
+        public class GetProjectBaseBuyingCountWithDifficultiesQueryHandler : IRequestHandler<GetProjectBaseBuyingCountWithDifficultiesQuery, IDataResult<IEnumerable<ProjectBuyingCountWithDifficulty>>>
         {
             private readonly IProjectBaseBuyingCountWithDifficultyRepository _projectBaseBuyingCountWithDifficultyRepository;
             private readonly IMediator _mediator;
@@ -33,9 +33,9 @@ namespace Business.Handlers.ProjectBaseBuyingCountWithDifficulties.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ProjectBaseBuyingCountWithDifficulty>>> Handle(GetProjectBaseBuyingCountWithDifficultiesQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<ProjectBuyingCountWithDifficulty>>> Handle(GetProjectBaseBuyingCountWithDifficultiesQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<ProjectBaseBuyingCountWithDifficulty>>(await _projectBaseBuyingCountWithDifficultyRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<ProjectBuyingCountWithDifficulty>>(await _projectBaseBuyingCountWithDifficultyRepository.GetListAsync());
             }
         }
     }

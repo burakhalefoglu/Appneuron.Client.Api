@@ -9,7 +9,7 @@ using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Concrete.MongoDb
 {
-    public class ProjectBaseSuccessAttemptRateRepository : MongoDbRepositoryBase<ProjectBaseSuccessAttemptRate>, IProjectBaseSuccessAttemptRateRepository
+    public class ProjectBaseSuccessAttemptRateRepository : MongoDbRepositoryBase<SuccessAttemptRate>, IProjectBaseSuccessAttemptRateRepository
     {
         public ProjectBaseSuccessAttemptRateRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
         {

@@ -10,7 +10,6 @@ namespace Business.Handlers.StatisticsByNumbers.ValidationRules
         public CreateStatisticsByNumberValidator()
         {
             RuleFor(x => x.TotalPlayer).NotEmpty();
-            RuleFor(x => x.PaidPlayer).NotEmpty();
 
         }
     }
@@ -19,7 +18,6 @@ namespace Business.Handlers.StatisticsByNumbers.ValidationRules
         public UpdateStatisticsByNumberValidator()
         {
             RuleFor(x => x.TotalPlayer).NotEmpty();
-            RuleFor(x => x.PaidPlayer).NotEmpty();
 
         }
     }

@@ -49,7 +49,7 @@ namespace Business.Handlers.ProjectBaseTotalDieWithDifficulties.Commands
                 if (isThereProjectBaseTotalDieWithDifficultyRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedProjectBaseTotalDieWithDifficulty = new ProjectBaseTotalDieWithDifficulty
+                var addedProjectBaseTotalDieWithDifficulty = new ProjectTotalDieWithDifficulty
                 {
                     ProjectId = request.ProjectId,
                     TotalDieWithDifficulty = request.TotalDieWithDifficulty

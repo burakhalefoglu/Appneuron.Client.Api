@@ -25,7 +25,6 @@ namespace Business.Handlers.StatisticsByNumbers.Commands
 
         public string ProjectID { get; set; }
         public long TotalPlayer { get; set; }
-        public long PaidPlayer { get; set; }
         public PlayerCountOnDate[] PlayerCountOnDate { get; set; }
 
         public class CreateStatisticsByNumberCommandHandler : IRequestHandler<CreateStatisticsByNumberCommand, IResult>
@@ -49,11 +48,10 @@ namespace Business.Handlers.StatisticsByNumbers.Commands
                 if (isThereStatisticsByNumberRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedStatisticsByNumber = new ProjectBaseStatisticsByNumber
+                var addedStatisticsByNumber = new StatisticsByNumber
                 {
                     ProjectID = request.ProjectID,
                     TotalPlayer = request.TotalPlayer,
-                    PaidPlayer = request.PaidPlayer,
                     PlayerCountOnDate = request.PlayerCountOnDate
 
                 };

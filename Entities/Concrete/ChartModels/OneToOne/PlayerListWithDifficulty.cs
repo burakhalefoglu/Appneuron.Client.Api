@@ -7,6 +7,7 @@ namespace Entities.Concrete.ChartModels.OneToOne
 {
     public class PlayerListWithDifficulty
     {
+        public DateTime DateTime { get; set; }
         public string ClientId { get; set; }
         public int DifficultyLevel { get; set; }
     }

@@ -26,12 +26,12 @@ namespace Tests.Business.HandlersTest
     [TestFixture]
     public class PlayerListByDayHandlerTests
     {
-        Mock<IPlayerListByDayRepository> _playerListByDayRepository;
+        Mock<IPlayerListByDayWithDifficultyRepository> _playerListByDayRepository;
         Mock<IMediator> _mediator;
         [SetUp]
         public void Setup()
         {
-            _playerListByDayRepository = new Mock<IPlayerListByDayRepository>();
+            _playerListByDayRepository = new Mock<IPlayerListByDayWithDifficultyRepository>();
             _mediator = new Mock<IMediator>();
         }
 
@@ -41,7 +41,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetPlayerListByDayQuery();
 
-            _playerListByDayRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ProjectBasePlayerListByDayWithDifficulty()
+            _playerListByDayRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new PlayerListByDayWithDifficulty()
 //propertyler buraya yazılacak
 //{																		
 //PlayerListByDayId = 1,
@@ -66,8 +66,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetPlayerListByDaysQuery();
 
-            _playerListByDayRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBasePlayerListByDayWithDifficulty, bool>>>()))
-                        .ReturnsAsync(new List<ProjectBasePlayerListByDayWithDifficulty> { new ProjectBasePlayerListByDayWithDifficulty() { /*TODO:propertyler buraya yazılacak PlayerListByDayId = 1, PlayerListByDayName = "test"*/ } }.AsQueryable());
+            _playerListByDayRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<PlayerListByDayWithDifficulty, bool>>>()))
+                        .ReturnsAsync(new List<PlayerListByDayWithDifficulty> { new PlayerListByDayWithDifficulty() { /*TODO:propertyler buraya yazılacak PlayerListByDayId = 1, PlayerListByDayName = "test"*/ } }.AsQueryable());
 
             var handler = new GetPlayerListByDaysQueryHandler(_playerListByDayRepository.Object, _mediator.Object);
 
@@ -76,14 +76,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ProjectBasePlayerListByDayWithDifficulty>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<PlayerListByDayWithDifficulty>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task PlayerListByDay_CreateCommand_Success()
         {
-            ProjectBasePlayerListByDayWithDifficulty rt = null;
+            PlayerListByDayWithDifficulty rt = null;
             //Arrange
             var command = new CreatePlayerListByDayCommand();
             //propertyler buraya yazılacak
@@ -92,7 +92,7 @@ namespace Tests.Business.HandlersTest
             _playerListByDayRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _playerListByDayRepository.Setup(x => x.Add(It.IsAny<ProjectBasePlayerListByDayWithDifficulty>()));
+            _playerListByDayRepository.Setup(x => x.Add(It.IsAny<PlayerListByDayWithDifficulty>()));
 
             var handler = new CreatePlayerListByDayCommandHandler(_playerListByDayRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -110,10 +110,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.PlayerListByDayName = "test";
 
-            _playerListByDayRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ProjectBasePlayerListByDayWithDifficulty, bool>>>()))
-                                           .ReturnsAsync(new List<ProjectBasePlayerListByDayWithDifficulty> { new ProjectBasePlayerListByDayWithDifficulty() { /*TODO:propertyler buraya yazılacak PlayerListByDayId = 1, PlayerListByDayName = "test"*/ } }.AsQueryable());
+            _playerListByDayRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<PlayerListByDayWithDifficulty, bool>>>()))
+                                           .ReturnsAsync(new List<PlayerListByDayWithDifficulty> { new PlayerListByDayWithDifficulty() { /*TODO:propertyler buraya yazılacak PlayerListByDayId = 1, PlayerListByDayName = "test"*/ } }.AsQueryable());
 
-            _playerListByDayRepository.Setup(x => x.Add(It.IsAny<ProjectBasePlayerListByDayWithDifficulty>()));
+            _playerListByDayRepository.Setup(x => x.Add(It.IsAny<PlayerListByDayWithDifficulty>()));
 
             var handler = new CreatePlayerListByDayCommandHandler(_playerListByDayRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -130,9 +130,9 @@ namespace Tests.Business.HandlersTest
             //command.PlayerListByDayName = "test";
 
             _playerListByDayRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBasePlayerListByDayWithDifficulty() { /*TODO:propertyler buraya yazılacak PlayerListByDayId = 1, PlayerListByDayName = "deneme"*/ });
+                        .ReturnsAsync(new PlayerListByDayWithDifficulty() { /*TODO:propertyler buraya yazılacak PlayerListByDayId = 1, PlayerListByDayName = "deneme"*/ });
 
-            _playerListByDayRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ProjectBasePlayerListByDayWithDifficulty>()));
+            _playerListByDayRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<PlayerListByDayWithDifficulty>()));
 
             var handler = new UpdatePlayerListByDayCommandHandler(_playerListByDayRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -149,9 +149,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeletePlayerListByDayCommand();
 
             _playerListByDayRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ProjectBasePlayerListByDayWithDifficulty() { /*TODO:propertyler buraya yazılacak PlayerListByDayId = 1, PlayerListByDayName = "deneme"*/});
+                        .ReturnsAsync(new PlayerListByDayWithDifficulty() { /*TODO:propertyler buraya yazılacak PlayerListByDayId = 1, PlayerListByDayName = "deneme"*/});
 
-            _playerListByDayRepository.Setup(x => x.Delete(It.IsAny<ProjectBasePlayerListByDayWithDifficulty>()));
+            _playerListByDayRepository.Setup(x => x.Delete(It.IsAny<PlayerListByDayWithDifficulty>()));
 
             var handler = new DeletePlayerListByDayCommandHandler(_playerListByDayRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

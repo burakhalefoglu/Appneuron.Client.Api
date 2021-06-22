@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         ///<return>List StatisticsByNumbers</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectBaseStatisticsByNumber>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StatisticsByNumber>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         ///<return>StatisticsByNumbers List</return>
         ///<response code="200"></response>  
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProjectBaseStatisticsByNumber))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StatisticsByNumber))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(string objectId)
@@ -115,5 +115,27 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+
+        ///<summary>
+        ///It brings the details according to its id.
+        ///</summary>
+        ///<remarks>StatisticsByNumbers</remarks>
+        ///<return>StatisticsByNumbers List</return>
+        ///<response code="200"></response>  
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StatisticsByNumber))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("getbyprojectid")]
+        public async Task<IActionResult> GetByProjectId(string ProjectId)
+        {
+            var result = await Mediator.Send(new GetStatisticsByProjectIdQuery { projectID = ProjectId });
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
     }
 }
+

@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         ///<return>List ProjectBaseSuccessAttemptRates</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectBaseSuccessAttemptRate>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SuccessAttemptRate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         ///<return>ProjectBaseSuccessAttemptRates List</return>
         ///<response code="200"></response>  
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProjectBaseSuccessAttemptRate))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessAttemptRate))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(string objectId)
