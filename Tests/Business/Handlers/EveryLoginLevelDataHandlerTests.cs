@@ -1,32 +1,32 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.EveryLoginLevelDatas.Commands;
 using Business.Handlers.EveryLoginLevelDatas.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.EveryLoginLevelDatas.Queries.GetEveryLoginLevelDataQuery;
-using Entities.Concrete;
-using static Business.Handlers.EveryLoginLevelDatas.Queries.GetEveryLoginLevelDatasQuery;
 using static Business.Handlers.EveryLoginLevelDatas.Commands.CreateEveryLoginLevelDataCommand;
-using Business.Handlers.EveryLoginLevelDatas.Commands;
-using Business.Constants;
-using static Business.Handlers.EveryLoginLevelDatas.Commands.UpdateEveryLoginLevelDataCommand;
 using static Business.Handlers.EveryLoginLevelDatas.Commands.DeleteEveryLoginLevelDataCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
+using static Business.Handlers.EveryLoginLevelDatas.Commands.UpdateEveryLoginLevelDataCommand;
+using static Business.Handlers.EveryLoginLevelDatas.Queries.GetEveryLoginLevelDataQuery;
+using static Business.Handlers.EveryLoginLevelDatas.Queries.GetEveryLoginLevelDatasQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class EveryLoginLevelDataHandlerTests
     {
-        Mock<IEveryLoginLevelDataRepository> _everyLoginLevelDataRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IEveryLoginLevelDataRepository> _everyLoginLevelDataRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -42,7 +42,7 @@ namespace Tests.Business.HandlersTest
 
             _everyLoginLevelDataRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new EveryLoginLevelData()
 //propertyler buraya yazılacak
-//{																		
+//{
 //EveryLoginLevelDataId = 1,
 //EveryLoginLevelDataName = "Test"
 //}
@@ -56,7 +56,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.EveryLoginLevelDataId.Should().Be(1);
-
         }
 
         [Test]
@@ -76,7 +75,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<EveryLoginLevelData>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -96,7 +94,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateEveryLoginLevelDataCommandHandler(_everyLoginLevelDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -106,7 +103,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateEveryLoginLevelDataCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.EveryLoginLevelDataName = "test";
 
             _everyLoginLevelDataRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<EveryLoginLevelData, bool>>>()))
@@ -136,7 +133,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateEveryLoginLevelDataCommandHandler(_everyLoginLevelDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -155,10 +151,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteEveryLoginLevelDataCommandHandler(_everyLoginLevelDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

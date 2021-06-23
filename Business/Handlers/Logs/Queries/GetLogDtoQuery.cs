@@ -1,5 +1,4 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
@@ -56,7 +55,6 @@ namespace Business.Handlers.Logs.Queries
                     };
 
                     data.Add(list);
-
                 }
                 return new SuccessDataResult<IEnumerable<LogDto>>(data);
             }

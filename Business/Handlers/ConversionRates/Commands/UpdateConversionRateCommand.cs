@@ -1,32 +1,29 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.ConversionRates.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using MongoDB.Bson;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.ConversionRates.ValidationRules;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
-using Entities.Concrete.ChartModels.OneToOne;
 
 namespace Business.Handlers.ConversionRates.Commands
 {
-
-
     public class UpdateConversionRateCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
         public string ProjectId { get; set; }
-        public RevenueByDaily[] RevenueByDaily { get; set; }
+        public long TotalPlayer { get; set; }
+        public DateTime DateTime { get; set; }
+        public long PaidPlayer { get; set; }
 
         public class UpdateConversionRateCommandHandler : IRequestHandler<UpdateConversionRateCommand, IResult>
         {
@@ -45,12 +42,11 @@ namespace Business.Handlers.ConversionRates.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateConversionRateCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var conversionRate = new ConversionRate();
                 conversionRate.ProjectId = request.ProjectId;
-                conversionRate.RevenueByDaily = request.RevenueByDaily;
+                conversionRate.PaidPlayer = request.PaidPlayer;
+                conversionRate.DateTime = request.DateTime;
+                conversionRate.TotalPlayer = request.TotalPlayer;
 
                 await _conversionRateRepository.UpdateAsync(request.Id, conversionRate);
 
@@ -59,4 +55,3 @@ namespace Business.Handlers.ConversionRates.Commands
         }
     }
 }
-

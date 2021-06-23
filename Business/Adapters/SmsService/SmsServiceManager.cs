@@ -10,6 +10,7 @@ namespace Business.Adapters.SmsService
             Thread.Sleep(1000);
             return await Task.FromResult(true);
         }
+
         public async Task<bool> SendAssist(string text, string cellPhone)
         {
             Thread.Sleep(1000);

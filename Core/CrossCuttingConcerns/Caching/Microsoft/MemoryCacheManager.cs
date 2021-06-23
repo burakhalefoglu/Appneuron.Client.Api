@@ -15,13 +15,16 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
     public class MemoryCacheManager : ICacheManager
     {
         private readonly IMemoryCache _cache;
+
         public MemoryCacheManager() : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
         {
         }
+
         public MemoryCacheManager(IMemoryCache cache)
         {
             _cache = cache;
         }
+
         public void Add(string key, object data, int duration)
         {
             _cache.Set(key, data, TimeSpan.FromMinutes(duration));

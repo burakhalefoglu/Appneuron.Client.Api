@@ -1,6 +1,5 @@
-﻿
-using Business.BusinessAspects;
-using Business.Constants;
+﻿using Business.Constants;
+using Business.Handlers.Tests.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
@@ -11,24 +10,21 @@ using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.Tests.ValidationRules;
 
 namespace Business.Handlers.Tests.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateTestCommand : IRequest<IResult>
     {
-
         public string Name { get; set; }
-
 
         public class CreateTestCommandHandler : IRequestHandler<CreateTestCommand, IResult>
         {
             private readonly ITestRepository _testRepository;
             private readonly IMediator _mediator;
+
             public CreateTestCommandHandler(ITestRepository testRepository, IMediator mediator)
             {
                 _testRepository = testRepository;
@@ -49,7 +45,6 @@ namespace Business.Handlers.Tests.Commands
                 var addedTest = new Test
                 {
                     Name = request.Name,
-
                 };
 
                 await _testRepository.AddAsync(addedTest);

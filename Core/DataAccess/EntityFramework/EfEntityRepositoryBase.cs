@@ -95,8 +95,6 @@ namespace Core.DataAccess.EntityFramework
             var result = default(TResult);
             try
             {
-
-
                 if (Context.Database.ProviderName.EndsWith("InMemory"))
                 {
                     result = action();
@@ -147,6 +145,5 @@ namespace Core.DataAccess.EntityFramework
             else
                 return Context.Set<TEntity>().Count(expression);
         }
-
     }
 }

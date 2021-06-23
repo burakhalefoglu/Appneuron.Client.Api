@@ -51,7 +51,6 @@ namespace Tests.Core.Extensions
         {
             _claimList.AddNameUniqueIdentifier(name);
             _claimList.Where(x => x.Type == ClaimTypes.SerialNumber && x.Value == name).Should().HaveCount(1);
-
         }
 
         [Test]
@@ -60,6 +59,5 @@ namespace Tests.Core.Extensions
             _claimList.AddRoles(_roles);
             _claimList.Where(x => x.Type == ClaimTypes.Role).Should().HaveCount(3);
         }
-
     }
 }

@@ -20,6 +20,5 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
                     .WriteTo.MicrosoftTeams(logConfig.ChannelHookAddress)
                     .CreateLogger();
         }
-
     }
 }

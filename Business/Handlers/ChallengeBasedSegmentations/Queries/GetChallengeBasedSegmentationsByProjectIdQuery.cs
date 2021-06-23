@@ -1,21 +1,18 @@
-﻿
-using Business.BusinessAspects;
-using Core.Utilities.Results;
+﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Caching;
-using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.ChallengeBasedSegmentations.Queries
 {
-
     public class GetChallengeBasedSegmentationsByProjectIdQuery : IRequest<IDataResult<IEnumerable<ChallengeBasedSegmentation>>>
     {
         public string ProjectId { get; set; }

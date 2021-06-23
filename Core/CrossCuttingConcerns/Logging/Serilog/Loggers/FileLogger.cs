@@ -27,6 +27,5 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
                     outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}")
                     .CreateLogger();
         }
-
     }
 }

@@ -1,32 +1,32 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.DailySessionDatas.Commands;
 using Business.Handlers.DailySessionDatas.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.DailySessionDatas.Queries.GetDailySessionDataQuery;
-using Entities.Concrete;
-using static Business.Handlers.DailySessionDatas.Queries.GetDailySessionDatasQuery;
 using static Business.Handlers.DailySessionDatas.Commands.CreateDailySessionDataCommand;
-using Business.Handlers.DailySessionDatas.Commands;
-using Business.Constants;
-using static Business.Handlers.DailySessionDatas.Commands.UpdateDailySessionDataCommand;
 using static Business.Handlers.DailySessionDatas.Commands.DeleteDailySessionDataCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
+using static Business.Handlers.DailySessionDatas.Commands.UpdateDailySessionDataCommand;
+using static Business.Handlers.DailySessionDatas.Queries.GetDailySessionDataQuery;
+using static Business.Handlers.DailySessionDatas.Queries.GetDailySessionDatasQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class DailySessionDataHandlerTests
     {
-        Mock<IDailySessionDataRepository> _dailySessionDataRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IDailySessionDataRepository> _dailySessionDataRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -42,7 +42,7 @@ namespace Tests.Business.HandlersTest
 
             _dailySessionDataRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new DailySessionData()
 //propertyler buraya yazılacak
-//{																		
+//{
 //DailySessionDataId = 1,
 //DailySessionDataName = "Test"
 //}
@@ -56,7 +56,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.DailySessionDataId.Should().Be(1);
-
         }
 
         [Test]
@@ -76,7 +75,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<DailySessionData>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -96,7 +94,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateDailySessionDataCommandHandler(_dailySessionDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -106,7 +103,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateDailySessionDataCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.DailySessionDataName = "test";
 
             _dailySessionDataRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<DailySessionData, bool>>>()))
@@ -136,7 +133,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateDailySessionDataCommandHandler(_dailySessionDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -155,10 +151,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteDailySessionDataCommandHandler(_dailySessionDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

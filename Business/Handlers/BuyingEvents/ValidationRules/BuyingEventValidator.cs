@@ -1,10 +1,8 @@
-﻿
-using Business.Handlers.BuyingEvents.Commands;
+﻿using Business.Handlers.BuyingEvents.Commands;
 using FluentValidation;
 
 namespace Business.Handlers.BuyingEvents.ValidationRules
 {
-
     public class CreateBuyingEventValidator : AbstractValidator<CreateBuyingEventCommand>
     {
         public CreateBuyingEventValidator()
@@ -16,9 +14,9 @@ namespace Business.Handlers.BuyingEvents.ValidationRules
             RuleFor(x => x.DifficultyLevel).NotNull();
             RuleFor(x => x.InWhatMinutes).NotNull();
             RuleFor(x => x.TrigerdTime).NotNull();
-
         }
     }
+
     public class UpdateBuyingEventValidator : AbstractValidator<UpdateBuyingEventCommand>
     {
         public UpdateBuyingEventValidator()
@@ -30,7 +28,6 @@ namespace Business.Handlers.BuyingEvents.ValidationRules
             RuleFor(x => x.DifficultyLevel).NotNull();
             RuleFor(x => x.InWhatMinutes).NotNull();
             RuleFor(x => x.TrigerdTime).NotNull();
-
         }
     }
 }

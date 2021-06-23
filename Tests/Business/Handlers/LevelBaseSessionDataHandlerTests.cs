@@ -1,32 +1,32 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.LevelBaseSessionDatas.Commands;
 using Business.Handlers.LevelBaseSessionDatas.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.LevelBaseSessionDatas.Queries.GetLevelBaseSessionDataQuery;
-using Entities.Concrete;
-using static Business.Handlers.LevelBaseSessionDatas.Queries.GetLevelBaseSessionDatasQuery;
 using static Business.Handlers.LevelBaseSessionDatas.Commands.CreateLevelBaseSessionDataCommand;
-using Business.Handlers.LevelBaseSessionDatas.Commands;
-using Business.Constants;
-using static Business.Handlers.LevelBaseSessionDatas.Commands.UpdateLevelBaseSessionDataCommand;
 using static Business.Handlers.LevelBaseSessionDatas.Commands.DeleteLevelBaseSessionDataCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
+using static Business.Handlers.LevelBaseSessionDatas.Commands.UpdateLevelBaseSessionDataCommand;
+using static Business.Handlers.LevelBaseSessionDatas.Queries.GetLevelBaseSessionDataQuery;
+using static Business.Handlers.LevelBaseSessionDatas.Queries.GetLevelBaseSessionDatasQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class LevelBaseSessionDataHandlerTests
     {
-        Mock<ILevelBaseSessionDataRepository> _levelBaseSessionDataRepository;
-        Mock<IMediator> _mediator;
+        private Mock<ILevelBaseSessionDataRepository> _levelBaseSessionDataRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -42,7 +42,7 @@ namespace Tests.Business.HandlersTest
 
             _levelBaseSessionDataRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new LevelBaseSessionData()
 //propertyler buraya yazılacak
-//{																		
+//{
 //LevelBaseSessionDataId = 1,
 //LevelBaseSessionDataName = "Test"
 //}
@@ -56,7 +56,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.LevelBaseSessionDataId.Should().Be(1);
-
         }
 
         [Test]
@@ -76,7 +75,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<LevelBaseSessionData>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -96,7 +94,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateLevelBaseSessionDataCommandHandler(_levelBaseSessionDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -106,7 +103,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateLevelBaseSessionDataCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.LevelBaseSessionDataName = "test";
 
             _levelBaseSessionDataRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<LevelBaseSessionData, bool>>>()))
@@ -136,7 +133,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateLevelBaseSessionDataCommandHandler(_levelBaseSessionDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -155,10 +151,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteLevelBaseSessionDataCommandHandler(_levelBaseSessionDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

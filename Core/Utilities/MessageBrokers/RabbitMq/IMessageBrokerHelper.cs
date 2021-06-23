@@ -1,5 +1,4 @@
-﻿
-namespace Core.Utilities.MessageBrokers.RabbitMq
+﻿namespace Core.Utilities.MessageBrokers.RabbitMq
 {
     public interface IMessageBrokerHelper
     {

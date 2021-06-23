@@ -1,24 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.BuyingEvents.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.BuyingEvents.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.BuyingEvents.Commands
 {
-
-
     public class UpdateBuyingEventCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -49,9 +45,6 @@ namespace Business.Handlers.BuyingEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateBuyingEventCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var buyingEvent = new BuyingEvent();
                 buyingEvent.ClientId = request.ClientId;
                 buyingEvent.ProjectID = request.ProjectID;
@@ -62,7 +55,6 @@ namespace Business.Handlers.BuyingEvents.Commands
                 buyingEvent.InWhatMinutes = request.InWhatMinutes;
                 buyingEvent.TrigerdTime = request.TrigerdTime;
 
-
                 await _buyingEventRepository.UpdateAsync(request.Id, buyingEvent);
 
                 return new SuccessResult(Messages.Updated);
@@ -70,4 +62,3 @@ namespace Business.Handlers.BuyingEvents.Commands
         }
     }
 }
-

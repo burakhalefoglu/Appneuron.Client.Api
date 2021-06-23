@@ -1,33 +1,33 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.Arppus.Commands;
 using Business.Handlers.Arppus.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using Entities.Concrete.ChartModels;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.Arppus.Queries.GetArppuQuery;
-using Entities.Concrete;
-using static Business.Handlers.Arppus.Queries.GetArppusQuery;
 using static Business.Handlers.Arppus.Commands.CreateArppuCommand;
-using Business.Handlers.Arppus.Commands;
-using Business.Constants;
-using static Business.Handlers.Arppus.Commands.UpdateArppuCommand;
 using static Business.Handlers.Arppus.Commands.DeleteArppuCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
+using static Business.Handlers.Arppus.Commands.UpdateArppuCommand;
+using static Business.Handlers.Arppus.Queries.GetArppuQuery;
+using static Business.Handlers.Arppus.Queries.GetArppusQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class ArppuHandlerTests
     {
-        Mock<IArppuRepository> _arppuRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IArppuRepository> _arppuRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -43,7 +43,7 @@ namespace Tests.Business.HandlersTest
 
             _arppuRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new Arppu()
 //propertyler buraya yazılacak
-//{																		
+//{
 //ArppuId = 1,
 //ArppuName = "Test"
 //}
@@ -57,7 +57,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.ArppuId.Should().Be(1);
-
         }
 
         [Test]
@@ -77,7 +76,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<Arppu>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -97,7 +95,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateArppuCommandHandler(_arppuRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -107,7 +104,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateArppuCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.ArppuName = "test";
 
             _arppuRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Arppu, bool>>>()))
@@ -137,7 +134,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateArppuCommandHandler(_arppuRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -156,10 +152,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteArppuCommandHandler(_arppuRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

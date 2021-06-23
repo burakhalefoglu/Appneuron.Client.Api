@@ -1,32 +1,32 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.GameSessionEveryLoginDatas.Commands;
 using Business.Handlers.GameSessionEveryLoginDatas.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.GameSessionEveryLoginDatas.Queries.GetGameSessionEveryLoginDataQuery;
-using Entities.Concrete;
-using static Business.Handlers.GameSessionEveryLoginDatas.Queries.GetGameSessionEveryLoginDatasQuery;
 using static Business.Handlers.GameSessionEveryLoginDatas.Commands.CreateGameSessionEveryLoginDataCommand;
-using Business.Handlers.GameSessionEveryLoginDatas.Commands;
-using Business.Constants;
-using static Business.Handlers.GameSessionEveryLoginDatas.Commands.UpdateGameSessionEveryLoginDataCommand;
 using static Business.Handlers.GameSessionEveryLoginDatas.Commands.DeleteGameSessionEveryLoginDataCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
+using static Business.Handlers.GameSessionEveryLoginDatas.Commands.UpdateGameSessionEveryLoginDataCommand;
+using static Business.Handlers.GameSessionEveryLoginDatas.Queries.GetGameSessionEveryLoginDataQuery;
+using static Business.Handlers.GameSessionEveryLoginDatas.Queries.GetGameSessionEveryLoginDatasQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class GameSessionEveryLoginDataHandlerTests
     {
-        Mock<IGameSessionEveryLoginDataRepository> _gameSessionEveryLoginDataRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IGameSessionEveryLoginDataRepository> _gameSessionEveryLoginDataRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -42,7 +42,7 @@ namespace Tests.Business.HandlersTest
 
             _gameSessionEveryLoginDataRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new GameSessionEveryLoginData()
 //propertyler buraya yazılacak
-//{																		
+//{
 //GameSessionEveryLoginDataId = 1,
 //GameSessionEveryLoginDataName = "Test"
 //}
@@ -56,7 +56,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.GameSessionEveryLoginDataId.Should().Be(1);
-
         }
 
         [Test]
@@ -76,7 +75,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<GameSessionEveryLoginData>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -96,7 +94,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateGameSessionEveryLoginDataCommandHandler(_gameSessionEveryLoginDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -106,7 +103,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateGameSessionEveryLoginDataCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.GameSessionEveryLoginDataName = "test";
 
             _gameSessionEveryLoginDataRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<GameSessionEveryLoginData, bool>>>()))
@@ -136,7 +133,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateGameSessionEveryLoginDataCommandHandler(_gameSessionEveryLoginDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -155,10 +151,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteGameSessionEveryLoginDataCommandHandler(_gameSessionEveryLoginDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

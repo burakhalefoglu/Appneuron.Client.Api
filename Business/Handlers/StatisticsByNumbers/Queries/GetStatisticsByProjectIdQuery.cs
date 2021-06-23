@@ -1,17 +1,13 @@
-﻿
-using Business.BusinessAspects;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using Entities.Concrete;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using MongoDB.Bson;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete.ChartModels;
-using System.Linq;
+using MediatR;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Business.Handlers.StatisticsByNumbers.Queries
 {
@@ -29,6 +25,7 @@ namespace Business.Handlers.StatisticsByNumbers.Queries
                 _statisticsByNumberRepository = statisticsByNumberRepository;
                 _mediator = mediator;
             }
+
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<StatisticsByNumber>>> Handle(GetStatisticsByProjectIdQuery request, CancellationToken cancellationToken)

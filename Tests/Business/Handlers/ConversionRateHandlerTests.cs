@@ -1,33 +1,33 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.ConversionRates.Commands;
 using Business.Handlers.ConversionRates.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using Entities.Concrete.ChartModels;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.ConversionRates.Queries.GetConversionRateQuery;
-using Entities.Concrete;
-using static Business.Handlers.ConversionRates.Queries.GetConversionRatesQuery;
 using static Business.Handlers.ConversionRates.Commands.CreateConversionRateCommand;
-using Business.Handlers.ConversionRates.Commands;
-using Business.Constants;
-using static Business.Handlers.ConversionRates.Commands.UpdateConversionRateCommand;
 using static Business.Handlers.ConversionRates.Commands.DeleteConversionRateCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
+using static Business.Handlers.ConversionRates.Commands.UpdateConversionRateCommand;
+using static Business.Handlers.ConversionRates.Queries.GetConversionRateQuery;
+using static Business.Handlers.ConversionRates.Queries.GetConversionRatesQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class ConversionRateHandlerTests
     {
-        Mock<IConversionRateRepository> _conversionRateRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IConversionRateRepository> _conversionRateRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -43,7 +43,7 @@ namespace Tests.Business.HandlersTest
 
             _conversionRateRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ConversionRate()
 //propertyler buraya yazılacak
-//{																		
+//{
 //ConversionRateId = 1,
 //ConversionRateName = "Test"
 //}
@@ -57,7 +57,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.ConversionRateId.Should().Be(1);
-
         }
 
         [Test]
@@ -77,7 +76,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<ConversionRate>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -97,7 +95,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateConversionRateCommandHandler(_conversionRateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -107,7 +104,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateConversionRateCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.ConversionRateName = "test";
 
             _conversionRateRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ConversionRate, bool>>>()))
@@ -137,7 +134,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateConversionRateCommandHandler(_conversionRateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -156,10 +152,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteConversionRateCommandHandler(_conversionRateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

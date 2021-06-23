@@ -1,10 +1,8 @@
-﻿
-using Business.Handlers.LevelBaseDieDatas.Commands;
+﻿using Business.Handlers.LevelBaseDieDatas.Commands;
 using FluentValidation;
 
 namespace Business.Handlers.LevelBaseDieDatas.ValidationRules
 {
-
     public class CreateLevelBaseDieDataValidator : AbstractValidator<CreateLevelBaseDieDataCommand>
     {
         public CreateLevelBaseDieDataValidator()
@@ -17,9 +15,9 @@ namespace Business.Handlers.LevelBaseDieDatas.ValidationRules
             RuleFor(x => x.DiyingLocationX).NotNull();
             RuleFor(x => x.DiyingLocationY).NotNull();
             RuleFor(x => x.DiyingLocationZ).NotNull();
-
         }
     }
+
     public class UpdateLevelBaseDieDataValidator : AbstractValidator<UpdateLevelBaseDieDataCommand>
     {
         public UpdateLevelBaseDieDataValidator()
@@ -32,7 +30,6 @@ namespace Business.Handlers.LevelBaseDieDatas.ValidationRules
             RuleFor(x => x.DiyingLocationX).NotNull();
             RuleFor(x => x.DiyingLocationY).NotNull();
             RuleFor(x => x.DiyingLocationZ).NotNull();
-
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.AdvEvents.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
@@ -11,17 +11,14 @@ using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.AdvEvents.ValidationRules;
 
 namespace Business.Handlers.AdvEvents.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateAdvEventCommand : IRequest<IResult>
     {
-
         public string ClientId { get; set; }
         public string ProjectID { get; set; }
         public string CustomerID { get; set; }
@@ -31,11 +28,11 @@ namespace Business.Handlers.AdvEvents.Commands
         public float InMinutes { get; set; }
         public System.DateTime TrigerdTime { get; set; }
 
-
         public class CreateAdvEventCommandHandler : IRequestHandler<CreateAdvEventCommand, IResult>
         {
             private readonly IAdvEventRepository _advEventRepository;
             private readonly IMediator _mediator;
+
             public CreateAdvEventCommandHandler(IAdvEventRepository advEventRepository, IMediator mediator)
             {
                 _advEventRepository = advEventRepository;
@@ -48,7 +45,6 @@ namespace Business.Handlers.AdvEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateAdvEventCommand request, CancellationToken cancellationToken)
             {
-
                 var addedAdvEvent = new AdvEvent
                 {
                     ClientId = request.ClientId,
@@ -59,7 +55,6 @@ namespace Business.Handlers.AdvEvents.Commands
                     DifficultyLevel = request.DifficultyLevel,
                     InMinutes = request.InMinutes,
                     TrigerdTime = request.TrigerdTime,
-
                 };
 
                 await _advEventRepository.AddAsync(addedAdvEvent);

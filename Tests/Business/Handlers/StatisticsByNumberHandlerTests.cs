@@ -1,33 +1,33 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.StatisticsByNumbers.Commands;
 using Business.Handlers.StatisticsByNumbers.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using Entities.Concrete.ChartModels;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.StatisticsByNumbers.Queries.GetStatisticsByNumberQuery;
-using Entities.Concrete;
-using static Business.Handlers.StatisticsByNumbers.Queries.GetStatisticsByNumbersQuery;
 using static Business.Handlers.StatisticsByNumbers.Commands.CreateStatisticsByNumberCommand;
-using Business.Handlers.StatisticsByNumbers.Commands;
-using Business.Constants;
-using static Business.Handlers.StatisticsByNumbers.Commands.UpdateStatisticsByNumberCommand;
 using static Business.Handlers.StatisticsByNumbers.Commands.DeleteStatisticsByNumberCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
+using static Business.Handlers.StatisticsByNumbers.Commands.UpdateStatisticsByNumberCommand;
+using static Business.Handlers.StatisticsByNumbers.Queries.GetStatisticsByNumberQuery;
+using static Business.Handlers.StatisticsByNumbers.Queries.GetStatisticsByNumbersQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class StatisticsByNumberHandlerTests
     {
-        Mock<IStatisticsByNumberRepository> _statisticsByNumberRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IStatisticsByNumberRepository> _statisticsByNumberRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -43,7 +43,7 @@ namespace Tests.Business.HandlersTest
 
             _statisticsByNumberRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new StatisticsByNumber()
 //propertyler buraya yazılacak
-//{																		
+//{
 //StatisticsByNumberId = 1,
 //StatisticsByNumberName = "Test"
 //}
@@ -57,7 +57,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.StatisticsByNumberId.Should().Be(1);
-
         }
 
         [Test]
@@ -77,7 +76,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<StatisticsByNumber>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -97,7 +95,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateStatisticsByNumberCommandHandler(_statisticsByNumberRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -107,7 +104,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateStatisticsByNumberCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.StatisticsByNumberName = "test";
 
             _statisticsByNumberRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<StatisticsByNumber, bool>>>()))
@@ -137,7 +134,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateStatisticsByNumberCommandHandler(_statisticsByNumberRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -156,10 +152,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteStatisticsByNumberCommandHandler(_statisticsByNumberRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

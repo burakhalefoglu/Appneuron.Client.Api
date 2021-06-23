@@ -1,6 +1,6 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.BuyingEvents.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
@@ -11,17 +11,14 @@ using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.BuyingEvents.ValidationRules;
 
 namespace Business.Handlers.BuyingEvents.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateBuyingEventCommand : IRequest<IResult>
     {
-
         public string ClientId { get; set; }
         public string ProjectID { get; set; }
         public string CustomerID { get; set; }
@@ -31,11 +28,11 @@ namespace Business.Handlers.BuyingEvents.Commands
         public float InWhatMinutes { get; set; }
         public System.DateTime TrigerdTime { get; set; }
 
-
         public class CreateBuyingEventCommandHandler : IRequestHandler<CreateBuyingEventCommand, IResult>
         {
             private readonly IBuyingEventRepository _buyingEventRepository;
             private readonly IMediator _mediator;
+
             public CreateBuyingEventCommandHandler(IBuyingEventRepository buyingEventRepository, IMediator mediator)
             {
                 _buyingEventRepository = buyingEventRepository;
@@ -48,7 +45,6 @@ namespace Business.Handlers.BuyingEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateBuyingEventCommand request, CancellationToken cancellationToken)
             {
-
                 var addedBuyingEvent = new BuyingEvent
                 {
                     ClientId = request.ClientId,
@@ -59,7 +55,6 @@ namespace Business.Handlers.BuyingEvents.Commands
                     DifficultyLevel = request.DifficultyLevel,
                     InWhatMinutes = request.InWhatMinutes,
                     TrigerdTime = request.TrigerdTime,
-
                 };
 
                 await _buyingEventRepository.AddAsync(addedBuyingEvent);

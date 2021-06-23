@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace Core.Aspects.Autofac.Exception
 {
     /// <summary>
@@ -21,6 +20,7 @@ namespace Core.Aspects.Autofac.Exception
     {
         private readonly LoggerServiceBase _loggerServiceBase;
         private readonly IHttpContextAccessor _httpContextAccessor;
+
         public ExceptionLogAspectAttribute(Type loggerService)
         {
             if (loggerService.BaseType != typeof(LoggerServiceBase))
@@ -30,7 +30,6 @@ namespace Core.Aspects.Autofac.Exception
 
             _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
-
         }
 
         protected override void OnException(IInvocation invocation, System.Exception e)

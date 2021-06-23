@@ -23,5 +23,4 @@ namespace Business
         Staging,
         Production,
     }
-
 }

@@ -1,10 +1,8 @@
-﻿
-using Business.Handlers.AdvEvents.Commands;
+﻿using Business.Handlers.AdvEvents.Commands;
 using FluentValidation;
 
 namespace Business.Handlers.AdvEvents.ValidationRules
 {
-
     public class CreateAdvEventValidator : AbstractValidator<CreateAdvEventCommand>
     {
         public CreateAdvEventValidator()
@@ -16,9 +14,9 @@ namespace Business.Handlers.AdvEvents.ValidationRules
             RuleFor(x => x.DifficultyLevel).NotNull();
             RuleFor(x => x.InMinutes).NotNull();
             RuleFor(x => x.TrigerdTime).NotNull();
-
         }
     }
+
     public class UpdateAdvEventValidator : AbstractValidator<UpdateAdvEventCommand>
     {
         public UpdateAdvEventValidator()
@@ -30,7 +28,6 @@ namespace Business.Handlers.AdvEvents.ValidationRules
             RuleFor(x => x.DifficultyLevel).NotNull();
             RuleFor(x => x.InMinutes).NotNull();
             RuleFor(x => x.TrigerdTime).NotNull();
-
         }
     }
 }

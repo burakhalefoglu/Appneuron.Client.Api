@@ -1,5 +1,4 @@
-﻿
-namespace Core.Utilities.Mail
+﻿namespace Core.Utilities.Mail
 {
     public class EmailConfiguration : IEmailConfiguration
     {

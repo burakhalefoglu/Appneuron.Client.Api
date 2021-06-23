@@ -1,7 +1,4 @@
-﻿
-using System;
-using Core.DataAccess;
-using Entities.Concrete;
+﻿using Core.DataAccess;
 using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Abstract

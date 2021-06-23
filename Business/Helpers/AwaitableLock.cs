@@ -33,6 +33,7 @@ namespace Business.Helpers
             {
                 _toRelease = toRelease;
             }
+
             public void Dispose()
             {
                 _toRelease.Release();

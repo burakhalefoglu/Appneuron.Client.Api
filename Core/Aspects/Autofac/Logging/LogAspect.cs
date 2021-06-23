@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-
 namespace Core.Aspects.Autofac.Logging
 {
     /// <summary>
@@ -20,6 +19,7 @@ namespace Core.Aspects.Autofac.Logging
     {
         private readonly LoggerServiceBase _loggerServiceBase;
         private readonly IHttpContextAccessor _httpContextAccessor;
+
         public LogAspectAttribute(Type loggerService)
         {
             if (loggerService.BaseType != typeof(LoggerServiceBase))
@@ -30,6 +30,7 @@ namespace Core.Aspects.Autofac.Logging
             _loggerServiceBase = (LoggerServiceBase)ServiceTool.ServiceProvider.GetService(loggerService);
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
+
         protected override void OnBefore(IInvocation invocation)
         {
             _loggerServiceBase?.Info(GetLogDetail(invocation));
@@ -45,8 +46,6 @@ namespace Core.Aspects.Autofac.Logging
                     Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
                     Value = invocation.Arguments[i],
                     Type = invocation.Arguments[i].GetType().Name,
-
-
                 });
             }
             var logDetail = new LogDetail
@@ -54,7 +53,6 @@ namespace Core.Aspects.Autofac.Logging
                 MethodName = invocation.Method.Name,
                 Parameters = logParameters,
                 User = (_httpContextAccessor.HttpContext == null || _httpContextAccessor.HttpContext.User.Identity.Name == null) ? "?" : _httpContextAccessor.HttpContext.User.Identity.Name
-
             };
             return JsonConvert.SerializeObject(logDetail);
         }

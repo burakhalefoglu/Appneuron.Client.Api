@@ -1,5 +1,4 @@
-﻿
-namespace Business.Constants
+﻿namespace Business.Constants
 {
     /// <summary>
     /// This class was created to get rid of magic strings and write more readable code.

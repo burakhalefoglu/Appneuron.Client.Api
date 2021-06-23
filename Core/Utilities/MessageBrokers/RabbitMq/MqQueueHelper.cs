@@ -9,6 +9,7 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
     {
         public IConfiguration Configuration;
         private readonly MessageBrokerOptions _brokerOptions;
+
         public MqQueueHelper(IConfiguration configuration)
         {
             Configuration = configuration;

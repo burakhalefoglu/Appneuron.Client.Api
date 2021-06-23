@@ -1,8 +1,5 @@
 ﻿using Core.Entities;
-using Entities.Concrete.ChartModels.OneToOne;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Entities.Concrete.ChartModels
 {
@@ -10,7 +7,8 @@ namespace Entities.Concrete.ChartModels
     {
         public string ProjectID { get; set; }
         public long TotalPlayerCount { get; set; }
-
-        public PlayerCountOnLevel[] PlayerCountOnLevel { get; set; }
+        public int LevelIndex { get; set; }
+        public DateTime DateTime { get; set; }
+        public long PaidPlayerCount { get; set; }
     }
 }

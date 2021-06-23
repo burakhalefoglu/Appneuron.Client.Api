@@ -1,4 +1,3 @@
-
 namespace DataAccess.Concrete.MongoDb.Collections
 {
     public static class Collections
@@ -30,6 +29,16 @@ namespace DataAccess.Concrete.MongoDb.Collections
         public static string ConversionRates => "conversionRates";
         public static string Arpus => "arpus";
         public static string Arppus => "arppus";
-
+        public static string PowerUsageWithDifficulties => "powerUsageWithDifficulties";
+        public static string AdvClickWithDifficulties => "advClickWithDifficulties";
+        public static string DieCountWithDifficulties => "dieCountWithDifficulties";
+        public static string BuyingCountWithDifficulties => "buyingCountWithDifficulties";
+        public static string SuccessAttemptRateWithDifficulties => "successAttemptRateWithDifficulties";
+        public static string DailySessionWithDifficulties => "dailySessionWithDifficulties";
+        public static string LevelBaseSessionWithDifficulties => "levelBaseSessionWithDifficulties";
+        public static string LevelBaseDieCountWithDifficulties => "levelBaseDieCountWithDifficulties";
+        public static string LevelBaseFinishingScoreWithDifficulties => "levelBaseFinishingScoreWithDifficulties";
+        public static string LevelBasePlayerCountWithDifficulties => "levelBasePlayerCountWithDifficulties";
+        public static string LevelBasePowerUsageWithDifficulties => "levelBasePowerUsageWithDifficulties";
     }
 }

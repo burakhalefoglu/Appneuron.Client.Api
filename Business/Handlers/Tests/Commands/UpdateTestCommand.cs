@@ -1,24 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.Tests.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.Tests.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.Tests.Commands
 {
-
-
     public class UpdateTestCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -42,12 +38,8 @@ namespace Business.Handlers.Tests.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateTestCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var test = new Test();
                 test.Name = request.Name;
-
 
                 await _testRepository.UpdateAsync(request.Id, test);
 
@@ -56,4 +48,3 @@ namespace Business.Handlers.Tests.Commands
         }
     }
 }
-

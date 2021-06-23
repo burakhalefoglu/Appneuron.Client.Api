@@ -1,33 +1,30 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.PlayerCountsOnLevels.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using MongoDB.Bson;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.PlayerCountsOnLevels.ValidationRules;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
-using Entities.Concrete.ChartModels.OneToOne;
 
 namespace Business.Handlers.PlayerCountsOnLevels.Commands
 {
-
-
     public class UpdatePlayersOnLevelCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
         public string ProjectID { get; set; }
         public long TotalPlayerCount { get; set; }
-        public PlayerCountOnLevel[] PlayerCountOnLevel { get; set; }
+        public int LevelIndex { get; set; }
+        public DateTime DateTime { get; set; }
+        public long PaidPlayerCount { get; set; }
 
         public class UpdatePlayersOnLevelCommandHandler : IRequestHandler<UpdatePlayersOnLevelCommand, IResult>
         {
@@ -46,13 +43,12 @@ namespace Business.Handlers.PlayerCountsOnLevels.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdatePlayersOnLevelCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var playersOnLevel = new PlayerCountsOnLevel();
                 playersOnLevel.ProjectID = request.ProjectID;
-                playersOnLevel.PlayerCountOnLevel = request.PlayerCountOnLevel;
+                playersOnLevel.DateTime = request.DateTime;
                 playersOnLevel.TotalPlayerCount = request.TotalPlayerCount;
+                playersOnLevel.LevelIndex = request.LevelIndex;
+                playersOnLevel.PaidPlayerCount = request.PaidPlayerCount;
 
                 await _playersOnLevelRepository.UpdateAsync(request.Id, playersOnLevel);
 
@@ -61,4 +57,3 @@ namespace Business.Handlers.PlayerCountsOnLevels.Commands
         }
     }
 }
-

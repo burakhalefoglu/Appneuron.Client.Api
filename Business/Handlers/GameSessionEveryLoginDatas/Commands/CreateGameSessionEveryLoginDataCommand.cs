@@ -1,6 +1,6 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.GameSessionEveryLoginDatas.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
@@ -11,17 +11,14 @@ using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.GameSessionEveryLoginDatas.ValidationRules;
 
 namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateGameSessionEveryLoginDataCommand : IRequest<IResult>
     {
-
         public string ClientId { get; set; }
         public string ProjectID { get; set; }
         public string CustomerID { get; set; }
@@ -29,11 +26,11 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
         public System.DateTime SessionFinishTime { get; set; }
         public float SessionTimeMinute { get; set; }
 
-
         public class CreateGameSessionEveryLoginDataCommandHandler : IRequestHandler<CreateGameSessionEveryLoginDataCommand, IResult>
         {
             private readonly IGameSessionEveryLoginDataRepository _gameSessionEveryLoginDataRepository;
             private readonly IMediator _mediator;
+
             public CreateGameSessionEveryLoginDataCommandHandler(IGameSessionEveryLoginDataRepository gameSessionEveryLoginDataRepository, IMediator mediator)
             {
                 _gameSessionEveryLoginDataRepository = gameSessionEveryLoginDataRepository;
@@ -46,7 +43,6 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateGameSessionEveryLoginDataCommand request, CancellationToken cancellationToken)
             {
-
                 var addedGameSessionEveryLoginData = new GameSessionEveryLoginData
                 {
                     ClientId = request.ClientId,
@@ -55,7 +51,6 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
                     SessionStartTime = request.SessionStartTime,
                     SessionFinishTime = request.SessionFinishTime,
                     SessionTimeMinute = request.SessionTimeMinute,
-
                 };
 
                 await _gameSessionEveryLoginDataRepository.AddAsync(addedGameSessionEveryLoginData);

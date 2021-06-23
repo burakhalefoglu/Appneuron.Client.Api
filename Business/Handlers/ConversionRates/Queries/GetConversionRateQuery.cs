@@ -1,15 +1,13 @@
-﻿
-using Business.BusinessAspects;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using Entities.Concrete;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using MongoDB.Bson;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete.ChartModels;
+using MediatR;
+using MongoDB.Bson;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Business.Handlers.ConversionRates.Queries
 {
@@ -28,6 +26,7 @@ namespace Business.Handlers.ConversionRates.Queries
                 _conversionRateRepository = conversionRateRepository;
                 _mediator = mediator;
             }
+
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<ConversionRate>> Handle(GetConversionRateQuery request, CancellationToken cancellationToken)

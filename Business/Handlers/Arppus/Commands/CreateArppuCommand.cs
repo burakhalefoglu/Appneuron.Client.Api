@@ -1,37 +1,35 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.Arppus.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.Arppus.ValidationRules;
-using Entities.Concrete.ChartModels;
-using Entities.Concrete.ChartModels.OneToOne;
 
 namespace Business.Handlers.Arppus.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateArppuCommand : IRequest<IResult>
     {
-
         public string ProjectId { get; set; }
-        public TotalIncomeAndTotalPaidPlayer[] TotalIncomeAndTotalPaidPlayer { get; set; }
-
+        public DateTime DateTime { get; set; }
+        public long TotalIncome { get; set; }
+        public long TotalIncomePlayer { get; set; }
 
         public class CreateArppuCommandHandler : IRequestHandler<CreateArppuCommand, IResult>
         {
             private readonly IArppuRepository _arppuRepository;
             private readonly IMediator _mediator;
+
             public CreateArppuCommandHandler(IArppuRepository arppuRepository, IMediator mediator)
             {
                 _arppuRepository = arppuRepository;
@@ -52,7 +50,9 @@ namespace Business.Handlers.Arppus.Commands
                 var addedArppu = new Arppu
                 {
                     ProjectId = request.ProjectId,
-                    TotalIncomeAndTotalPaidPlayer = request.TotalIncomeAndTotalPaidPlayer
+                    DateTime = request.DateTime,
+                    TotalIncome = request.TotalIncome,
+                    TotalIncomePlayer = request.TotalIncomePlayer
                 };
 
                 await _arppuRepository.AddAsync(addedArppu);

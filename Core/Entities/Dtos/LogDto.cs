@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace Core.Entities.Dtos
 {
@@ -12,6 +11,5 @@ namespace Core.Entities.Dtos
         public string User { get; set; }
         public string Value { get; set; }
         public string Type { get; set; }
-
     }
 }

@@ -1,37 +1,35 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.Arpus.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.Arpus.ValidationRules;
-using Entities.Concrete.ChartModels;
-using Entities.Concrete.ChartModels.OneToOne;
 
 namespace Business.Handlers.Arpus.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateArpuCommand : IRequest<IResult>
     {
-
         public string ProjectId { get; set; }
-        public DaliyTotalIncomeAndClientCount[] DaliyTotalIncomeAndClientCount { get; set; }
-
+        public DateTime DateTime { get; set; }
+        public long TotalPlayer { get; set; }
+        public long TotalRevenue { get; set; }
 
         public class CreateArpuCommandHandler : IRequestHandler<CreateArpuCommand, IResult>
         {
             private readonly IArpuRepository _arpuRepository;
             private readonly IMediator _mediator;
+
             public CreateArpuCommandHandler(IArpuRepository arpuRepository, IMediator mediator)
             {
                 _arpuRepository = arpuRepository;
@@ -52,8 +50,9 @@ namespace Business.Handlers.Arpus.Commands
                 var addedArpu = new Arpu
                 {
                     ProjectId = request.ProjectId,
-                    DaliyTotalIncomeAndClientCount = request.DaliyTotalIncomeAndClientCount
-
+                    DateTime = request.DateTime,
+                    TotalPlayer = request.TotalPlayer,
+                    TotalRevenue = request.TotalRevenue
                 };
 
                 await _arpuRepository.AddAsync(addedArpu);

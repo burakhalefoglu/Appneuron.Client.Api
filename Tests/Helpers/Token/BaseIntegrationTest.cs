@@ -21,7 +21,6 @@ namespace Tests.Helpers.Token
 
         private static readonly JwtSecurityTokenHandler STokenHandler = new();
 
-
         [SetUp]
         public void Setup()
         {

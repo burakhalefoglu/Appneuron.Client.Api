@@ -22,7 +22,6 @@ namespace Tests.Helpers.Token
             var sKey = Encoding.UTF8.GetBytes(_keyString);
             SecurityKey = new SymmetricSecurityKey(sKey);
             SigningCredentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256Signature);
-
         }
 
         public static string GenerateJwtToken(IEnumerable<Claim> claims, double value = 5)

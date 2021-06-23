@@ -1,14 +1,13 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using MongoDB.Bson;
 
 namespace Business.Handlers.Tests.Queries
 {
@@ -27,6 +26,7 @@ namespace Business.Handlers.Tests.Queries
                 _testRepository = testRepository;
                 _mediator = mediator;
             }
+
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<Test>> Handle(GetTestQuery request, CancellationToken cancellationToken)

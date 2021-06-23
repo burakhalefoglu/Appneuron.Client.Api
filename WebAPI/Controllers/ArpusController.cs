@@ -1,14 +1,10 @@
-﻿
-using Business.Handlers.Arpus.Commands;
+﻿using Business.Handlers.Arpus.Commands;
 using Business.Handlers.Arpus.Queries;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Entities.Concrete;
-using System.Collections.Generic;
-using MongoDB.Bson;
 using Entities.Concrete.ChartModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -44,7 +40,7 @@ namespace WebAPI.Controllers
         ///</summary>
         ///<remarks>Arpus</remarks>
         ///<return>Arpus List</return>
-        ///<response code="200"></response>  
+        ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Arpu))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -115,6 +111,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+
         ///<summary>
         ///List Arpus
         ///</summary>
@@ -129,9 +126,7 @@ namespace WebAPI.Controllers
         {
             var result = await Mediator.Send(new GetArpusByProjectIdQueryQuery()
             {
-
                 ProjectId = ProjectId
-
             });
             if (result.Success)
             {
@@ -139,6 +134,5 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-
     }
 }

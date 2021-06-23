@@ -10,11 +10,13 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
     {
         private readonly IConfiguration _configuration;
         private readonly MessageBrokerOptions _brokerOptions;
+
         public MqConsumerHelper(IConfiguration configuration)
         {
             _configuration = configuration;
             _brokerOptions = _configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
         }
+
         public void GetQueue()
         {
             var factory = new ConnectionFactory()
@@ -46,9 +48,7 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
                                                       autoAck: true,
                                                       consumer: consumer);
                 Console.ReadKey();
-
             }
-
         }
     }
 }

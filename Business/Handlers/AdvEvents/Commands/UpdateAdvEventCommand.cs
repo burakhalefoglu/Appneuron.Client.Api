@@ -1,24 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.AdvEvents.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.AdvEvents.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.AdvEvents.Commands
 {
-
-
     public class UpdateAdvEventCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -49,9 +45,6 @@ namespace Business.Handlers.AdvEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateAdvEventCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var advEvent = new AdvEvent();
                 advEvent.ClientId = request.ClientId;
                 advEvent.ProjectID = request.ProjectID;
@@ -62,7 +55,6 @@ namespace Business.Handlers.AdvEvents.Commands
                 advEvent.InMinutes = request.InMinutes;
                 advEvent.TrigerdTime = request.TrigerdTime;
 
-
                 await _advEventRepository.UpdateAsync(request.Id, advEvent);
 
                 return new SuccessResult(Messages.Updated);
@@ -70,4 +62,3 @@ namespace Business.Handlers.AdvEvents.Commands
         }
     }
 }
-

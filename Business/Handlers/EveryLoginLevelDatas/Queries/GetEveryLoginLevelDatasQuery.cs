@@ -1,6 +1,8 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -8,13 +10,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Aspects.Autofac.Caching;
 
 namespace Business.Handlers.EveryLoginLevelDatas.Queries
 {
-
     public class GetEveryLoginLevelDatasQuery : IRequest<IDataResult<IEnumerable<EveryLoginLevelData>>>
     {
         public class GetEveryLoginLevelDatasQueryHandler : IRequestHandler<GetEveryLoginLevelDatasQuery, IDataResult<IEnumerable<EveryLoginLevelData>>>

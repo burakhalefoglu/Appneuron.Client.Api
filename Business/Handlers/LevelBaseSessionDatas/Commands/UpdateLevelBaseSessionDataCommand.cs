@@ -1,24 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.LevelBaseSessionDatas.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.LevelBaseSessionDatas.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.LevelBaseSessionDatas.Commands
 {
-
-
     public class UpdateLevelBaseSessionDataCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -49,9 +45,6 @@ namespace Business.Handlers.LevelBaseSessionDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateLevelBaseSessionDataCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var levelBaseSessionData = new LevelBaseSessionData();
                 levelBaseSessionData.ClientId = request.ClientId;
                 levelBaseSessionData.ProjectID = request.ProjectID;
@@ -62,7 +55,6 @@ namespace Business.Handlers.LevelBaseSessionDatas.Commands
                 levelBaseSessionData.SessionStartTime = request.SessionStartTime;
                 levelBaseSessionData.SessionFinishTime = request.SessionFinishTime;
 
-
                 await _levelBaseSessionDataRepository.UpdateAsync(request.Id, levelBaseSessionData);
 
                 return new SuccessResult(Messages.Updated);
@@ -70,4 +62,3 @@ namespace Business.Handlers.LevelBaseSessionDatas.Commands
         }
     }
 }
-

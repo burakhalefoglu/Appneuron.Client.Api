@@ -1,37 +1,33 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.ChallengeBasedSegmentations.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.ChallengeBasedSegmentations.ValidationRules;
-using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.ChallengeBasedSegmentations.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateChallengeBasedSegmentationCommand : IRequest<IResult>
     {
-
         public string ProjectId { get; set; }
         public long CompetitiveClientCount { get; set; }
         public long NonCompetitiveClientCount { get; set; }
-
 
         public class CreateChallengeBasedSegmentationCommandHandler : IRequestHandler<CreateChallengeBasedSegmentationCommand, IResult>
         {
             private readonly IChallengeBasedSegmentationRepository _challengeBasedSegmentationRepository;
             private readonly IMediator _mediator;
+
             public CreateChallengeBasedSegmentationCommandHandler(IChallengeBasedSegmentationRepository challengeBasedSegmentationRepository, IMediator mediator)
             {
                 _challengeBasedSegmentationRepository = challengeBasedSegmentationRepository;
@@ -54,7 +50,6 @@ namespace Business.Handlers.ChallengeBasedSegmentations.Commands
                     ProjectId = request.ProjectId,
                     CompetitiveClientCount = request.CompetitiveClientCount,
                     NonCompetitiveClientCount = request.NonCompetitiveClientCount,
-
                 };
 
                 await _challengeBasedSegmentationRepository.AddAsync(addedChallengeBasedSegmentation);

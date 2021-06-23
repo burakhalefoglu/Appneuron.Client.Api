@@ -1,10 +1,8 @@
-﻿
-using Business.Handlers.DailySessionDatas.Commands;
+﻿using Business.Handlers.DailySessionDatas.Commands;
 using FluentValidation;
 
 namespace Business.Handlers.DailySessionDatas.ValidationRules
 {
-
     public class CreateDailySessionDataValidator : AbstractValidator<CreateDailySessionDataCommand>
     {
         public CreateDailySessionDataValidator()
@@ -14,9 +12,9 @@ namespace Business.Handlers.DailySessionDatas.ValidationRules
             RuleFor(x => x.SessionFrequency).NotNull();
             RuleFor(x => x.TotalSessionTime).NotNull();
             RuleFor(x => x.TodayTime).NotNull();
-
         }
     }
+
     public class UpdateDailySessionDataValidator : AbstractValidator<UpdateDailySessionDataCommand>
     {
         public UpdateDailySessionDataValidator()
@@ -26,7 +24,6 @@ namespace Business.Handlers.DailySessionDatas.ValidationRules
             RuleFor(x => x.SessionFrequency).NotNull();
             RuleFor(x => x.TotalSessionTime).NotNull();
             RuleFor(x => x.TodayTime).NotNull();
-
         }
     }
 }

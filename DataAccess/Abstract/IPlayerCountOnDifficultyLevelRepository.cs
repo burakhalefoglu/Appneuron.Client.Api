@@ -1,12 +1,9 @@
-﻿
-using System;
-using Core.DataAccess;
-using Entities.Concrete;
+﻿using Core.DataAccess;
 using Entities.Concrete.ChartModels;
 
 namespace DataAccess.Abstract
 {
-    public interface IPlayerCountOnDifficultyLevelRepository : IDocumentDbRepository<PlayerCountOnDifficultyLevel>
+    public interface IPlayerCountOnDifficultyLevelRepository : IDocumentDbRepository<PlayerCountWithDifficulty>
     {
     }
 }

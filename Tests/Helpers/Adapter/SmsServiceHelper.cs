@@ -5,6 +5,7 @@ namespace Tests.Helpers.Adapter
     public class SmsServiceHelper
     {
         private readonly ISmsService _smsService;
+
         public SmsServiceHelper(ISmsService smsService)
         {
             _smsService = smsService;
@@ -14,6 +15,7 @@ namespace Tests.Helpers.Adapter
         {
             return _smsService.Send(password, text, cellPhone).Result;
         }
+
         public bool SendAssist(string text, string cellPhone)
         {
             return _smsService.SendAssist(text, cellPhone).Result;

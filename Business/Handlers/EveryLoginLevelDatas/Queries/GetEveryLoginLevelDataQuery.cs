@@ -1,14 +1,13 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using MongoDB.Bson;
 
 namespace Business.Handlers.EveryLoginLevelDatas.Queries
 {
@@ -27,6 +26,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
                 _everyLoginLevelDataRepository = everyLoginLevelDataRepository;
                 _mediator = mediator;
             }
+
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<EveryLoginLevelData>> Handle(GetEveryLoginLevelDataQuery request, CancellationToken cancellationToken)

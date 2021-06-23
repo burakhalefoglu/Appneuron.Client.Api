@@ -15,22 +15,19 @@ namespace Core.DataAccess.MongoDb.Concrete
     {
         private readonly IMongoCollection<T> _collection;
         protected string CollectionName;
+
         protected MongoDbRepositoryBase(MongoConnectionSettings mongoConnectionSetting, string collectionName)
         {
             CollectionName = collectionName;
 
             ConnectionSettingControl(mongoConnectionSetting);
 
-
             var client = mongoConnectionSetting.GetMongoClientSettings() == null ?
                                 new MongoClient(mongoConnectionSetting.ConnectionString) :
                                 new MongoClient(mongoConnectionSetting.GetMongoClientSettings());
 
-
-
             var database = client.GetDatabase(mongoConnectionSetting.DatabaseName);
             _collection = database.GetCollection<T>(collectionName);
-
         }
 
         public virtual void Delete(ObjectId id)
@@ -67,14 +64,12 @@ namespace Core.DataAccess.MongoDb.Concrete
         {
             var options = new InsertOneOptions { BypassDocumentValidation = false };
             _collection.InsertOne(entity, options);
-
         }
 
         public virtual async Task AddAsync(T entity)
         {
             var options = new InsertOneOptions { BypassDocumentValidation = false };
             await _collection.InsertOneAsync(entity, options);
-
         }
 
         public virtual void AddMany(IEnumerable<T> entities)
@@ -104,7 +99,6 @@ namespace Core.DataAccess.MongoDb.Concrete
                                                     ? _collection.AsQueryable()
                                                     : _collection.AsQueryable().Where(predicate);
                 });
-
         }
 
         public virtual void Update(ObjectId id, T record)
@@ -133,12 +127,10 @@ namespace Core.DataAccess.MongoDb.Concrete
                         (string.IsNullOrEmpty(CollectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
                 throw new Exception(DocumentDbMessages.NullOremptyMessage);
 
-
             if (string.IsNullOrEmpty(CollectionName) ||
                         string.IsNullOrEmpty(settings.ConnectionString) ||
                         string.IsNullOrEmpty(settings.DatabaseName))
                 throw new Exception(DocumentDbMessages.NullOremptyMessage);
-
         }
 
         public bool Any(Expression<Func<T, bool>> predicate = null)

@@ -24,6 +24,7 @@ namespace Core.Aspects.Autofac.Performance
         {
             _stopwatch.Start();
         }
+
         protected override void OnAfter(IInvocation invocation)
         {
             if (_stopwatch.Elapsed.TotalSeconds > _interval)

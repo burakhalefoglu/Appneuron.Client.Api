@@ -1,24 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.EveryLoginLevelDatas.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.EveryLoginLevelDatas.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.EveryLoginLevelDatas.Commands
 {
-
-
     public class UpdateEveryLoginLevelDataCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -50,9 +46,6 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateEveryLoginLevelDataCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var everyLoginLevelData = new EveryLoginLevelData();
                 everyLoginLevelData.ClientId = request.ClientId;
                 everyLoginLevelData.ProjectID = request.ProjectID;
@@ -64,7 +57,6 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
                 everyLoginLevelData.IsDead = request.IsDead;
                 everyLoginLevelData.TotalPowerUsage = request.TotalPowerUsage;
 
-
                 await _everyLoginLevelDataRepository.UpdateAsync(request.Id, everyLoginLevelData);
 
                 return new SuccessResult(Messages.Updated);
@@ -72,4 +64,3 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
         }
     }
 }
-

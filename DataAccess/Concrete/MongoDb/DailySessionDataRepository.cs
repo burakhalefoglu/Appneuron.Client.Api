@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using Core.DataAccess;
-using Entities.Concrete;
+﻿using Core.DataAccess.MongoDb.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.MongoDb.Context;
-using Core.DataAccess.MongoDb.Concrete;
+using Entities.Concrete;
+
 namespace DataAccess.Concrete.MongoDb
 {
     public class DailySessionDataRepository : MongoDbRepositoryBase<DailySessionData>, IDailySessionDataRepository

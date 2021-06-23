@@ -25,9 +25,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
                             {"Level", new LevelColumnWriter(true, NpgsqlDbType.Varchar) },
                             {"TimeStamp", new TimestampColumnWriter(NpgsqlDbType.Timestamp) },
                             {"Exception", new ExceptionColumnWriter(NpgsqlDbType.Text) },
-
                         };
-
 
             var seriLogConfig = new LoggerConfiguration()
                     .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", columnWriters, needAutoCreateTable: false)

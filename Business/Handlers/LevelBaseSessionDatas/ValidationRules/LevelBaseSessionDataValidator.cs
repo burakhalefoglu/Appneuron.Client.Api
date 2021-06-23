@@ -1,10 +1,8 @@
-﻿
-using Business.Handlers.LevelBaseSessionDatas.Commands;
+﻿using Business.Handlers.LevelBaseSessionDatas.Commands;
 using FluentValidation;
 
 namespace Business.Handlers.LevelBaseSessionDatas.ValidationRules
 {
-
     public class CreateLevelBaseSessionDataValidator : AbstractValidator<CreateLevelBaseSessionDataCommand>
     {
         public CreateLevelBaseSessionDataValidator()
@@ -16,9 +14,9 @@ namespace Business.Handlers.LevelBaseSessionDatas.ValidationRules
             RuleFor(x => x.SessionTimeMinute).NotNull();
             RuleFor(x => x.SessionStartTime).NotNull();
             RuleFor(x => x.SessionFinishTime).NotNull();
-
         }
     }
+
     public class UpdateLevelBaseSessionDataValidator : AbstractValidator<UpdateLevelBaseSessionDataCommand>
     {
         public UpdateLevelBaseSessionDataValidator()
@@ -30,7 +28,6 @@ namespace Business.Handlers.LevelBaseSessionDatas.ValidationRules
             RuleFor(x => x.SessionTimeMinute).NotNull();
             RuleFor(x => x.SessionStartTime).NotNull();
             RuleFor(x => x.SessionFinishTime).NotNull();
-
         }
     }
 }

@@ -12,11 +12,9 @@ namespace Core.Extensions
     {
         private readonly RequestDelegate _next;
 
-
         public ExceptionMiddleware(RequestDelegate next)
         {
             _next = next;
-
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
@@ -30,7 +28,6 @@ namespace Core.Extensions
                 await HandleExceptionAsync(httpContext, e);
             }
         }
-
 
         private async Task HandleExceptionAsync(HttpContext httpContext, Exception e)
         {

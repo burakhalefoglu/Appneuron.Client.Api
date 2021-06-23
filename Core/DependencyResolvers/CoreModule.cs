@@ -26,7 +26,6 @@ namespace Core.DependencyResolvers
             services.AddSingleton<Stopwatch>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(SwaggerMessages.Version, new OpenApiInfo

@@ -1,25 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.ChallengeBasedSegmentations.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.ChallengeBasedSegmentations.ValidationRules;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.ChallengeBasedSegmentations.Commands
 {
-
-
     public class UpdateChallengeBasedSegmentationCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -45,14 +40,10 @@ namespace Business.Handlers.ChallengeBasedSegmentations.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateChallengeBasedSegmentationCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var challengeBasedSegmentation = new ChallengeBasedSegmentation();
                 challengeBasedSegmentation.ProjectId = request.ProjectId;
                 challengeBasedSegmentation.CompetitiveClientCount = request.CompetitiveClientCount;
                 challengeBasedSegmentation.NonCompetitiveClientCount = request.NonCompetitiveClientCount;
-
 
                 await _challengeBasedSegmentationRepository.UpdateAsync(request.Id, challengeBasedSegmentation);
 
@@ -61,4 +52,3 @@ namespace Business.Handlers.ChallengeBasedSegmentations.Commands
         }
     }
 }
-

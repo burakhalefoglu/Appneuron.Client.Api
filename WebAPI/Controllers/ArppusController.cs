@@ -1,14 +1,10 @@
-﻿
-using Business.Handlers.Arppus.Commands;
+﻿using Business.Handlers.Arppus.Commands;
 using Business.Handlers.Arppus.Queries;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Entities.Concrete;
-using System.Collections.Generic;
-using MongoDB.Bson;
 using Entities.Concrete.ChartModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -44,7 +40,7 @@ namespace WebAPI.Controllers
         ///</summary>
         ///<remarks>Arppus</remarks>
         ///<return>Arppus List</return>
-        ///<response code="200"></response>  
+        ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Arppu))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -121,7 +117,7 @@ namespace WebAPI.Controllers
         ///</summary>
         ///<remarks>Arppus</remarks>
         ///<return>Arppus List</return>
-        ///<response code="200"></response>  
+        ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Arppu))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -135,7 +131,5 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-
-
     }
 }

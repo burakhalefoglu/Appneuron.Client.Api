@@ -1,21 +1,18 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Aspects.Autofac.Caching;
-using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.Arppus.Queries
 {
-
     public class GetArppusQuery : IRequest<IDataResult<IEnumerable<Arppu>>>
     {
         public class GetArppusQueryHandler : IRequestHandler<GetArppusQuery, IDataResult<IEnumerable<Arppu>>>

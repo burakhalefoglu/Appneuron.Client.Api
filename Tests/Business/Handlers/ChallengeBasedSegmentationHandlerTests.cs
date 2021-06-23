@@ -1,33 +1,33 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.ChallengeBasedSegmentations.Commands;
 using Business.Handlers.ChallengeBasedSegmentations.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using Entities.Concrete.ChartModels;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.ChallengeBasedSegmentations.Queries.GetChallengeBasedSegmentationQuery;
-using Entities.Concrete;
-using static Business.Handlers.ChallengeBasedSegmentations.Queries.GetChallengeBasedSegmentationsQuery;
 using static Business.Handlers.ChallengeBasedSegmentations.Commands.CreateChallengeBasedSegmentationCommand;
-using Business.Handlers.ChallengeBasedSegmentations.Commands;
-using Business.Constants;
-using static Business.Handlers.ChallengeBasedSegmentations.Commands.UpdateChallengeBasedSegmentationCommand;
 using static Business.Handlers.ChallengeBasedSegmentations.Commands.DeleteChallengeBasedSegmentationCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
+using static Business.Handlers.ChallengeBasedSegmentations.Commands.UpdateChallengeBasedSegmentationCommand;
+using static Business.Handlers.ChallengeBasedSegmentations.Queries.GetChallengeBasedSegmentationQuery;
+using static Business.Handlers.ChallengeBasedSegmentations.Queries.GetChallengeBasedSegmentationsQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class ChallengeBasedSegmentationHandlerTests
     {
-        Mock<IChallengeBasedSegmentationRepository> _challengeBasedSegmentationRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IChallengeBasedSegmentationRepository> _challengeBasedSegmentationRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -43,7 +43,7 @@ namespace Tests.Business.HandlersTest
 
             _challengeBasedSegmentationRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ChallengeBasedSegmentation()
 //propertyler buraya yazılacak
-//{																		
+//{
 //ChallengeBasedSegmentationId = 1,
 //ChallengeBasedSegmentationName = "Test"
 //}
@@ -57,7 +57,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.ChallengeBasedSegmentationId.Should().Be(1);
-
         }
 
         [Test]
@@ -77,7 +76,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<ChallengeBasedSegmentation>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -97,7 +95,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateChallengeBasedSegmentationCommandHandler(_challengeBasedSegmentationRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -107,7 +104,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateChallengeBasedSegmentationCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.ChallengeBasedSegmentationName = "test";
 
             _challengeBasedSegmentationRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ChallengeBasedSegmentation, bool>>>()))
@@ -137,7 +134,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateChallengeBasedSegmentationCommandHandler(_challengeBasedSegmentationRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -156,10 +152,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteChallengeBasedSegmentationCommandHandler(_challengeBasedSegmentationRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

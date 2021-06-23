@@ -1,32 +1,29 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.StatisticsByNumbers.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using MongoDB.Bson;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.StatisticsByNumbers.ValidationRules;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.StatisticsByNumbers.Commands
 {
-
-
     public class UpdateStatisticsByNumberCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
         public string ProjectID { get; set; }
-        public long TotalPlayer { get; set; }
-        public PlayerCountOnDate[] PlayerCountOnDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public long ClientCount { get; set; }
+        public long PaidPlayer { get; set; }
 
         public class UpdateStatisticsByNumberCommandHandler : IRequestHandler<UpdateStatisticsByNumberCommand, IResult>
         {
@@ -45,14 +42,11 @@ namespace Business.Handlers.StatisticsByNumbers.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateStatisticsByNumberCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var statisticsByNumber = new StatisticsByNumber();
                 statisticsByNumber.ProjectID = request.ProjectID;
-                statisticsByNumber.TotalPlayer = request.TotalPlayer;
-                statisticsByNumber.PlayerCountOnDate = request.PlayerCountOnDate;
-
+                statisticsByNumber.ClientCount = request.ClientCount;
+                statisticsByNumber.CreatedDate = request.CreatedDate;
+                statisticsByNumber.PaidPlayer = request.PaidPlayer;
 
                 await _statisticsByNumberRepository.UpdateAsync(request.Id, statisticsByNumber);
 
@@ -61,4 +55,3 @@ namespace Business.Handlers.StatisticsByNumbers.Commands
         }
     }
 }
-

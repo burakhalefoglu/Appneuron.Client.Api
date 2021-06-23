@@ -14,6 +14,7 @@ namespace Core.Aspects.Autofac.Validation
     public class ValidationAspectAttribute : MethodInterceptionAttribute
     {
         private readonly Type _validatorType;
+
         public ValidationAspectAttribute(Type validatorType)
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
@@ -22,6 +23,7 @@ namespace Core.Aspects.Autofac.Validation
             }
             _validatorType = validatorType;
         }
+
         protected override void OnBefore(IInvocation invocation)
         {
             var validator = (IValidator)Activator.CreateInstance(_validatorType);

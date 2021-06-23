@@ -1,32 +1,29 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.Arppus.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using MongoDB.Bson;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.Arppus.ValidationRules;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
-using Entities.Concrete.ChartModels.OneToOne;
 
 namespace Business.Handlers.Arppus.Commands
 {
-
-
     public class UpdateArppuCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
         public string ProjectId { get; set; }
-        public TotalIncomeAndTotalPaidPlayer[] TotalIncomeAndTotalPaidPlayer { get; set; }
+        public DateTime DateTime { get; set; }
+        public long TotalIncome { get; set; }
+        public long TotalIncomePlayer { get; set; }
 
         public class UpdateArppuCommandHandler : IRequestHandler<UpdateArppuCommand, IResult>
         {
@@ -45,12 +42,11 @@ namespace Business.Handlers.Arppus.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateArppuCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var arppu = new Arppu();
                 arppu.ProjectId = request.ProjectId;
-                arppu.TotalIncomeAndTotalPaidPlayer = request.TotalIncomeAndTotalPaidPlayer;
+                arppu.TotalIncomePlayer = request.TotalIncomePlayer;
+                arppu.TotalIncome = request.TotalIncome;
+                arppu.DateTime = request.DateTime;
 
                 await _arppuRepository.UpdateAsync(request.Id, arppu);
 
@@ -59,4 +55,3 @@ namespace Business.Handlers.Arppus.Commands
         }
     }
 }
-

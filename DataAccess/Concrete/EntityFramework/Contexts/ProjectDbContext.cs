@@ -1,5 +1,4 @@
 using Core.Entities.Concrete;
-using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
@@ -14,7 +13,6 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
     public class ProjectDbContext : DbContext
     {
         protected readonly IConfiguration Configuration;
-
 
         /// <summary>
         /// in constructor we get IConfiguration, parallel to more than one db
@@ -39,21 +37,19 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
             Configuration = configuration;
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 base.OnConfiguring(optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DArchPgContext")).EnableSensitiveDataLogging());
-
             }
         }
 
         public DbSet<Log> Logs { get; set; }
-
     }
 }

@@ -1,24 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.DailySessionDatas.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.DailySessionDatas.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.DailySessionDatas.Commands
 {
-
-
     public class UpdateDailySessionDataCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -47,9 +43,6 @@ namespace Business.Handlers.DailySessionDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateDailySessionDataCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var dailySessionData = new DailySessionData();
                 dailySessionData.ClientId = request.ClientId;
                 dailySessionData.ProjectID = request.ProjectID;
@@ -58,7 +51,6 @@ namespace Business.Handlers.DailySessionDatas.Commands
                 dailySessionData.TotalSessionTime = request.TotalSessionTime;
                 dailySessionData.TodayTime = request.TodayTime;
 
-
                 await _dailySessionDataRepository.UpdateAsync(request.Id, dailySessionData);
 
                 return new SuccessResult(Messages.Updated);
@@ -66,4 +58,3 @@ namespace Business.Handlers.DailySessionDatas.Commands
         }
     }
 }
-

@@ -1,14 +1,10 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Entities.Concrete;
-using System.Collections.Generic;
-using MongoDB.Bson;
+﻿using Business.Handlers.PlayerCountWithDifficulties.Commands;
+using Business.Handlers.PlayerCountWithDifficulties.Queries;
 using Entities.Concrete.ChartModels;
-using Business.Handlers.PlayerCountOnDifficultyLevels.Queries;
-using Business.Handlers.PlayerCountOnDifficultyLevels.Commands;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -26,7 +22,7 @@ namespace WebAPI.Controllers
         ///<return>List PlayersOnDifficultyLevels</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PlayerCountOnDifficultyLevel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PlayerCountWithDifficulty>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
@@ -44,9 +40,9 @@ namespace WebAPI.Controllers
         ///</summary>
         ///<remarks>PlayersOnDifficultyLevels</remarks>
         ///<return>PlayersOnDifficultyLevels List</return>
-        ///<response code="200"></response>  
+        ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlayerCountOnDifficultyLevel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlayerCountWithDifficulty))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(string objectId)
@@ -121,9 +117,9 @@ namespace WebAPI.Controllers
         ///</summary>
         ///<remarks>PlayersOnDifficultyLevels</remarks>
         ///<return>PlayersOnDifficultyLevels List</return>
-        ///<response code="200"></response>  
+        ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlayerCountOnDifficultyLevel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlayerCountWithDifficulty))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyprojectid")]
         public async Task<IActionResult> GetByProjectId(string ProjectId)
@@ -135,6 +131,5 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-
     }
 }

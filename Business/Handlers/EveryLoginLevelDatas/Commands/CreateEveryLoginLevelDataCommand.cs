@@ -1,6 +1,6 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.EveryLoginLevelDatas.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
@@ -11,17 +11,14 @@ using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.EveryLoginLevelDatas.ValidationRules;
 
 namespace Business.Handlers.EveryLoginLevelDatas.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateEveryLoginLevelDataCommand : IRequest<IResult>
     {
-
         public string ClientId { get; set; }
         public string ProjectID { get; set; }
         public string CustomerID { get; set; }
@@ -32,11 +29,11 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
         public int IsDead { get; set; }
         public int TotalPowerUsage { get; set; }
 
-
         public class CreateEveryLoginLevelDataCommandHandler : IRequestHandler<CreateEveryLoginLevelDataCommand, IResult>
         {
             private readonly IEveryLoginLevelDataRepository _everyLoginLevelDataRepository;
             private readonly IMediator _mediator;
+
             public CreateEveryLoginLevelDataCommandHandler(IEveryLoginLevelDataRepository everyLoginLevelDataRepository, IMediator mediator)
             {
                 _everyLoginLevelDataRepository = everyLoginLevelDataRepository;
@@ -49,7 +46,6 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateEveryLoginLevelDataCommand request, CancellationToken cancellationToken)
             {
-
                 var addedEveryLoginLevelData = new EveryLoginLevelData
                 {
                     ClientId = request.ClientId,
@@ -61,7 +57,6 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
                     AverageScores = request.AverageScores,
                     IsDead = request.IsDead,
                     TotalPowerUsage = request.TotalPowerUsage,
-
                 };
 
                 await _everyLoginLevelDataRepository.AddAsync(addedEveryLoginLevelData);

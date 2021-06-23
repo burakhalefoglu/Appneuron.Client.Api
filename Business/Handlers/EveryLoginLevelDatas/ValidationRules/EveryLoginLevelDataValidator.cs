@@ -1,10 +1,8 @@
-﻿
-using Business.Handlers.EveryLoginLevelDatas.Commands;
+﻿using Business.Handlers.EveryLoginLevelDatas.Commands;
 using FluentValidation;
 
 namespace Business.Handlers.EveryLoginLevelDatas.ValidationRules
 {
-
     public class CreateEveryLoginLevelDataValidator : AbstractValidator<CreateEveryLoginLevelDataCommand>
     {
         public CreateEveryLoginLevelDataValidator()
@@ -17,9 +15,9 @@ namespace Business.Handlers.EveryLoginLevelDatas.ValidationRules
             RuleFor(x => x.AverageScores).NotNull();
             RuleFor(x => x.IsDead).NotNull();
             RuleFor(x => x.TotalPowerUsage).NotNull();
-
         }
     }
+
     public class UpdateEveryLoginLevelDataValidator : AbstractValidator<UpdateEveryLoginLevelDataCommand>
     {
         public UpdateEveryLoginLevelDataValidator()
@@ -32,7 +30,6 @@ namespace Business.Handlers.EveryLoginLevelDatas.ValidationRules
             RuleFor(x => x.AverageScores).NotNull();
             RuleFor(x => x.IsDead).NotNull();
             RuleFor(x => x.TotalPowerUsage).NotNull();
-
         }
     }
 }

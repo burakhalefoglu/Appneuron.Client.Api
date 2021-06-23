@@ -1,20 +1,19 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Business.BusinessAspects;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using MongoDB.Bson;
 
 namespace Business.Handlers.Arppus.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class DeleteArppuCommand : IRequest<IResult>
     {
@@ -37,8 +36,6 @@ namespace Business.Handlers.Arppus.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteArppuCommand request, CancellationToken cancellationToken)
             {
-
-
                 await _arppuRepository.DeleteAsync(request.Id);
 
                 return new SuccessResult(Messages.Deleted);
@@ -46,4 +43,3 @@ namespace Business.Handlers.Arppus.Commands
         }
     }
 }
-

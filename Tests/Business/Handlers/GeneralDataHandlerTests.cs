@@ -1,32 +1,32 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.GeneralDatas.Commands;
 using Business.Handlers.GeneralDatas.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.GeneralDatas.Queries.GetGeneralDataQuery;
-using Entities.Concrete;
-using static Business.Handlers.GeneralDatas.Queries.GetGeneralDatasQuery;
 using static Business.Handlers.GeneralDatas.Commands.CreateGeneralDataCommand;
-using Business.Handlers.GeneralDatas.Commands;
-using Business.Constants;
-using static Business.Handlers.GeneralDatas.Commands.UpdateGeneralDataCommand;
 using static Business.Handlers.GeneralDatas.Commands.DeleteGeneralDataCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
+using static Business.Handlers.GeneralDatas.Commands.UpdateGeneralDataCommand;
+using static Business.Handlers.GeneralDatas.Queries.GetGeneralDataQuery;
+using static Business.Handlers.GeneralDatas.Queries.GetGeneralDatasQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class GeneralDataHandlerTests
     {
-        Mock<IGeneralDataRepository> _generalDataRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IGeneralDataRepository> _generalDataRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -42,7 +42,7 @@ namespace Tests.Business.HandlersTest
 
             _generalDataRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new GeneralData()
 //propertyler buraya yazılacak
-//{																		
+//{
 //GeneralDataId = 1,
 //GeneralDataName = "Test"
 //}
@@ -56,7 +56,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.GeneralDataId.Should().Be(1);
-
         }
 
         [Test]
@@ -76,7 +75,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<GeneralData>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -96,7 +94,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateGeneralDataCommandHandler(_generalDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -106,7 +103,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateGeneralDataCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.GeneralDataName = "test";
 
             _generalDataRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<GeneralData, bool>>>()))
@@ -136,7 +133,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateGeneralDataCommandHandler(_generalDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -155,10 +151,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteGeneralDataCommandHandler(_generalDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

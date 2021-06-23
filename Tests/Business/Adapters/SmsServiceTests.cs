@@ -48,6 +48,5 @@ namespace Tests.Business.Adapters
             //Assert
             result.Should().BeTrue();
         }
-
     }
 }

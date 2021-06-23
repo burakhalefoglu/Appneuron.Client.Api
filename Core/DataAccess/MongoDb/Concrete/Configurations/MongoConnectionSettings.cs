@@ -11,13 +11,14 @@ namespace Core.DataAccess.MongoDb.Concrete.Configurations
 
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
+
         public MongoConnectionSettings(MongoClientSettings mongoClientSettings)
         {
             MongoClientSettings = mongoClientSettings;
         }
+
         public MongoConnectionSettings()
         {
-
         }
 
         public MongoClientSettings GetMongoClientSettings()

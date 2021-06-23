@@ -15,11 +15,9 @@ namespace Core.Utilities.ElasticSearch
 
         public ElasticSearchManager(IConfiguration configuration)
         {
-
             var settings = configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>();
             var uri = new Uri(settings.ConnectionString);
             _connectionSettings = new ConnectionSettings(uri);
-
         }
 
         public async Task<IResult> CreateNewIndexAsync(IndexModel indexModel)
@@ -27,7 +25,6 @@ namespace Core.Utilities.ElasticSearch
             var elasticClient = GetElasticClient(indexModel.IndexName);
             if (elasticClient.Indices.Exists(indexModel.IndexName).Exists)
                 return new Results.Result(success: false, message: "Index already exists");
-
 
             var response = await elasticClient.Indices.CreateAsync(indexModel.IndexName, se =>
                   se.Settings(a => a.NumberOfReplicas(indexModel.NumberOfReplicas)
@@ -37,7 +34,6 @@ namespace Core.Utilities.ElasticSearch
 
             return new Results.Result(success: response.IsValid,
                                       message: response.IsValid ? "Success" : response.ServerError.Error.Reason);
-
         }
 
         public async Task<IResult> DeleteByElasticIdAsync(ElasticSearchModel model)
@@ -57,7 +53,6 @@ namespace Core.Utilities.ElasticSearch
                             .Index(Indices.Index(parameters.IndexName))
                             .From(parameters.From)
                             .Size(parameters.Size));
-
 
             var list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>()
             {
@@ -171,5 +166,4 @@ namespace Core.Utilities.ElasticSearch
             return new ElasticClient(_connectionSettings);
         }
     }
-
 }

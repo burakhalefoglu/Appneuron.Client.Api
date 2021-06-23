@@ -1,5 +1,4 @@
-﻿
-namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels
 {
     public class MongoDbConfiguration
     {

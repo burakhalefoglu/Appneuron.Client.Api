@@ -11,6 +11,7 @@ namespace Tests.Business.Handlers
     {
         private Mock<ILogRepository> _logRepository;
         private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {

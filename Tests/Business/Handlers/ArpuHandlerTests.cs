@@ -1,33 +1,33 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.Arpus.Commands;
 using Business.Handlers.Arpus.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using Entities.Concrete.ChartModels;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.Arpus.Queries.GetArpuQuery;
-using Entities.Concrete;
-using static Business.Handlers.Arpus.Queries.GetArpusQuery;
 using static Business.Handlers.Arpus.Commands.CreateArpuCommand;
-using Business.Handlers.Arpus.Commands;
-using Business.Constants;
-using static Business.Handlers.Arpus.Commands.UpdateArpuCommand;
 using static Business.Handlers.Arpus.Commands.DeleteArpuCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
-using Entities.Concrete.ChartModels;
+using static Business.Handlers.Arpus.Commands.UpdateArpuCommand;
+using static Business.Handlers.Arpus.Queries.GetArpuQuery;
+using static Business.Handlers.Arpus.Queries.GetArpusQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class ArpuHandlerTests
     {
-        Mock<IArpuRepository> _arpuRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IArpuRepository> _arpuRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -43,7 +43,7 @@ namespace Tests.Business.HandlersTest
 
             _arpuRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new Arpu()
 //propertyler buraya yazılacak
-//{																		
+//{
 //ArpuId = 1,
 //ArpuName = "Test"
 //}
@@ -57,7 +57,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.ArpuId.Should().Be(1);
-
         }
 
         [Test]
@@ -77,7 +76,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<Arpu>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -97,7 +95,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateArpuCommandHandler(_arpuRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -107,7 +104,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateArpuCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.ArpuName = "test";
 
             _arpuRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Arpu, bool>>>()))
@@ -137,7 +134,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateArpuCommandHandler(_arpuRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -156,10 +152,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteArpuCommandHandler(_arpuRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

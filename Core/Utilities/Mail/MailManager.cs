@@ -9,12 +9,13 @@ namespace Core.Utilities.Mail
 {
     public class MailManager : IMailService
     {
-
         private readonly IConfiguration _configuration;
+
         public MailManager(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         public void Send(EmailMessage emailMessage)
         {
             var message = new MimeMessage();
@@ -22,7 +23,6 @@ namespace Core.Utilities.Mail
             message.From.AddRange(emailMessage.FromAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
 
             message.Subject = emailMessage.Subject;
-
 
             var messageBody = string.Format(emailMessage.Subject, emailMessage.Content);
 

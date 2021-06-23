@@ -1,5 +1,4 @@
 ﻿using Business;
-using Business.Helpers;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Extensions;
 using Core.Utilities.IoC;
@@ -21,12 +20,12 @@ using System.Text.Json.Serialization;
 namespace WebAPI
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public partial class Startup : BusinessStartup
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="hostEnvironment"></param>
@@ -35,9 +34,8 @@ namespace WebAPI
         {
         }
 
-
         /// <summary>
-        /// This method gets called by the runtime. Use this method to add services to the container. 
+        /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <remarks>
         /// It is common to all configurations and must be called. Aspnet core does not call this method because there are other methods.
@@ -45,7 +43,6 @@ namespace WebAPI
         /// <param name="services"></param>
         public override void ConfigureServices(IServiceCollection services)
         {
-
             // Business katmanında olan dependency tanımlarının bir metot üzerinden buraya implemente edilmesi.
 
             services.AddControllers()
@@ -55,8 +52,6 @@ namespace WebAPI
                                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                                 options.JsonSerializerOptions.IgnoreNullValues = true;
                             });
-
-
 
             services.AddCors(options =>
             {
@@ -84,7 +79,6 @@ namespace WebAPI
             services.AddSwaggerGen(c =>
             {
                 c.IncludeXmlComments(Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml"));
-
             });
 
             services.AddTransient<FileLogger>();
@@ -93,7 +87,6 @@ namespace WebAPI
 
             base.ConfigureServices(services);
         }
-
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,7 +99,6 @@ namespace WebAPI
             // By the way, we can construct with DI by taking type to avoid calling static methods in aspects.
             ServiceTool.ServiceProvider = app.ApplicationServices;
 
-
             var configurationManager = app.ApplicationServices.GetService<ConfigurationManager>();
             switch (configurationManager.Mode)
             {
@@ -115,6 +107,7 @@ namespace WebAPI
                 case ApplicationMode.Staging:
 
                     break;
+
                 case ApplicationMode.Production:
                     break;
             }
@@ -123,8 +116,6 @@ namespace WebAPI
             app.UseHsts();
             //güvenlik için gerekli...
             app.UseSecurityHeaders();
-
-
 
             app.UseDeveloperExceptionPage();
 
@@ -135,7 +126,6 @@ namespace WebAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture");
-
             });
             app.UseCors(builder => builder.WithOrigins("https://localhost:4200").AllowAnyHeader());
 
@@ -151,7 +141,6 @@ namespace WebAPI
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture("tr-TR"),
-
             });
 
             var cultureInfo = new CultureInfo("tr-TR");

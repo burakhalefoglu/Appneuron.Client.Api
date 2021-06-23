@@ -1,32 +1,32 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.BuyingEvents.Commands;
 using Business.Handlers.BuyingEvents.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.BuyingEvents.Queries.GetBuyingEventQuery;
-using Entities.Concrete;
-using static Business.Handlers.BuyingEvents.Queries.GetBuyingEventsQuery;
 using static Business.Handlers.BuyingEvents.Commands.CreateBuyingEventCommand;
-using Business.Handlers.BuyingEvents.Commands;
-using Business.Constants;
-using static Business.Handlers.BuyingEvents.Commands.UpdateBuyingEventCommand;
 using static Business.Handlers.BuyingEvents.Commands.DeleteBuyingEventCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
+using static Business.Handlers.BuyingEvents.Commands.UpdateBuyingEventCommand;
+using static Business.Handlers.BuyingEvents.Queries.GetBuyingEventQuery;
+using static Business.Handlers.BuyingEvents.Queries.GetBuyingEventsQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class BuyingEventHandlerTests
     {
-        Mock<IBuyingEventRepository> _buyingEventRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IBuyingEventRepository> _buyingEventRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -42,7 +42,7 @@ namespace Tests.Business.HandlersTest
 
             _buyingEventRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new BuyingEvent()
 //propertyler buraya yazılacak
-//{																		
+//{
 //BuyingEventId = 1,
 //BuyingEventName = "Test"
 //}
@@ -56,7 +56,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.BuyingEventId.Should().Be(1);
-
         }
 
         [Test]
@@ -76,7 +75,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<BuyingEvent>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -96,7 +94,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateBuyingEventCommandHandler(_buyingEventRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -106,7 +103,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateBuyingEventCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.BuyingEventName = "test";
 
             _buyingEventRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<BuyingEvent, bool>>>()))
@@ -136,7 +133,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateBuyingEventCommandHandler(_buyingEventRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -155,10 +151,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteBuyingEventCommandHandler(_buyingEventRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

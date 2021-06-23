@@ -1,36 +1,35 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.StatisticsByNumbers.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ChartModels;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.StatisticsByNumbers.ValidationRules;
-using Entities.Concrete.ChartModels;
 
 namespace Business.Handlers.StatisticsByNumbers.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateStatisticsByNumberCommand : IRequest<IResult>
     {
-
         public string ProjectID { get; set; }
-        public long TotalPlayer { get; set; }
-        public PlayerCountOnDate[] PlayerCountOnDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public long ClientCount { get; set; }
+        public long PaidPlayer { get; set; }
 
         public class CreateStatisticsByNumberCommandHandler : IRequestHandler<CreateStatisticsByNumberCommand, IResult>
         {
             private readonly IStatisticsByNumberRepository _statisticsByNumberRepository;
             private readonly IMediator _mediator;
+
             public CreateStatisticsByNumberCommandHandler(IStatisticsByNumberRepository statisticsByNumberRepository, IMediator mediator)
             {
                 _statisticsByNumberRepository = statisticsByNumberRepository;
@@ -51,9 +50,9 @@ namespace Business.Handlers.StatisticsByNumbers.Commands
                 var addedStatisticsByNumber = new StatisticsByNumber
                 {
                     ProjectID = request.ProjectID,
-                    TotalPlayer = request.TotalPlayer,
-                    PlayerCountOnDate = request.PlayerCountOnDate
-
+                    ClientCount = request.ClientCount,
+                    CreatedDate = request.CreatedDate,
+                    PaidPlayer = request.PaidPlayer
                 };
 
                 await _statisticsByNumberRepository.AddAsync(addedStatisticsByNumber);

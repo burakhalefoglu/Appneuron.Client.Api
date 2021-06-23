@@ -1,24 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.GeneralDatas.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.GeneralDatas.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.GeneralDatas.Commands
 {
-
-
     public class UpdateGeneralDataCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -45,15 +41,11 @@ namespace Business.Handlers.GeneralDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateGeneralDataCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var generalData = new GeneralData();
                 generalData.ClientId = request.ClientId;
                 generalData.ProjectID = request.ProjectID;
                 generalData.CustomerID = request.CustomerID;
                 generalData.PlayersDifficultylevel = request.PlayersDifficultylevel;
-
 
                 await _generalDataRepository.UpdateAsync(request.Id, generalData);
 
@@ -62,4 +54,3 @@ namespace Business.Handlers.GeneralDatas.Commands
         }
     }
 }
-

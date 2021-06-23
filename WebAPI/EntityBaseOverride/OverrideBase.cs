@@ -6,23 +6,22 @@ using System;
 namespace WebAPI.EntityBaseOverride
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class OverrideBase : CSharpEntityTypeGenerator
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="annotationCodeGenerator"></param>
         /// <param name="cSharpHelper"></param>
         public OverrideBase(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper)
             : base(annotationCodeGenerator, cSharpHelper)
         {
-
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="entityType"></param>
         /// <param name="namespace"></param>
@@ -35,6 +34,5 @@ namespace WebAPI.EntityBaseOverride
             var newValue = oldValue + Environment.NewLine + "using Core.Entities;";
             return str.Replace(oldValue, newValue);
         }
-
     }
 }

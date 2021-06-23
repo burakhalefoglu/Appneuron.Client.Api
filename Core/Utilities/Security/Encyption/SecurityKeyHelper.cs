@@ -32,15 +32,9 @@ namespace Core.Utilities.Security.Encyption
                         {
                             return streamReader.ReadToEnd();
                         }
-
                     }
                 }
-
-
             }
-
         }
     }
-
-
 }

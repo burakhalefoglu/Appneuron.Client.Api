@@ -1,32 +1,32 @@
-﻿
+﻿using Business.Constants;
+using Business.Handlers.LevelBaseDieDatas.Commands;
 using Business.Handlers.LevelBaseDieDatas.Queries;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using FluentAssertions;
+using MediatR;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.LevelBaseDieDatas.Queries.GetLevelBaseDieDataQuery;
-using Entities.Concrete;
-using static Business.Handlers.LevelBaseDieDatas.Queries.GetLevelBaseDieDatasQuery;
 using static Business.Handlers.LevelBaseDieDatas.Commands.CreateLevelBaseDieDataCommand;
-using Business.Handlers.LevelBaseDieDatas.Commands;
-using Business.Constants;
-using static Business.Handlers.LevelBaseDieDatas.Commands.UpdateLevelBaseDieDataCommand;
 using static Business.Handlers.LevelBaseDieDatas.Commands.DeleteLevelBaseDieDataCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using MongoDB.Bson;
+using static Business.Handlers.LevelBaseDieDatas.Commands.UpdateLevelBaseDieDataCommand;
+using static Business.Handlers.LevelBaseDieDatas.Queries.GetLevelBaseDieDataQuery;
+using static Business.Handlers.LevelBaseDieDatas.Queries.GetLevelBaseDieDatasQuery;
 
 namespace Tests.Business.HandlersTest
 {
     [TestFixture]
     public class LevelBaseDieDataHandlerTests
     {
-        Mock<ILevelBaseDieDataRepository> _levelBaseDieDataRepository;
-        Mock<IMediator> _mediator;
+        private Mock<ILevelBaseDieDataRepository> _levelBaseDieDataRepository;
+        private Mock<IMediator> _mediator;
+
         [SetUp]
         public void Setup()
         {
@@ -42,7 +42,7 @@ namespace Tests.Business.HandlersTest
 
             _levelBaseDieDataRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new LevelBaseDieData()
 //propertyler buraya yazılacak
-//{																		
+//{
 //LevelBaseDieDataId = 1,
 //LevelBaseDieDataName = "Test"
 //}
@@ -56,7 +56,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             //x.Data.LevelBaseDieDataId.Should().Be(1);
-
         }
 
         [Test]
@@ -76,7 +75,6 @@ namespace Tests.Business.HandlersTest
             //Asset
             x.Success.Should().BeTrue();
             ((List<LevelBaseDieData>)x.Data).Count.Should().BeGreaterThan(1);
-
         }
 
         [Test]
@@ -96,7 +94,6 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateLevelBaseDieDataCommandHandler(_levelBaseDieDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
         }
@@ -106,7 +103,7 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var command = new CreateLevelBaseDieDataCommand();
-            //propertyler buraya yazılacak 
+            //propertyler buraya yazılacak
             //command.LevelBaseDieDataName = "test";
 
             _levelBaseDieDataRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<LevelBaseDieData, bool>>>()))
@@ -136,7 +133,6 @@ namespace Tests.Business.HandlersTest
             var handler = new UpdateLevelBaseDieDataCommandHandler(_levelBaseDieDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Updated);
         }
@@ -155,10 +151,8 @@ namespace Tests.Business.HandlersTest
             var handler = new DeleteLevelBaseDieDataCommandHandler(_levelBaseDieDataRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Deleted);
         }
     }
 }
-

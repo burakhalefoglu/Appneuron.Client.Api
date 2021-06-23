@@ -1,24 +1,20 @@
-﻿
+﻿using Business.BusinessAspects;
 using Business.Constants;
-using Business.BusinessAspects;
+using Business.Handlers.GameSessionEveryLoginDatas.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
+using MongoDB.Bson;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.GameSessionEveryLoginDatas.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
 {
-
-
     public class UpdateGameSessionEveryLoginDataCommand : IRequest<IResult>
     {
         public string ObjectId { get; set; }
@@ -47,9 +43,6 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateGameSessionEveryLoginDataCommand request, CancellationToken cancellationToken)
             {
-
-
-
                 var gameSessionEveryLoginData = new GameSessionEveryLoginData();
                 gameSessionEveryLoginData.ClientId = request.ClientId;
                 gameSessionEveryLoginData.ProjectID = request.ProjectID;
@@ -58,7 +51,6 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
                 gameSessionEveryLoginData.SessionFinishTime = request.SessionFinishTime;
                 gameSessionEveryLoginData.SessionTimeMinute = request.SessionTimeMinute;
 
-
                 await _gameSessionEveryLoginDataRepository.UpdateAsync(request.Id, gameSessionEveryLoginData);
 
                 return new SuccessResult(Messages.Updated);
@@ -66,4 +58,3 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
         }
     }
 }
-
