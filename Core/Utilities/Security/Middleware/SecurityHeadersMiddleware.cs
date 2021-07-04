@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Security.Middleware
 {
-    public class SecurityHeadersMiddleware
+    public class SecurityHeadersMiddleware 
     {
         private readonly RequestDelegate next;
 
