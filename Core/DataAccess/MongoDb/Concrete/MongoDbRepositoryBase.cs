@@ -40,6 +40,11 @@ namespace Core.DataAccess.MongoDb.Concrete
             _collection.FindOneAndDelete(x => x.Id == record.Id);
         }
 
+        public async Task DeleteAsync(Expression<Func<T, bool>> predicate)
+        {
+            await _collection.DeleteManyAsync(predicate);
+        }
+
         public virtual async Task DeleteAsync(ObjectId id)
         {
             await _collection.FindOneAndDeleteAsync(x => x.Id == id);
@@ -144,5 +149,7 @@ namespace Core.DataAccess.MongoDb.Concrete
             else
                 return true;
         }
+
+       
     }
 }

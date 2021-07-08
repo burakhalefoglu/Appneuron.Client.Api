@@ -24,10 +24,14 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BuyingEvent>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("getByProjectId")]
+        public async Task<IActionResult> GetByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetBuyingEventsQuery());
+            var result = await Mediator.Send(new GetBuyingEventsByProjectIdQuery { 
+            
+                ProjectID = ProjectId
+            });
+            
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -36,18 +40,23 @@ namespace WebAPI.Controllers
         }
 
         ///<summary>
-        ///It brings the details according to its id.
+        ///List BuyingEvents
         ///</summary>
         ///<remarks>BuyingEvents</remarks>
-        ///<return>BuyingEvents List</return>
+        ///<return>List BuyingEvents</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BuyingEvent))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BuyingEvent>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(string objectId)
+        [HttpGet("getDtoByProjectId")]
+        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetBuyingEventQuery { ObjectId = objectId });
+            var result = await Mediator.Send(new GetBuyingEventsDtoByProjectIdQuery
+            {
+
+                ProjectID = ProjectId
+            });
+
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -55,43 +64,6 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        /// <summary>
-        /// Add BuyingEvent.
-        /// </summary>
-        /// <param name="createBuyingEvent"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateBuyingEventCommand createBuyingEvent)
-        {
-            var result = await Mediator.Send(createBuyingEvent);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
-
-        /// <summary>
-        /// Update BuyingEvent.
-        /// </summary>
-        /// <param name="updateBuyingEvent"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateBuyingEventCommand updateBuyingEvent)
-        {
-            var result = await Mediator.Send(updateBuyingEvent);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
 
         /// <summary>
         /// Delete BuyingEvent.
@@ -101,8 +73,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteBuyingEventCommand deleteBuyingEvent)
+        [HttpDelete("deleteByProjectId")]
+        public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteBuyingEventByProjectIdCommand deleteBuyingEvent)
         {
             var result = await Mediator.Send(deleteBuyingEvent);
             if (result.Success)

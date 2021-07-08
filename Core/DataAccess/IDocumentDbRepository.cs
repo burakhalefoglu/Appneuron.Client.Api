@@ -40,6 +40,8 @@ namespace Core.DataAccess
 
         Task DeleteAsync(ObjectId id);
 
+        Task DeleteAsync(Expression<Func<T, bool>> predicate);
+
         Task DeleteAsync(T record);
 
         bool Any(Expression<Func<T, bool>> predicate = null);

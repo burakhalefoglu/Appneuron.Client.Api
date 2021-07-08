@@ -24,30 +24,40 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AdvEvent>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("getByProjectId")]
+        public async Task<IActionResult> GetByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetAdvEventsQuery());
+            var result = await Mediator.Send(new GetAdvEventsByProjectIdQuery { 
+            
+                ProjectID = ProjectId
+            });
+
             if (result.Success)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
+
 
         ///<summary>
-        ///It brings the details according to its id.
+        ///List AdvEvents
         ///</summary>
         ///<remarks>AdvEvents</remarks>
-        ///<return>AdvEvents List</return>
+        ///<return>List AdvEvents</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdvEvent))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AdvEvent>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(string objectId)
+        [HttpGet("getDtoByProjectId")]
+        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetAdvEventQuery { ObjectId = objectId });
+            var result = await Mediator.Send(new GetAdvEventsDtoByProjectIdQuery
+            {
+
+                ProjectID = ProjectId
+            });
+
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -55,43 +65,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        /// <summary>
-        /// Add AdvEvent.
-        /// </summary>
-        /// <param name="createAdvEvent"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateAdvEventCommand createAdvEvent)
-        {
-            var result = await Mediator.Send(createAdvEvent);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
 
-        /// <summary>
-        /// Update AdvEvent.
-        /// </summary>
-        /// <param name="updateAdvEvent"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateAdvEventCommand updateAdvEvent)
-        {
-            var result = await Mediator.Send(updateAdvEvent);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
 
         /// <summary>
         /// Delete AdvEvent.
@@ -101,8 +75,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteAdvEventCommand deleteAdvEvent)
+        [HttpDelete("deleteByProjectId")]
+        public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteAdvEventByProjectIdCommand deleteAdvEvent)
         {
             var result = await Mediator.Send(deleteAdvEvent);
             if (result.Success)
@@ -111,5 +85,6 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+
     }
 }

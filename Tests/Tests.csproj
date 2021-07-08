@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Business\Handlers\" />
     <Folder Include="Business\Services\" />
     <Folder Include="WebAPI\" />
   </ItemGroup>

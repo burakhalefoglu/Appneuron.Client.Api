@@ -24,30 +24,40 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EveryLoginLevelData>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("getByProjectId")]
+        public async Task<IActionResult> GgetByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetEveryLoginLevelDatasQuery());
+            var result = await Mediator.Send(new GetEveryLoginLevelDatasByProjectIdQuery { 
+            
+                ProjectID = ProjectId
+
+            });
             if (result.Success)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
+
 
         ///<summary>
-        ///It brings the details according to its id.
+        ///List EveryLoginLevelDatas
         ///</summary>
         ///<remarks>EveryLoginLevelDatas</remarks>
-        ///<return>EveryLoginLevelDatas List</return>
+        ///<return>List EveryLoginLevelDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EveryLoginLevelData))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EveryLoginLevelData>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(string objectId)
+        [HttpGet("getDtoByProjectId")]
+        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetEveryLoginLevelDataQuery { ObjectId = objectId });
+            var result = await Mediator.Send(new GetEveryLoginLevelDatasDtoByProjectIdQuery
+            {
+
+                ProjectID = ProjectId
+
+            });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -55,43 +65,6 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        /// <summary>
-        /// Add EveryLoginLevelData.
-        /// </summary>
-        /// <param name="createEveryLoginLevelData"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateEveryLoginLevelDataCommand createEveryLoginLevelData)
-        {
-            var result = await Mediator.Send(createEveryLoginLevelData);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
-
-        /// <summary>
-        /// Update EveryLoginLevelData.
-        /// </summary>
-        /// <param name="updateEveryLoginLevelData"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateEveryLoginLevelDataCommand updateEveryLoginLevelData)
-        {
-            var result = await Mediator.Send(updateEveryLoginLevelData);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
 
         /// <summary>
         /// Delete EveryLoginLevelData.
@@ -101,8 +74,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteEveryLoginLevelDataCommand deleteEveryLoginLevelData)
+        [HttpDelete("deleteByProjectId")]
+        public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteEveryLoginLevelDataByProjectIdCommand deleteEveryLoginLevelData)
         {
             var result = await Mediator.Send(deleteEveryLoginLevelData);
             if (result.Success)

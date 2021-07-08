@@ -24,30 +24,37 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GameSessionEveryLoginData>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("getByProjectId")]
+        public async Task<IActionResult> GetByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetGameSessionEveryLoginDatasQuery());
+            var result = await Mediator.Send(new GetGameSessionEveryLoginDatasByProjectIdQuery
+            {
+                ProjectID = ProjectId
+            });
             if (result.Success)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
+
 
         ///<summary>
-        ///It brings the details according to its id.
+        ///List GameSessionEveryLoginDatas
         ///</summary>
         ///<remarks>GameSessionEveryLoginDatas</remarks>
-        ///<return>GameSessionEveryLoginDatas List</return>
+        ///<return>List GameSessionEveryLoginDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameSessionEveryLoginData))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GameSessionEveryLoginData>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(string objectId)
+        [HttpGet("getDtoByProjectId")]
+        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetGameSessionEveryLoginDataQuery { ObjectId = objectId });
+            var result = await Mediator.Send(new GetGameSessionEveryLoginDatasDtoByProjectIdQuery
+            {
+                ProjectID = ProjectId
+            });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -55,43 +62,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        /// <summary>
-        /// Add GameSessionEveryLoginData.
-        /// </summary>
-        /// <param name="createGameSessionEveryLoginData"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateGameSessionEveryLoginDataCommand createGameSessionEveryLoginData)
-        {
-            var result = await Mediator.Send(createGameSessionEveryLoginData);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
 
-        /// <summary>
-        /// Update GameSessionEveryLoginData.
-        /// </summary>
-        /// <param name="updateGameSessionEveryLoginData"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateGameSessionEveryLoginDataCommand updateGameSessionEveryLoginData)
-        {
-            var result = await Mediator.Send(updateGameSessionEveryLoginData);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
 
         /// <summary>
         /// Delete GameSessionEveryLoginData.
@@ -101,8 +72,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteGameSessionEveryLoginDataCommand deleteGameSessionEveryLoginData)
+        [HttpDelete("deleteByProjectId")]
+        public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteGameSessionEveryLoginDataByProjectIdCommand deleteGameSessionEveryLoginData)
         {
             var result = await Mediator.Send(deleteGameSessionEveryLoginData);
             if (result.Success)

@@ -24,10 +24,13 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelBaseSessionData>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("getByProjectId")]
+        public async Task<IActionResult> GetByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetLevelBaseSessionDatasQuery());
+            var result = await Mediator.Send(new GetLevelBaseSessionDatasByProjectIdQuery
+            {
+                ProjectID = ProjectId
+            });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -36,59 +39,24 @@ namespace WebAPI.Controllers
         }
 
         ///<summary>
-        ///It brings the details according to its id.
+        ///List LevelBaseSessionDatas
         ///</summary>
         ///<remarks>LevelBaseSessionDatas</remarks>
-        ///<return>LevelBaseSessionDatas List</return>
+        ///<return>List LevelBaseSessionDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LevelBaseSessionData))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelBaseSessionData>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(string objectId)
+        [HttpGet("getDtoByProjectId")]
+        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetLevelBaseSessionDataQuery { ObjectId = objectId });
+            var result = await Mediator.Send(new GetLevelBaseSessionDatasDtoByProjectIdQuery
+            {
+                ProjectID = ProjectId
+            });
             if (result.Success)
             {
                 return Ok(result.Data);
-            }
-            return BadRequest(result.Message);
-        }
-
-        /// <summary>
-        /// Add LevelBaseSessionData.
-        /// </summary>
-        /// <param name="createLevelBaseSessionData"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateLevelBaseSessionDataCommand createLevelBaseSessionData)
-        {
-            var result = await Mediator.Send(createLevelBaseSessionData);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
-
-        /// <summary>
-        /// Update LevelBaseSessionData.
-        /// </summary>
-        /// <param name="updateLevelBaseSessionData"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateLevelBaseSessionDataCommand updateLevelBaseSessionData)
-        {
-            var result = await Mediator.Send(updateLevelBaseSessionData);
-            if (result.Success)
-            {
-                return Ok(result.Message);
             }
             return BadRequest(result.Message);
         }
@@ -101,8 +69,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteLevelBaseSessionDataCommand deleteLevelBaseSessionData)
+        [HttpDelete("deleteByProjectId")]
+        public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteLevelBaseSessionDataByProjectIdCommand deleteLevelBaseSessionData)
         {
             var result = await Mediator.Send(deleteLevelBaseSessionData);
             if (result.Success)
