@@ -53,10 +53,14 @@ namespace WebAPI
                                 options.JsonSerializerOptions.IgnoreNullValues = true;
                             });
 
+            var corsPolicies = Configuration.GetSection("CorsPolicies").Get<String[]>();
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowOrigin",
-                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                options.AddPolicy("CorsPolicy",
+           builder => builder.WithOrigins(corsPolicies)
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials());
             });
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
@@ -127,9 +131,10 @@ namespace WebAPI
             {
                 c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture");
             });
-            app.UseCors(builder => builder.WithOrigins("https://localhost:4200").AllowAnyHeader());
 
             app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 
