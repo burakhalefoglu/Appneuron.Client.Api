@@ -86,6 +86,7 @@ namespace Business
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureServices(services);          
+            services.AddTransient<IMlResultModelRepository>(x=> new MlResultModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
             services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
             services.AddTransient<ILevelBaseDieDataRepository>(x => new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
@@ -104,6 +105,7 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);           
+            services.AddTransient<IMlResultModelRepository>(x=> new MlResultModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
             services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
             services.AddTransient<ILevelBaseDieDataRepository>(x => new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
@@ -123,8 +125,8 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IMlResultModelRepository>(x=> new MlResultModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
          
-          
             services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
             services.AddTransient<ILevelBaseDieDataRepository>(x => new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));

@@ -40,5 +40,7 @@ namespace DataAccess.Concrete.MongoDb.Collections
         public static string LevelBaseFinishingScoreWithDifficulties => "levelBaseFinishingScoreWithDifficulties";
         public static string LevelBasePlayerCountWithDifficulties => "levelBasePlayerCountWithDifficulties";
         public static string LevelBasePowerUsageWithDifficulties => "levelBasePowerUsageWithDifficulties";
+        public static string DifficultyDatas => "difficultyDatas";
+        public static string MlResultModels => "mlResultModels";
     }
 }
