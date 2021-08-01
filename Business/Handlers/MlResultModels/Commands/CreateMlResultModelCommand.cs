@@ -23,7 +23,7 @@ namespace Business.Handlers.MlResultModels.Commands
     {
 
         public string ProjectId { get; set; }
-        public string ProductId { get; set; }
+        public short ProductId { get; set; }
         public string ClientId { get; set; }
         public double ResultValue { get; set; }
         public System.DateTime DateTime { get; set; }
