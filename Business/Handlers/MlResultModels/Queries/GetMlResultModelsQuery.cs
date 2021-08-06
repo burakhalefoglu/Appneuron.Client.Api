@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Aspects.Autofac.Caching;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers.ApacheKafka;
 
 namespace Business.Handlers.MlResultModels.Queries
 {
@@ -30,7 +31,7 @@ namespace Business.Handlers.MlResultModels.Queries
 
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(ApacheKafkaDatabaseActionLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<MlResultModel>>> Handle(GetMlResultModelsQuery request, CancellationToken cancellationToken)
             {

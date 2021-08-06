@@ -14,6 +14,7 @@ using System.Linq;
 using Core.Aspects.Autofac.Validation;
 using Business.Handlers.MlResultModels.ValidationRules;
 using MongoDB.Bson;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers.ApacheKafka;
 
 namespace Business.Handlers.MlResultModels.Commands
 {
@@ -42,7 +43,7 @@ namespace Business.Handlers.MlResultModels.Commands
 
             [ValidationAspect(typeof(UpdateMlResultModelValidator), Priority = 1)]
             [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(ApacheKafkaDatabaseActionLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateMlResultModelCommand request, CancellationToken cancellationToken)
             {

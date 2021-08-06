@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using MongoDB.Bson;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers.ApacheKafka;
 
 namespace Business.Handlers.MlResultModels.Queries
 {
@@ -27,7 +28,7 @@ namespace Business.Handlers.MlResultModels.Queries
                 _mlResultModelRepository = mlResultModelRepository;
                 _mediator = mediator;
             }
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(ApacheKafkaDatabaseActionLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<MlResultModel>> Handle(GetMlResultModelQuery request, CancellationToken cancellationToken)
             {

@@ -10,6 +10,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers.ApacheKafka;
 
 namespace Business.Handlers.MlResultModels.Commands
 {
@@ -33,7 +34,7 @@ namespace Business.Handlers.MlResultModels.Commands
             }
 
             [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(ApacheKafkaDatabaseActionLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteMlResultModelCommand request, CancellationToken cancellationToken)
             {

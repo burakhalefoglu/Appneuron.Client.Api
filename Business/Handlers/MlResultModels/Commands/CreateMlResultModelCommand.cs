@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Business.Handlers.MlResultModels.ValidationRules;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers.ApacheKafka;
 
 namespace Business.Handlers.MlResultModels.Commands
 {
@@ -41,7 +42,7 @@ namespace Business.Handlers.MlResultModels.Commands
 
             [ValidationAspect(typeof(CreateMlResultModelValidator), Priority = 1)]
             [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(ApacheKafkaDatabaseActionLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateMlResultModelCommand request, CancellationToken cancellationToken)
             {

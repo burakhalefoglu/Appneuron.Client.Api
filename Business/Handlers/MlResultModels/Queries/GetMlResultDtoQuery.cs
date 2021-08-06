@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Core.Utilities.IoC;
 using System.Linq;
 using Business.Constants;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers.ApacheKafka;
 
 namespace Business.Handlers.MlResultModels.Queries
 {
@@ -41,7 +42,7 @@ namespace Business.Handlers.MlResultModels.Queries
 
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(ApacheKafkaDatabaseActionLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<MlResultDto>> Handle(GetMlResultDtoQuery request, CancellationToken cancellationToken)
             {
