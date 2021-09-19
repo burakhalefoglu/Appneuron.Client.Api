@@ -1,6 +1,7 @@
 ﻿using Business.Handlers.AdvEvents.Commands;
 using Business.Handlers.AdvEvents.Queries;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -39,7 +40,6 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-
         ///<summary>
         ///List AdvEvents
         ///</summary>
@@ -47,15 +47,14 @@ namespace WebAPI.Controllers
         ///<return>List AdvEvents</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AdvEvent>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClickbaseAdvEventDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getDtoByProjectId")]
-        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
+        [HttpGet("getClickbaseAdvEventByProjectId")]
+        public async Task<IActionResult> getClickbaseAdvEventDtoListQuery(string ProjectId)
         {
-            var result = await Mediator.Send(new GetAdvEventsDtoByProjectIdQuery
+            var result = await Mediator.Send(new GetClickbaseAdvEventDtoListQuery
             {
-
-                ProjectID = ProjectId
+                ProjectId = ProjectId
             });
 
             if (result.Success)
@@ -64,8 +63,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-
-
+        
 
         /// <summary>
         /// Delete AdvEvent.

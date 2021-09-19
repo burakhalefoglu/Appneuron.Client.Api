@@ -2,6 +2,7 @@ using Autofac;
 using Business.Constants;
 using Business.DependencyResolvers;
 using Business.Fakes.DArch;
+using Business.MessageBrokers.Kafka;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Core.DependencyResolvers;
@@ -86,13 +87,15 @@ namespace Business
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureServices(services);          
-            services.AddTransient<IMlResultModelRepository>(x=> new MlResultModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
+            services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
+            services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
             services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
             services.AddTransient<ILevelBaseDieDataRepository>(x => new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
             services.AddTransient<IEveryLoginLevelDataRepository>(x => new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
             services.AddTransient<IBuyingEventRepository>(x => new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
             services.AddTransient<IAdvEventRepository>(x => new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
+            services.AddTransient<IKafkaMessageBroker, KafkaMessageBroker>();
 
             services.AddDbContext<ProjectDbContext, DArchInMemory>(ServiceLifetime.Transient);
             services.AddSingleton<MongoDbContextBase, MongoDbContext>();
@@ -105,13 +108,15 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);           
-            services.AddTransient<IMlResultModelRepository>(x=> new MlResultModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
+            services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
+            services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
             services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
             services.AddTransient<ILevelBaseDieDataRepository>(x => new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
             services.AddTransient<IEveryLoginLevelDataRepository>(x => new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
             services.AddTransient<IBuyingEventRepository>(x => new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
             services.AddTransient<IAdvEventRepository>(x => new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
+            services.AddTransient<IKafkaMessageBroker, KafkaMessageBroker>();
 
             services.AddDbContext<ProjectDbContext>();
 
@@ -125,7 +130,8 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
-            services.AddTransient<IMlResultModelRepository>(x=> new MlResultModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
+            services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
+            services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
          
             services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
             services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
@@ -133,6 +139,7 @@ namespace Business
             services.AddTransient<IEveryLoginLevelDataRepository>(x => new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
             services.AddTransient<IBuyingEventRepository>(x => new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
             services.AddTransient<IAdvEventRepository>(x => new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
+            services.AddTransient<IKafkaMessageBroker, KafkaMessageBroker>();
 
             services.AddDbContext<ProjectDbContext>();
 

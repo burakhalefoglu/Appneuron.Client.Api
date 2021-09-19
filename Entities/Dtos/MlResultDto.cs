@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Entities.Dtos
 {
-    public class MlResultDto : IDto
+    public class MlResultDto: IDto
     {
-        public int CenterOfDifficultyLevel { get; set; }
-        public int RangeCount { get; set; }
-
+        public string ClientId { get; set; }
+        public double ResultValue { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

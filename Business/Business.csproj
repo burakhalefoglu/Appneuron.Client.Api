@@ -35,7 +35,7 @@
    <WCFMetadata Include="Connected Services" />
  </ItemGroup>
  <ItemGroup>
-   <Folder Include="Fakes\Handlers\" />
+   <Folder Include="MessageBrokers\Models\" />
    <Folder Include="Services\" />
  </ItemGroup> 
 </Project>

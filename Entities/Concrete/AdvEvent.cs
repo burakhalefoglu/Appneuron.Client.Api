@@ -2,7 +2,7 @@
 using System;
 
 namespace Entities.Concrete
-{
+{ 
     public class AdvEvent : DocumentDbEntity
     {
         public string ClientId { get; set; }

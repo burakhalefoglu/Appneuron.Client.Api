@@ -1,6 +1,7 @@
 ﻿using Business.Handlers.LevelBaseDieDatas.Commands;
 using Business.Handlers.LevelBaseDieDatas.Queries;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -45,14 +46,14 @@ namespace WebAPI.Controllers
         ///<return>List LevelBaseDieDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelBaseDieData>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelbaseFailDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getDtoByProjectId")]
-        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
+        [HttpGet("getLevelbaseFailDtoByProjectId")]
+        public async Task<IActionResult> GetLevelbaseFailDtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetLevelBaseDieDatasDtoByProjectIdQuery
+            var result = await Mediator.Send(new GetLevelbaseFailDtoByProjectIdQuery
             {
-                ProjectID = ProjectId
+                ProjectId = ProjectId
             });
             if (result.Success)
             {
@@ -62,6 +63,31 @@ namespace WebAPI.Controllers
         }
 
 
+        
+        ///<summary>
+        ///List LevelBaseDieDatas
+        ///</summary>
+        ///<remarks>LevelBaseDieDatas</remarks>
+        ///<return>List LevelBaseDieDatas</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DailyDieCountDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("getDailyDieCountDto")]
+        public async Task<IActionResult> GetDailyDieCountDto(string ProjectId)
+        {
+            var result = await Mediator.Send(new GetDailyDieCountDtoByProjectIdQuery
+            {
+                ProjectId = ProjectId
+            });
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+        
         /// <summary>
         /// Delete LevelBaseDieData.
         /// </summary>

@@ -1,6 +1,7 @@
 ﻿using Business.Handlers.GameSessionEveryLoginDatas.Commands;
 using Business.Handlers.GameSessionEveryLoginDatas.Queries;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -38,7 +39,6 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-
         ///<summary>
         ///List GameSessionEveryLoginDatas
         ///</summary>
@@ -46,12 +46,12 @@ namespace WebAPI.Controllers
         ///<return>List GameSessionEveryLoginDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GameSessionEveryLoginData>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RetentionDataWithSessionDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getDtoByProjectId")]
-        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
+        [HttpGet("getRetentionDataByProjectId")]
+        public async Task<IActionResult> GetRetentionDataDtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetGameSessionEveryLoginDatasDtoByProjectIdQuery
+            var result = await Mediator.Send(new GetRetentionDataDtoByProjectIdQuery
             {
                 ProjectID = ProjectId
             });
@@ -61,8 +61,6 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-
-
 
         /// <summary>
         /// Delete GameSessionEveryLoginData.

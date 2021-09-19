@@ -1,6 +1,7 @@
 ﻿using Business.Handlers.LevelBaseSessionDatas.Commands;
 using Business.Handlers.LevelBaseSessionDatas.Queries;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
+
         ///<summary>
         ///List LevelBaseSessionDatas
         ///</summary>
@@ -45,12 +47,36 @@ namespace WebAPI.Controllers
         ///<return>List LevelBaseSessionDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelBaseSessionData>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelbaseSessionWithPlayingTimeDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getDtoByProjectId")]
-        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
+        [HttpGet("getLevelbaseSessionWithPlayingTimeDtoByProjectId")]
+        public async Task<IActionResult> GetLevelbaseSessionWithPlayingTimeDtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetLevelBaseSessionDatasDtoByProjectIdQuery
+            var result = await Mediator.Send(new GetLevelbaseSessionWithPlayingTimeDtoByProjectIdQuery
+            {
+                ProjectId = ProjectId
+            });
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+
+        ///<summary>
+        ///List LevelBaseSessionDatas
+        ///</summary>
+        ///<remarks>LevelBaseSessionDatas</remarks>
+        ///<return>List LevelBaseSessionDatas</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelbaseSessionDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("getSessionDtoByProjectId")]
+        public async Task<IActionResult> GetSessionDtoByProjectId(string ProjectId)
+        {
+            var result = await Mediator.Send(new GetLevelBaseSessionDtoDatasByProjectIdQuery
             {
                 ProjectID = ProjectId
             });

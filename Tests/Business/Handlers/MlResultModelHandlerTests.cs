@@ -25,12 +25,12 @@ namespace Tests.Business.HandlersTest
     [TestFixture]
     public class MlResultModelHandlerTests
     {
-        Mock<IMlResultModelRepository> _mlResultModelRepository;
+        Mock<IMlResultRepository> _mlResultModelRepository;
         Mock<IMediator> _mediator;
         [SetUp]
         public void Setup()
         {
-            _mlResultModelRepository = new Mock<IMlResultModelRepository>();
+            _mlResultModelRepository = new Mock<IMlResultRepository>();
             _mediator = new Mock<IMediator>();
         }
 
@@ -40,7 +40,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetMlResultModelQuery();
 
-            _mlResultModelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new MlResultModel()
+            _mlResultModelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new MlResult()
 //propertyler buraya yazılacak
 //{																		
 //MlResultModelId = 1,
@@ -65,8 +65,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetMlResultModelsQuery();
 
-            _mlResultModelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<MlResultModel, bool>>>()))
-                        .ReturnsAsync(new List<MlResultModel> { new MlResultModel() { /*TODO:propertyler buraya yazılacak MlResultModelId = 1, MlResultModelName = "test"*/ } }.AsQueryable());
+            _mlResultModelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<MlResult, bool>>>()))
+                        .ReturnsAsync(new List<MlResult> { new MlResult() { /*TODO:propertyler buraya yazılacak MlResultModelId = 1, MlResultModelName = "test"*/ } }.AsQueryable());
 
             var handler = new GetMlResultModelsQueryHandler(_mlResultModelRepository.Object, _mediator.Object);
 
@@ -75,14 +75,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<MlResultModel>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<MlResult>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task MlResultModel_CreateCommand_Success()
         {
-            MlResultModel rt = null;
+            MlResult rt = null;
             //Arrange
             var command = new CreateMlResultModelCommand();
             //propertyler buraya yazılacak
@@ -91,7 +91,7 @@ namespace Tests.Business.HandlersTest
             _mlResultModelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _mlResultModelRepository.Setup(x => x.Add(It.IsAny<MlResultModel>()));
+            _mlResultModelRepository.Setup(x => x.Add(It.IsAny<MlResult>()));
 
             var handler = new CreateMlResultModelCommandHandler(_mlResultModelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -109,10 +109,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.MlResultModelName = "test";
 
-            _mlResultModelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<MlResultModel, bool>>>()))
-                                           .ReturnsAsync(new List<MlResultModel> { new MlResultModel() { /*TODO:propertyler buraya yazılacak MlResultModelId = 1, MlResultModelName = "test"*/ } }.AsQueryable());
+            _mlResultModelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<MlResult, bool>>>()))
+                                           .ReturnsAsync(new List<MlResult> { new MlResult() { /*TODO:propertyler buraya yazılacak MlResultModelId = 1, MlResultModelName = "test"*/ } }.AsQueryable());
 
-            _mlResultModelRepository.Setup(x => x.Add(It.IsAny<MlResultModel>()));
+            _mlResultModelRepository.Setup(x => x.Add(It.IsAny<MlResult>()));
 
             var handler = new CreateMlResultModelCommandHandler(_mlResultModelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -129,9 +129,9 @@ namespace Tests.Business.HandlersTest
             //command.MlResultModelName = "test";
 
             _mlResultModelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new MlResultModel() { /*TODO:propertyler buraya yazılacak MlResultModelId = 1, MlResultModelName = "deneme"*/ });
+                        .ReturnsAsync(new MlResult() { /*TODO:propertyler buraya yazılacak MlResultModelId = 1, MlResultModelName = "deneme"*/ });
 
-            _mlResultModelRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<MlResultModel>()));
+            _mlResultModelRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<MlResult>()));
 
             var handler = new UpdateMlResultModelCommandHandler(_mlResultModelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -148,9 +148,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteMlResultModelCommand();
 
             _mlResultModelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new MlResultModel() { /*TODO:propertyler buraya yazılacak MlResultModelId = 1, MlResultModelName = "deneme"*/});
+                        .ReturnsAsync(new MlResult() { /*TODO:propertyler buraya yazılacak MlResultModelId = 1, MlResultModelName = "deneme"*/});
 
-            _mlResultModelRepository.Setup(x => x.Delete(It.IsAny<MlResultModel>()));
+            _mlResultModelRepository.Setup(x => x.Delete(It.IsAny<MlResult>()));
 
             var handler = new DeleteMlResultModelCommandHandler(_mlResultModelRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

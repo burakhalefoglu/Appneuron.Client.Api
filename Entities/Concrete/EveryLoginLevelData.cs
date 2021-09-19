@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using System;
 
 namespace Entities.Concrete
 {
@@ -11,6 +12,7 @@ namespace Entities.Concrete
         public int LevelsDifficultylevel { get; set; }
         public int PlayingTime { get; set; }
         public int AverageScores { get; set; }
+        public DateTime DateTime { get; set; }
         public int IsDead { get; set; }
         public int TotalPowerUsage { get; set; }
 

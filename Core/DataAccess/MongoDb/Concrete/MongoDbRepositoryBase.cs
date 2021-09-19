@@ -106,6 +106,15 @@ namespace Core.DataAccess.MongoDb.Concrete
                 });
         }
 
+        public async Task<T> GetByFilterAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await Task.Run(() =>
+            {
+                return _collection.Find(predicate).FirstOrDefault();
+            });
+
+        }
+
         public virtual void Update(ObjectId id, T record)
         {
             _collection.FindOneAndReplace(x => x.Id == id, record);
@@ -150,6 +159,5 @@ namespace Core.DataAccess.MongoDb.Concrete
                 return true;
         }
 
-       
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Business.Handlers.BuyingEvents.Commands;
 using Business.Handlers.BuyingEvents.Queries;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -46,15 +47,15 @@ namespace WebAPI.Controllers
         ///<return>List BuyingEvents</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BuyingEvent>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BuyingEventDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getDtoByProjectId")]
-        public async Task<IActionResult> GetDtoByProjectId(string ProjectId)
+        [HttpGet("getBuyingEventdtoByProjectId")]
+        public async Task<IActionResult> GetBuyingEventdtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetBuyingEventsDtoByProjectIdQuery
+            var result = await Mediator.Send(new GetBuyingEventdtoByProjectIdQuery
             {
 
-                ProjectID = ProjectId
+                ProjectId = ProjectId
             });
 
             if (result.Success)
@@ -63,7 +64,6 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-
 
         /// <summary>
         /// Delete BuyingEvent.
