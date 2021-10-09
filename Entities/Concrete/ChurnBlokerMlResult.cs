@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Entities.Concrete
 {
-    public class MlResult : DocumentDbEntity
+    public class ChurnBlokerMlResult : DocumentDbEntity
     {
         public string ProjectId { get; set; }
         public short ProductId { get; set; }

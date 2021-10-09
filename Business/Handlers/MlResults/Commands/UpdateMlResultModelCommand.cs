@@ -49,7 +49,7 @@ namespace Business.Handlers.MlResultModels.Commands
 
 
 
-                var mlResultModel = new MlResult();
+                var mlResultModel = new ChurnBlokerMlResult();
                 mlResultModel.ProjectId = request.ProjectId;
                 mlResultModel.ProductId = request.ProductId;
                 mlResultModel.ClientId = request.ClientId;

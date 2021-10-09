@@ -40,7 +40,7 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetClientQuery();
 
-            _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new Client()
+            _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ClientDataModel()
 //propertyler buraya yazılacak
 //{																		
 //ClientId = 1,
@@ -65,8 +65,8 @@ namespace Tests.Business.HandlersTest
             //Arrange
             var query = new GetClientsQuery();
 
-            _clientRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Client, bool>>>()))
-                        .ReturnsAsync(new List<Client> { new Client() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "test"*/ } }.AsQueryable());
+            _clientRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
+                        .ReturnsAsync(new List<ClientDataModel> { new ClientDataModel() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "test"*/ } }.AsQueryable());
 
             var handler = new GetClientsQueryHandler(_clientRepository.Object, _mediator.Object);
 
@@ -75,14 +75,14 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<Client>)x.Data).Count.Should().BeGreaterThan(1);
+            ((List<ClientDataModel>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
         [Test]
         public async Task Client_CreateCommand_Success()
         {
-            Client rt = null;
+            ClientDataModel rt = null;
             //Arrange
             var command = new CreateClientCommand();
             //propertyler buraya yazılacak
@@ -91,7 +91,7 @@ namespace Tests.Business.HandlersTest
             _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
                         .ReturnsAsync(rt);
 
-            _clientRepository.Setup(x => x.Add(It.IsAny<Client>()));
+            _clientRepository.Setup(x => x.Add(It.IsAny<ClientDataModel>()));
 
             var handler = new CreateClientCommandHandler(_clientRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -109,10 +109,10 @@ namespace Tests.Business.HandlersTest
             //propertyler buraya yazılacak 
             //command.ClientName = "test";
 
-            _clientRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Client, bool>>>()))
-                                           .ReturnsAsync(new List<Client> { new Client() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "test"*/ } }.AsQueryable());
+            _clientRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
+                                           .ReturnsAsync(new List<ClientDataModel> { new ClientDataModel() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "test"*/ } }.AsQueryable());
 
-            _clientRepository.Setup(x => x.Add(It.IsAny<Client>()));
+            _clientRepository.Setup(x => x.Add(It.IsAny<ClientDataModel>()));
 
             var handler = new CreateClientCommandHandler(_clientRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -129,9 +129,9 @@ namespace Tests.Business.HandlersTest
             //command.ClientName = "test";
 
             _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new Client() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "deneme"*/ });
+                        .ReturnsAsync(new ClientDataModel() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "deneme"*/ });
 
-            _clientRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<Client>()));
+            _clientRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ClientDataModel>()));
 
             var handler = new UpdateClientCommandHandler(_clientRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
@@ -148,9 +148,9 @@ namespace Tests.Business.HandlersTest
             var command = new DeleteClientCommand();
 
             _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new Client() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "deneme"*/});
+                        .ReturnsAsync(new ClientDataModel() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "deneme"*/});
 
-            _clientRepository.Setup(x => x.Delete(It.IsAny<Client>()));
+            _clientRepository.Setup(x => x.Delete(It.IsAny<ClientDataModel>()));
 
             var handler = new DeleteClientCommandHandler(_clientRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());

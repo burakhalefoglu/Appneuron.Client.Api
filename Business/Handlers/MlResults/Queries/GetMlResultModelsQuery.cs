@@ -15,9 +15,9 @@ using Core.Aspects.Autofac.Caching;
 namespace Business.Handlers.MlResultModels.Queries
 {
 
-    public class GetMlResultModelsQuery : IRequest<IDataResult<IEnumerable<MlResult>>>
+    public class GetMlResultModelsQuery : IRequest<IDataResult<IEnumerable<ChurnBlokerMlResult>>>
     {
-        public class GetMlResultModelsQueryHandler : IRequestHandler<GetMlResultModelsQuery, IDataResult<IEnumerable<MlResult>>>
+        public class GetMlResultModelsQueryHandler : IRequestHandler<GetMlResultModelsQuery, IDataResult<IEnumerable<ChurnBlokerMlResult>>>
         {
             private readonly IMlResultRepository _mlResultModelRepository;
             private readonly IMediator _mediator;
@@ -32,9 +32,9 @@ namespace Business.Handlers.MlResultModels.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<MlResult>>> Handle(GetMlResultModelsQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<ChurnBlokerMlResult>>> Handle(GetMlResultModelsQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<MlResult>>(await _mlResultModelRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<ChurnBlokerMlResult>>(await _mlResultModelRepository.GetListAsync());
             }
         }
     }

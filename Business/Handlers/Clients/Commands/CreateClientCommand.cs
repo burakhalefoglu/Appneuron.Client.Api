@@ -49,12 +49,12 @@ namespace Business.Handlers.Clients.Commands
                 if (isThereClientRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedClient = new Client
+                var addedClient = new ClientDataModel
                 {
                     ClientId = request.ClientId,
-                    ProjectKey = request.ProjectKey,
+                    ProjectId = request.ProjectKey,
                     CreatedAt = request.CreatedAt,
-                    IsPaidClient = request.IsPaidClient,
+                    IsPaidClient = request.IsPaidClient ? 1 : 0,
 
                 };
 

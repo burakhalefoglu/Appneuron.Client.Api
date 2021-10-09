@@ -15,11 +15,11 @@ using Core.Aspects.Autofac.Caching;
 namespace Business.Handlers.Clients.Queries
 {
 
-    public class GetClientsByProjectIdQuery : IRequest<IDataResult<IEnumerable<Client>>>
+    public class GetClientsByProjectIdQuery : IRequest<IDataResult<IEnumerable<ClientDataModel>>>
     {
         public string ProjectId { get; set; }
 
-        public class GetClientsByProjectIdQueryHandler : IRequestHandler<GetClientsByProjectIdQuery, IDataResult<IEnumerable<Client>>>
+        public class GetClientsByProjectIdQueryHandler : IRequestHandler<GetClientsByProjectIdQuery, IDataResult<IEnumerable<ClientDataModel>>>
         {
             private readonly IClientRepository _clientRepository;
             private readonly IMediator _mediator;
@@ -34,10 +34,10 @@ namespace Business.Handlers.Clients.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<Client>>> Handle(GetClientsByProjectIdQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<ClientDataModel>>> Handle(GetClientsByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var client = await _clientRepository.GetListAsync(c => c.ProjectKey == request.ProjectId);
-                return new SuccessDataResult<IEnumerable<Client>>(client);
+                var client = await _clientRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
+                return new SuccessDataResult<IEnumerable<ClientDataModel>>(client);
             }
         }
     }

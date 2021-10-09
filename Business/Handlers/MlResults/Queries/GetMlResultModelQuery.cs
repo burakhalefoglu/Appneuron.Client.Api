@@ -12,12 +12,12 @@ using MongoDB.Bson;
 
 namespace Business.Handlers.MlResultModels.Queries
 {
-    public class GetMlResultModelQuery : IRequest<IDataResult<MlResult>>
+    public class GetMlResultModelQuery : IRequest<IDataResult<ChurnBlokerMlResult>>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
 
-        public class GetMlResultModelQueryHandler : IRequestHandler<GetMlResultModelQuery, IDataResult<MlResult>>
+        public class GetMlResultModelQueryHandler : IRequestHandler<GetMlResultModelQuery, IDataResult<ChurnBlokerMlResult>>
         {
             private readonly IMlResultRepository _mlResultModelRepository;
             private readonly IMediator _mediator;
@@ -29,10 +29,10 @@ namespace Business.Handlers.MlResultModels.Queries
             }
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<MlResult>> Handle(GetMlResultModelQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<ChurnBlokerMlResult>> Handle(GetMlResultModelQuery request, CancellationToken cancellationToken)
             {
                 var mlResultModel = await _mlResultModelRepository.GetByIdAsync(request.Id);
-                return new SuccessDataResult<MlResult>(mlResultModel);
+                return new SuccessDataResult<ChurnBlokerMlResult>(mlResultModel);
             }
         }
     }

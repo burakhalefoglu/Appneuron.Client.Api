@@ -4,7 +4,7 @@ using Core.DataAccess;
 using Entities.Concrete;
 namespace DataAccess.Abstract
 {
-    public interface IClientRepository : IDocumentDbRepository<Client>
+    public interface IClientRepository : IDocumentDbRepository<ClientDataModel>
     {
     }
 }

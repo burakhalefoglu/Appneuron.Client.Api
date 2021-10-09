@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         ///<return>List Clients</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Client>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClientDataModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         ///<return>List Clients</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Client>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClientDataModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("GetListByProject")]
         public async Task<IActionResult> GetListByProject(string ProjectId)
@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
         ///<return>Clients List</return>
         ///<response code="200"></response>  
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Client))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientDataModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(string objectId)

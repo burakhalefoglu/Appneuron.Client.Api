@@ -8,6 +8,6 @@ namespace Entities.Dtos
     {
         public string ClientId { get; set; }
         public string ProjectKey { get; set; }
-        public bool IsPaidClient { get; set; }
+        public int IsPaidClient { get; set; }
     }
 }

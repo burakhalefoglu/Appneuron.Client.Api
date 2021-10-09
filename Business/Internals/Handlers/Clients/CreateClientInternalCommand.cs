@@ -22,7 +22,7 @@ namespace Business.Handlers.Clients.Commands
         public string ClientId { get; set; }
         public string ProjectKey { get; set; }
         public System.DateTime CreatedAt { get; set; }
-        public bool IsPaidClient { get; set; }
+        public int IsPaidClient { get; set; }
 
 
         public class CreateClientInternalCommandHandler : IRequestHandler<CreateClientInternalCommand, IResult>
@@ -45,10 +45,10 @@ namespace Business.Handlers.Clients.Commands
                 if (isThereClientRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedClient = new Client
+                var addedClient = new ClientDataModel
                 {
                     ClientId = request.ClientId,
-                    ProjectKey = request.ProjectKey,
+                    ProjectId = request.ProjectKey,
                     CreatedAt = request.CreatedAt,
                     IsPaidClient = request.IsPaidClient,
 

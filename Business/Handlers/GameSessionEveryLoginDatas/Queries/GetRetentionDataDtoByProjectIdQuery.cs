@@ -65,11 +65,12 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
                                 ProjectId = item.ProjectID
                             });
 
-                            retentionDataDto.clientDtoList.Append(new ClientDto
+                            _ = retentionDataDto.clientDtoList.Append(new ClientDto
                             {
                                 ClientId = item.ClientId,
                                 ProjectKey = item.ProjectID,
                                 IsPaidClient = clientResult.Data.IsPaidClient
+
                             });
                         }
                     }

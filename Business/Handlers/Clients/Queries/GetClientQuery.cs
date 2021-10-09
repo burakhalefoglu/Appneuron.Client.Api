@@ -12,12 +12,12 @@ using MongoDB.Bson;
 
 namespace Business.Handlers.Clients.Queries
 {
-    public class GetClientQuery : IRequest<IDataResult<Client>>
+    public class GetClientQuery : IRequest<IDataResult<ClientDataModel>>
     {
         public string ObjectId { get; set; }
         private ObjectId Id => new ObjectId(this.ObjectId);
 
-        public class GetClientQueryHandler : IRequestHandler<GetClientQuery, IDataResult<Client>>
+        public class GetClientQueryHandler : IRequestHandler<GetClientQuery, IDataResult<ClientDataModel>>
         {
             private readonly IClientRepository _clientRepository;
             private readonly IMediator _mediator;
@@ -29,10 +29,10 @@ namespace Business.Handlers.Clients.Queries
             }
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<Client>> Handle(GetClientQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<ClientDataModel>> Handle(GetClientQuery request, CancellationToken cancellationToken)
             {
                 var client = await _clientRepository.GetByIdAsync(request.Id);
-                return new SuccessDataResult<Client>(client);
+                return new SuccessDataResult<ClientDataModel>(client);
             }
         }
     }

@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         ///<return>List MlResultModels</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MlResult>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChurnBlokerMlResult>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         ///<return>MlResultModels List</return>
         ///<response code="200"></response>  
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MlResult))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ChurnBlokerMlResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(string objectId)
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
         ///<return>List MlResultModels</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MlResult>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChurnBlokerMlResult>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getListbyProductIdAndProjectId")]
         public async Task<IActionResult> GetListbyProductIdAndProjectId(string ProjectId, int ProductId)

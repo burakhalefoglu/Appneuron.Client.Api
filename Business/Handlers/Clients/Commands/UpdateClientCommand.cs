@@ -48,11 +48,11 @@ namespace Business.Handlers.Clients.Commands
 
 
 
-                var client = new Client();
+                var client = new ClientDataModel();
                 client.ClientId = request.ClientId;
-                client.ProjectKey = request.ProjectKey;
+                client.ProjectId = request.ProjectKey;
                 client.CreatedAt = request.CreatedAt;
-                client.IsPaidClient = request.IsPaidClient;
+                client.IsPaidClient = request.IsPaidClient ? 1 : 0;
 
 
                 await _clientRepository.UpdateAsync(request.Id, client);

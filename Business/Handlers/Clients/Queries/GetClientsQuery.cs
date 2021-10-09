@@ -15,9 +15,9 @@ using Core.Aspects.Autofac.Caching;
 namespace Business.Handlers.Clients.Queries
 {
 
-    public class GetClientsQuery : IRequest<IDataResult<IEnumerable<Client>>>
+    public class GetClientsQuery : IRequest<IDataResult<IEnumerable<ClientDataModel>>>
     {
-        public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, IDataResult<IEnumerable<Client>>>
+        public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, IDataResult<IEnumerable<ClientDataModel>>>
         {
             private readonly IClientRepository _clientRepository;
             private readonly IMediator _mediator;
@@ -32,9 +32,9 @@ namespace Business.Handlers.Clients.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<Client>>> Handle(GetClientsQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<ClientDataModel>>> Handle(GetClientsQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<Client>>(await _clientRepository.GetListAsync());
+                return new SuccessDataResult<IEnumerable<ClientDataModel>>(await _clientRepository.GetListAsync());
             }
         }
     }

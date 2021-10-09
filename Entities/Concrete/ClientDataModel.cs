@@ -1,16 +1,14 @@
 ﻿using Core.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Entities.Concrete
 {
-    public class Client : DocumentDbEntity
+    public class ClientDataModel : DocumentDbEntity
     {
         public string ClientId { get; set; }
-        public string ProjectKey { get; set; }
+        public string ProjectId { get; set; }
+        public int IsPaidClient { get; set; }
         public DateTime CreatedAt { get; set; }
-        public bool IsPaidClient { get; set; }
         public DateTime PaidTime { get; set; }
     }
 }

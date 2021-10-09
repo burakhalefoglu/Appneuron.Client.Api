@@ -68,7 +68,7 @@ namespace Business.MessageBrokers.Kafka
                             Console.WriteLine($"Received message at {consumeResult.TopicPartitionOffset}: {consumeResult.Message.Value}");
 
                             
-                              var client = JsonConvert.DeserializeObject<Client>(consumeResult.Message.Value,
+                              var client = JsonConvert.DeserializeObject<ClientDataModel>(consumeResult.Message.Value,
                               new JsonSerializerSettings
                               {
                                   PreserveReferencesHandling = PreserveReferencesHandling.Objects
@@ -78,7 +78,7 @@ namespace Business.MessageBrokers.Kafka
                             var result = await _mediator.Send(new CreateClientInternalCommand
                             {
                                 ClientId = client.ClientId,
-                                ProjectKey = client.ProjectKey,
+                                ProjectKey = client.ProjectId,
                                 CreatedAt = client.CreatedAt,
                                 IsPaidClient = client.IsPaidClient
                             });

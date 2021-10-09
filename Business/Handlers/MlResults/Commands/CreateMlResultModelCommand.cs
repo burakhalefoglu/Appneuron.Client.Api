@@ -50,7 +50,7 @@ namespace Business.Handlers.MlResultModels.Commands
                 if (isThereMlResultModelRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
-                var addedMlResultModel = new MlResult
+                var addedMlResultModel = new ChurnBlokerMlResult
                 {
                     ProjectId = request.ProjectId,
                     ProductId = request.ProductId,
