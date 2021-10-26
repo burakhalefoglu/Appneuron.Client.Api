@@ -65,7 +65,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
                                 ProjectId = item.ProjectID
                             });
 
-                            _ = retentionDataDto.clientDtoList.Append(new ClientDto
+                            _ = retentionDataDto.clientDtoList.Append(new ChurnClientDto
                             {
                                 ClientId = item.ClientId,
                                 ProjectKey = item.ProjectID,

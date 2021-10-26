@@ -87,6 +87,10 @@ namespace Business
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureServices(services);          
+            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x=> new AdvStrategyBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvStrategyBehaviorModels));
+            services.AddTransient<IChurnClientPredictionResultRepository>(x=> new ChurnClientPredictionResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnClientPredictionResults));
+            services.AddTransient<IOfferBehaviorModelRepository>(x=> new OfferBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OfferBehaviorModels));
+            services.AddTransient<IChurnDateRepository>(x=> new ChurnDateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnDates));
             services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
             services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
             services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
@@ -108,6 +112,10 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);           
+            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x=> new AdvStrategyBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvStrategyBehaviorModels));
+            services.AddTransient<IChurnClientPredictionResultRepository>(x=> new ChurnClientPredictionResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnClientPredictionResults));
+            services.AddTransient<IOfferBehaviorModelRepository>(x=> new OfferBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OfferBehaviorModels));
+            services.AddTransient<IChurnDateRepository>(x=> new ChurnDateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnDates));
             services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
             services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
             services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
@@ -130,6 +138,10 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x=> new AdvStrategyBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvStrategyBehaviorModels));
+            services.AddTransient<IChurnClientPredictionResultRepository>(x=> new ChurnClientPredictionResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnClientPredictionResults));
+            services.AddTransient<IOfferBehaviorModelRepository>(x=> new OfferBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OfferBehaviorModels));
+            services.AddTransient<IChurnDateRepository>(x=> new ChurnDateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnDates));
             services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
             services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
          

@@ -12,5 +12,9 @@ namespace DataAccess.Concrete.MongoDb.Collections
         public static string Clients => "clients";
         public static string MlResultModels => "mlResultModels";
         public static string PaidClients => "paidClients";
+        public static string ChurnDates => "churnDates";
+        public static string OfferBehaviorModels => "offerBehaviorModels";
+        public static string ChurnClientPredictionResults => "churnClientPredictionResults";
+        public static string AdvStrategyBehaviorModels => "advStrategyBehaviorModels";
     }
 }

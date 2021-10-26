@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entities.Dtos
 {
-    public class ClientDto
+    public class ChurnClientDto
     {
         public string ClientId { get; set; }
         public string ProjectKey { get; set; }

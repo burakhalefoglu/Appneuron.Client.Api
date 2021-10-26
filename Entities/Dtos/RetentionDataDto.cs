@@ -9,7 +9,7 @@ namespace Entities.Dtos
     public class RetentionDataDto : IDto
     {
         public DateTime Day { get; set; }
-        public ClientDto[] clientDtoList { get; set; }
+        public ChurnClientDto[] clientDtoList { get; set; }
 
     }
 }
