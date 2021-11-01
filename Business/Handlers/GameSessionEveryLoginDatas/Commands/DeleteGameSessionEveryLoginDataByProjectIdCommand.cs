@@ -35,7 +35,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteGameSessionEveryLoginDataByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _gameSessionEveryLoginDataRepository.DeleteAsync(p=>p.ProjectID == request.ProjectID);
+                await _gameSessionEveryLoginDataRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
 
                 return new SuccessResult(Messages.Deleted);
             }

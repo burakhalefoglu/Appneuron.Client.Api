@@ -37,7 +37,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<DailyDieCountDto>>> Handle(GetDailyDieCountDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var levelBaseDieDataList = await _levelBaseDieDataRepository.GetListAsync(l => l.ProjectID == request.ProjectId);
+                var levelBaseDieDataList = await _levelBaseDieDataRepository.GetListAsync(l => l.ProjectId == request.ProjectId);
                 var dailyDieCountDtoList = new List<DailyDieCountDto>();
 
                 levelBaseDieDataList.ToList().ForEach(l =>

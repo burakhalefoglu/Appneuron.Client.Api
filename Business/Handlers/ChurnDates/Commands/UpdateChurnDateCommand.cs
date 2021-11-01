@@ -43,7 +43,7 @@ namespace Business.Handlers.ChurnDates.Commands
             public async Task<IResult> Handle(UpdateChurnDateCommand request, CancellationToken cancellationToken)
             {
                 var result = await _churnDateRepository.GetByFilterAsync(c => c.ProjectId == request.ProjectId);
-                if (result == null)
+                if (result.ProjectId == null)
                 {
                     await _mediator.Send(new CreateChurnDateCommand {
                     
@@ -54,7 +54,7 @@ namespace Business.Handlers.ChurnDates.Commands
                     return new SuccessResult(Messages.Added);
                 }
 
-                result.churnDateMinutes = request.ChurnDateMinutes;
+                result.ChurnDateMinutes = request.ChurnDateMinutes;
                 result.DateTypeOnGui = request.DateTypeOnGui;
 
                 await _churnDateRepository.UpdateAsync(result.Id, result);

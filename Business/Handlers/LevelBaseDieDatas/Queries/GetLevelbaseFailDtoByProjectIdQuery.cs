@@ -37,13 +37,13 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbaseFailDto>>> Handle(GetLevelbaseFailDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var levelBaseDieDataList = await _levelBaseDieDataRepository.GetListAsync(l => l.ProjectID == request.ProjectId);
+                var levelBaseDieDataList = await _levelBaseDieDataRepository.GetListAsync(l => l.ProjectId == request.ProjectId);
                 var levelbaseFailDtoList = new List<LevelbaseFailDto>();
 
                 levelBaseDieDataList.ToList().ForEach(levelBaseFail =>
                 {
                     var levelbaseFailDto = levelbaseFailDtoList.FirstOrDefault(levelBaseFailDto => levelBaseFailDto.ClientId == levelBaseFail.ClientId
-                    && levelBaseFailDto.levelName == levelBaseFail.levelName);
+                    && levelBaseFailDto.LevelName == levelBaseFail.LevelName);
 
                     if(levelbaseFailDto == null)
                     {
@@ -51,7 +51,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
                         {
                             ClientId = levelBaseFail.ClientId,
                             FailCount = 1,
-                            levelName = levelBaseFail.levelName
+                            LevelName = levelBaseFail.LevelName
                         });
                     }
                     else

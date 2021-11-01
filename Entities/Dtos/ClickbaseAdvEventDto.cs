@@ -11,4 +11,4 @@ namespace Entities.Dtos
         public DateTime TrigerdDay { get; set; }
 
     }
-}
+} 

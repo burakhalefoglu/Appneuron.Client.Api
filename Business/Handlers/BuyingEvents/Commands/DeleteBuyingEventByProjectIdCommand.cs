@@ -32,7 +32,7 @@ namespace Business.Handlers.BuyingEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteBuyingEventByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _buyingEventRepository.DeleteAsync(p=>p.ProjectID == request.ProjectID);
+                await _buyingEventRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
 
                 return new SuccessResult(Messages.Deleted);
             }

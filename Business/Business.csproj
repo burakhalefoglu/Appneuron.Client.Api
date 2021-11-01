@@ -36,6 +36,12 @@
    <WCFMetadata Include="Connected Services" />
  </ItemGroup>
  <ItemGroup>
+   <Folder Include="Handlers\AdvStrategyBehaviorModels\Commands\" />
+   <Folder Include="Handlers\ChurnClientPredictionResults\Commands\" />
+   <Folder Include="Handlers\ChurnClientPredictionResults\ValidationRules\" />
+   <Folder Include="Handlers\Clients\Commands\" />
+   <Folder Include="Handlers\MlResults\Commands\" />
+   <Folder Include="Handlers\OfferBehaviorModels\Commands\" />
    <Folder Include="MessageBrokers\Models\" />
    <Folder Include="Services\" />
  </ItemGroup> 

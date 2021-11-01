@@ -35,7 +35,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteLevelBaseSessionDataByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _levelBaseSessionDataRepository.DeleteAsync(p=>p.ProjectID == request.ProjectID);
+                await _levelBaseSessionDataRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
 
                 return new SuccessResult(Messages.Deleted);
             }

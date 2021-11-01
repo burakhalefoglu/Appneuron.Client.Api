@@ -1,22 +1,16 @@
 ﻿
-using Business.Handlers.Clients.Queries;
 using DataAccess.Abstract;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.Clients.Queries.GetClientQuery;
 using Entities.Concrete;
-using static Business.Handlers.Clients.Queries.GetClientsQuery;
-using static Business.Handlers.Clients.Commands.CreateClientCommand;
-using Business.Handlers.Clients.Commands;
+using static Business.Internals.Handlers.Clients.CreateClientInternalCommand;
 using Business.Constants;
-using static Business.Handlers.Clients.Commands.UpdateClientCommand;
-using static Business.Handlers.Clients.Commands.DeleteClientCommand;
+using static Business.Internals.Handlers.Clients.GetClientByProjectIdInternalQuery;
 using MediatR;
-using System.Linq;
+using Business.Internals.Handlers.Clients;
 using FluentAssertions;
 using MongoDB.Bson;
 
@@ -35,67 +29,52 @@ namespace Tests.Business.HandlersTest
         }
 
         [Test]
-        public async Task Client_GetQuery_Success()
+        public async Task Client_GetQueriesByProjectId_Success()
         {
             //Arrange
-            var query = new GetClientQuery();
+            var query = new GetClientByProjectIdInternalQuery();
+            query.ClientId = "asdas";
+            query.ProjectId = "asfdzs";
 
-            _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ClientDataModel()
-//propertyler buraya yazılacak
-//{																		
-//ClientId = 1,
-//ClientName = "Test"
-//}
-);
+            _clientRepository.Setup(x => x.GetByFilterAsync(
+                    It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
+                .ReturnsAsync(new ClientDataModel()
+                {
+                    Id = new ObjectId(),
+                    ProjectId = "asfdzs",
+                    ClientId = "asdas",
+                    CreatedAt = new DateTime(),
+                    IsPaidClient = 0,
+                    PaidTime = DateTime.Now
+                });
 
-            var handler = new GetClientQueryHandler(_clientRepository.Object, _mediator.Object);
+            var handler = new GetClientByProjectIdInternalQueryHandler(_clientRepository.Object, _mediator.Object);
 
             //Act
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
 
             //Asset
             x.Success.Should().BeTrue();
-            //x.Data.ClientId.Should().Be(1);
+            x.Data.ProjectId.Should().Be("asfdzs");
 
         }
 
-        [Test]
-        public async Task Client_GetQueries_Success()
-        {
-            //Arrange
-            var query = new GetClientsQuery();
-
-            _clientRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
-                        .ReturnsAsync(new List<ClientDataModel> { new ClientDataModel() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "test"*/ } }.AsQueryable());
-
-            var handler = new GetClientsQueryHandler(_clientRepository.Object, _mediator.Object);
-
-            //Act
-            var x = await handler.Handle(query, new System.Threading.CancellationToken());
-
-            //Asset
-            x.Success.Should().BeTrue();
-            ((List<ClientDataModel>)x.Data).Count.Should().BeGreaterThan(1);
-
-        }
 
         [Test]
         public async Task Client_CreateCommand_Success()
         {
-            ClientDataModel rt = null;
-            //Arrange
-            var command = new CreateClientCommand();
-            //propertyler buraya yazılacak
-            //command.ClientName = "deneme";
+            var command = new CreateClientInternalCommand();
+            command.ClientId = "sdfdsf";
+            command.ProjectKey = "sfd";
+            command.CreatedAt = new DateTime();
+            command.IsPaidClient = 0;
 
-            _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(rt);
+            _clientRepository.Setup(x => x
+                    .Any(It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
+                .Returns(false);
 
-            _clientRepository.Setup(x => x.Add(It.IsAny<ClientDataModel>()));
-
-            var handler = new CreateClientCommandHandler(_clientRepository.Object, _mediator.Object);
+            var handler = new CreateClientInternalCommandHandler(_clientRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
-
 
             x.Success.Should().BeTrue();
             x.Message.Should().Be(Messages.Added);
@@ -104,60 +83,21 @@ namespace Tests.Business.HandlersTest
         [Test]
         public async Task Client_CreateCommand_NameAlreadyExist()
         {
-            //Arrange
-            var command = new CreateClientCommand();
-            //propertyler buraya yazılacak 
-            //command.ClientName = "test";
+            var command = new CreateClientInternalCommand();
+            command.ClientId = "sdfdsf";
+            command.ProjectKey = "sfd";
+            command.CreatedAt = new DateTime();
+            command.IsPaidClient = 0;
 
-            _clientRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
-                                           .ReturnsAsync(new List<ClientDataModel> { new ClientDataModel() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "test"*/ } }.AsQueryable());
+            _clientRepository.Setup(x => x
+                    .Any(It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
+                    .Returns(true);
 
-            _clientRepository.Setup(x => x.Add(It.IsAny<ClientDataModel>()));
-
-            var handler = new CreateClientCommandHandler(_clientRepository.Object, _mediator.Object);
+            var handler = new CreateClientInternalCommandHandler(_clientRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             x.Success.Should().BeFalse();
             x.Message.Should().Be(Messages.NameAlreadyExist);
-        }
-
-        [Test]
-        public async Task Client_UpdateCommand_Success()
-        {
-            //Arrange
-            var command = new UpdateClientCommand();
-            //command.ClientName = "test";
-
-            _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ClientDataModel() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "deneme"*/ });
-
-            _clientRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ClientDataModel>()));
-
-            var handler = new UpdateClientCommandHandler(_clientRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
-
-
-            x.Success.Should().BeTrue();
-            x.Message.Should().Be(Messages.Updated);
-        }
-
-        [Test]
-        public async Task Client_DeleteCommand_Success()
-        {
-            //Arrange
-            var command = new DeleteClientCommand();
-
-            _clientRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ClientDataModel() { /*TODO:propertyler buraya yazılacak ClientId = 1, ClientName = "deneme"*/});
-
-            _clientRepository.Setup(x => x.Delete(It.IsAny<ClientDataModel>()));
-
-            var handler = new DeleteClientCommandHandler(_clientRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
-
-
-            x.Success.Should().BeTrue();
-            x.Message.Should().Be(Messages.Deleted);
         }
     }
 }

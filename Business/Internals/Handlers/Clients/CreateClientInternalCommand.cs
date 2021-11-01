@@ -1,4 +1,7 @@
-﻿using Business.Constants;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Business.Constants;
+using Business.Handlers.Clients.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
@@ -7,11 +10,8 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.Handlers.Clients.ValidationRules;
 
-namespace Business.Handlers.Clients.Commands
+namespace Business.Internals.Handlers.Clients
 {
     /// <summary>
     /// 

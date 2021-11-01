@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Aspects.Autofac.Logging;
-using Entities.Dtos;
 using System;
 using System.Linq;
 

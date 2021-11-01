@@ -37,7 +37,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbaseFinishScoreDto>>> Handle(GetLevelbaseFinishScoreByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var everyLoginLevelDataList = await _everyLoginLevelDataRepository.GetListAsync(e => e.ProjectID == request.ProjectId);
+                var everyLoginLevelDataList = await _everyLoginLevelDataRepository.GetListAsync(e => e.ProjectId == request.ProjectId);
                 var levelbaseFinishScoreDtoList = new List<LevelbaseFinishScoreDto>();
 
                 everyLoginLevelDataList.ToList().ForEach(e =>

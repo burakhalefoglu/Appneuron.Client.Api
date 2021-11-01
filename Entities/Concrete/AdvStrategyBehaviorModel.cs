@@ -9,6 +9,6 @@ namespace Entities.Concrete
         public string ProjectId { get; set; }
         public int Version { get; set; }
         public string Name { get; set; }
-        public DateTime dateTime { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

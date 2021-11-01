@@ -34,7 +34,7 @@ namespace Business.Handlers.AdvEvents.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<AdvEvent>>> Handle(GetAdvEventsByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<AdvEvent>>(await _advEventRepository.GetListAsync(p=>p.ProjectID == request.ProjectID));
+                return new SuccessDataResult<IEnumerable<AdvEvent>>(await _advEventRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
             }
         }
     }

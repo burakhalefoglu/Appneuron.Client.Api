@@ -35,7 +35,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
             public async Task<IDataResult<IEnumerable<EveryLoginLevelData>>> Handle(GetEveryLoginLevelDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<EveryLoginLevelData>>
-                    (await _everyLoginLevelDataRepository.GetListAsync(p => p.ProjectID == request.ProjectID));
+                    (await _everyLoginLevelDataRepository.GetListAsync(p => p.ProjectId == request.ProjectID));
             }
         }
     }

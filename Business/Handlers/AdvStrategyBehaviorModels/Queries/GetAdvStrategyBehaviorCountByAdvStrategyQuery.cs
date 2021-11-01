@@ -38,7 +38,7 @@ namespace Business.Handlers.AdvStrategyBehaviorModels.Queries
                     a => a.ProjectId == request.ProjectId &&
                          a.Name == request.Name &&
                          a.Version == request.Version &&
-                         a.dateTime == request.StartTime);
+                         a.DateTime == request.StartTime);
 
                 return new SuccessDataResult<int>(result.ToList().Count);
             }

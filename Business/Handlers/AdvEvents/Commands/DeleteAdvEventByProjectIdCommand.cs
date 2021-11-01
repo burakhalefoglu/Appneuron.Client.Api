@@ -35,7 +35,7 @@ namespace Business.Handlers.AdvEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteAdvEventByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _advEventRepository.DeleteAsync(p=>p.ProjectID == request.ProjectID);
+                await _advEventRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
 
                 return new SuccessResult(Messages.Deleted);
             }

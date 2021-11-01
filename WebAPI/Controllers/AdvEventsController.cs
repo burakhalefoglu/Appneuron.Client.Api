@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
         [HttpGet("getClickbaseAdvEventByProjectId")]
         public async Task<IActionResult> getClickbaseAdvEventDtoListQuery(string ProjectId)
         {
-            var result = await Mediator.Send(new GetClickbaseAdvEventDtoListQuery
+            var result = await Mediator.Send(new GetClickBaseAdvEventDtoListQuery
             {
                 ProjectId = ProjectId
             });

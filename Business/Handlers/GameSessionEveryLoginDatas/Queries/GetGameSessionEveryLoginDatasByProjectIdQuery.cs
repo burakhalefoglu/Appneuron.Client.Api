@@ -35,7 +35,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
             public async Task<IDataResult<IEnumerable<GameSessionEveryLoginData>>> Handle(GetGameSessionEveryLoginDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<GameSessionEveryLoginData>>
-                    (await _gameSessionEveryLoginDataRepository.GetListAsync(p=>p.ProjectID == request.ProjectID));
+                    (await _gameSessionEveryLoginDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
             }
         }
     }

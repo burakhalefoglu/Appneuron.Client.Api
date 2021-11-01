@@ -37,7 +37,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
             public async Task<IDataResult<IEnumerable<TotalPowerUsageDto>>> Handle(GetTotalPowerUsageDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
 
-                var everyLoginLevelDataList = await _everyLoginLevelDataRepository.GetListAsync(e => e.ProjectID == request.ProjectId);
+                var everyLoginLevelDataList = await _everyLoginLevelDataRepository.GetListAsync(e => e.ProjectId == request.ProjectId);
                 var totalPowerUsageDtoList = new List<TotalPowerUsageDto>();
 
                 everyLoginLevelDataList.ToList().ForEach(e =>

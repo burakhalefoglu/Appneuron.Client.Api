@@ -38,14 +38,14 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbaseSessionDto>>> Handle(GetLevelBaseSessionDtoDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var sessionData = await _levelBaseSessionDataRepository.GetListAsync(p => p.ProjectID == request.ProjectID);
+                var sessionData = await _levelBaseSessionDataRepository.GetListAsync(p => p.ProjectId == request.ProjectID);
                 var sessionDataDto = new List<LevelbaseSessionDto>();
                 sessionData.ToList().ForEach(s =>
                 {
                     sessionDataDto.Add(new LevelbaseSessionDto
                     {
                         ClientId = s.ClientId,
-                        levelName = s.levelName,
+                        LevelName = s.LevelName,
                         SessionStartTime = s.SessionStartTime
                     });
 

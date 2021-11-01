@@ -38,14 +38,14 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbaseSessionWithPlayingTimeDto>>> Handle(GetLevelbaseSessionWithPlayingTimeDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var sessionData = await _levelBaseSessionDataRepository.GetListAsync(p => p.ProjectID == request.ProjectId);
+                var sessionData = await _levelBaseSessionDataRepository.GetListAsync(p => p.ProjectId == request.ProjectId);
                 var levelbaseSessionWithPlayingTimeDtoList = new List<LevelbaseSessionWithPlayingTimeDto>();
                 sessionData.ToList().ForEach(s =>
                 {
                     var resultLevelbaseSessionWithPlayingTimeDto = levelbaseSessionWithPlayingTimeDtoList
                     .Find(l => l.SessionStartTime == new DateTime(
                         s.SessionStartTime.Day, s.SessionStartTime.Month, s.SessionStartTime.Year) &&
-                        l.levelName == s.levelName && l.ClientId == s.ClientId);
+                        l.LevelName == s.LevelName && l.ClientId == s.ClientId);
 
                     if (resultLevelbaseSessionWithPlayingTimeDto == null)
                     {
@@ -53,7 +53,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
                             new LevelbaseSessionWithPlayingTimeDto
                             {
                                 ClientId = s.ClientId,
-                                levelName = s.levelName,
+                                LevelName = s.LevelName,
                                 SessionStartTime = s.SessionStartTime,
                                 SessionTimeMinute = s.SessionTimeMinute
                             });

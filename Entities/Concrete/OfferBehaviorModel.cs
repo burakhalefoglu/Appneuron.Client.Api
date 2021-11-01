@@ -11,7 +11,7 @@ namespace Entities.Concrete
         public string CustomerId { get; set; }
         public int Version { get; set; }
         public string OfferName { get; set; }
-        public DateTime dateTime { get; set; }
+        public DateTime DateTime { get; set; }
         public int IsBuyOffer { get; set; }
     }
 }

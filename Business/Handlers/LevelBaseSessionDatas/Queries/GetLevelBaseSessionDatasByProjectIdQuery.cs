@@ -35,7 +35,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
             public async Task<IDataResult<IEnumerable<LevelBaseSessionData>>> Handle(GetLevelBaseSessionDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<LevelBaseSessionData>>
-                    (await _levelBaseSessionDataRepository.GetListAsync(p=>p.ProjectID == request.ProjectID));
+                    (await _levelBaseSessionDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
             }
         }
     }

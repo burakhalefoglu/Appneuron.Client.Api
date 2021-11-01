@@ -46,7 +46,7 @@ namespace Business.Handlers.OfferBehaviorModels.Queries
                     o.Version == request.Version);
                 offerResult.ToList().ForEach(o =>
                 {
-                    _ = offerDtoList.Append(new OfferBehaviorDto
+                    offerDtoList.Add(new OfferBehaviorDto
                     {
                         IsBuyOffer = o.IsBuyOffer,
                         Version = o.Version,

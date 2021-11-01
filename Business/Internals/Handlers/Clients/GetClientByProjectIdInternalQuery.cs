@@ -1,16 +1,13 @@
-﻿
-using Business.BusinessAspects;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using MongoDB.Bson;
 
-namespace Business.Handlers.Clients.Queries
+namespace Business.Internals.Handlers.Clients
 {
     public class GetClientByProjectIdInternalQuery : IRequest<IDataResult<ClientDataModel>>
     {

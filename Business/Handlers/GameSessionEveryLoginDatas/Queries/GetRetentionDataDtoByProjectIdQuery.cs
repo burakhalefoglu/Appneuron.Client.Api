@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Internals.Handlers.Clients;
 
 namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
 {
@@ -40,7 +41,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
             {
 
 
-                var sessionData = await _gameSessionEveryLoginDataRepository.GetListAsync(p => p.ProjectID == request.ProjectID);
+                var sessionData = await _gameSessionEveryLoginDataRepository.GetListAsync(p => p.ProjectId == request.ProjectID);
                 if(sessionData.Count() == 0)
                     return new ErrorDataResult<RetentionDataWithSessionDto>();
 
@@ -62,13 +63,13 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
                             var clientResult = await _mediator.Send(new GetClientByProjectIdInternalQuery
                             {
                                 ClientId = item.ClientId,
-                                ProjectId = item.ProjectID
+                                ProjectId = item.ProjectId
                             });
 
-                            _ = retentionDataDto.clientDtoList.Append(new ChurnClientDto
+                            _ = retentionDataDto.ClientDtoList.Append(new ChurnClientDto
                             {
                                 ClientId = item.ClientId,
-                                ProjectKey = item.ProjectID,
+                                ProjectKey = item.ProjectId,
                                 IsPaidClient = clientResult.Data.IsPaidClient
 
                             });

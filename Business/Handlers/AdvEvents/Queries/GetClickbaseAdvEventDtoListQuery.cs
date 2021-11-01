@@ -18,15 +18,15 @@ using System;
 namespace Business.Handlers.AdvEvents.Queries
 {
 
-    public class GetClickbaseAdvEventDtoListQuery : IRequest<IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
+    public class GetClickBaseAdvEventDtoListQuery : IRequest<IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
     {
         public string ProjectId { get; set; }
-        public class GetClickbaseAdvEventDtoListQueryHandler : IRequestHandler<GetClickbaseAdvEventDtoListQuery, IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
+        public class GetClickBaseAdvEventDtoListQueryHandler : IRequestHandler<GetClickBaseAdvEventDtoListQuery, IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
         {
             private readonly IAdvEventRepository _advEventRepository;
             private readonly IMediator _mediator;
 
-            public GetClickbaseAdvEventDtoListQueryHandler(IAdvEventRepository advEventRepository, IMediator mediator)
+            public GetClickBaseAdvEventDtoListQueryHandler(IAdvEventRepository advEventRepository, IMediator mediator)
             {
                 _advEventRepository = advEventRepository;
                 _mediator = mediator;
@@ -36,9 +36,9 @@ namespace Business.Handlers.AdvEvents.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ClickbaseAdvEventDto>>> Handle(GetClickbaseAdvEventDtoListQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<ClickbaseAdvEventDto>>> Handle(GetClickBaseAdvEventDtoListQuery request, CancellationToken cancellationToken)
             {
-                var advEventList = await _advEventRepository.GetListAsync(adv => adv.ProjectID == request.ProjectId);
+                var advEventList = await _advEventRepository.GetListAsync(adv => adv.ProjectId == request.ProjectId);
                 var clickbaseAdvEventDtoList = new List<ClickbaseAdvEventDto>();
                 advEventList.ToList().ForEach(adv =>
                 {

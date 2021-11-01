@@ -35,7 +35,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteEveryLoginLevelDataByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _everyLoginLevelDataRepository.DeleteAsync(p=>p.ProjectID == request.ProjectID);
+                await _everyLoginLevelDataRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
 
                 return new SuccessResult(Messages.Deleted);
             }

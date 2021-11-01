@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Entities.Concrete;
 using Business.Handlers.Clients.Commands;
+using Business.Internals.Handlers.Clients;
 
 namespace Business.MessageBrokers.Kafka
 {

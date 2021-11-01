@@ -35,7 +35,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
             public async Task<IDataResult<IEnumerable<LevelBaseDieData>>> Handle(GetLevelBaseDieDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<LevelBaseDieData>>
-                    (await _levelBaseDieDataRepository.GetListAsync(p=>p.ProjectID == request.ProjectID));
+                    (await _levelBaseDieDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
             }
         }
     }

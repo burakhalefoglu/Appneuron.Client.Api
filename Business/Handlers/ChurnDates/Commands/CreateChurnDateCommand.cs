@@ -46,7 +46,7 @@ namespace Business.Handlers.ChurnDates.Commands
                 var addedChurnDate = new ChurnDate
                 {
                     ProjectId = request.ProjectId,
-                    churnDateMinutes = request.churnDateMinutes,
+                    ChurnDateMinutes = request.churnDateMinutes,
                     DateTypeOnGui = request.DateTypeOnGui
                 };
 

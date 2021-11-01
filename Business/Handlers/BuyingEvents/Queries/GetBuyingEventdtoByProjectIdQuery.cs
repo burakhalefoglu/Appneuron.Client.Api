@@ -38,7 +38,7 @@ namespace Business.Handlers.BuyingEvents.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<BuyingEventDto>>> Handle(GetBuyingEventdtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var buyingEventList = await _buyingEventRepository.GetListAsync(p => p.ProjectID == request.ProjectId);
+                var buyingEventList = await _buyingEventRepository.GetListAsync(p => p.ProjectId == request.ProjectId);
                 var buyingEventDtoList = new List<BuyingEventDto>();
 
                 buyingEventList.ToList().ForEach(b =>

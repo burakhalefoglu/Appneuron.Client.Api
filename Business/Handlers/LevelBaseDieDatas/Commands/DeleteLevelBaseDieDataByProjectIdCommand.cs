@@ -35,7 +35,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteLevelBaseDieDataByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _levelBaseDieDataRepository.DeleteAsync(p=>p.ProjectID == request.ProjectID);
+                await _levelBaseDieDataRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
 
                 return new SuccessResult(Messages.Deleted);
             }

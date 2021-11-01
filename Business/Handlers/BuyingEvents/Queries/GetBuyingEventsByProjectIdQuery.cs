@@ -34,7 +34,7 @@ namespace Business.Handlers.BuyingEvents.Queries
             public async Task<IDataResult<IEnumerable<BuyingEvent>>> Handle(GetBuyingEventsByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<BuyingEvent>>
-                    (await _buyingEventRepository.GetListAsync(p=>p.ProjectID == request.ProjectID));
+                    (await _buyingEventRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
             }
         }
     }

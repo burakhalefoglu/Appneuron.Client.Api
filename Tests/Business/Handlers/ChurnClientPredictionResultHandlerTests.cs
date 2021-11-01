@@ -7,16 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.ChurnClientPredictionResults.Queries.GetChurnClientPredictionResultQuery;
+using static Business.Handlers.ChurnClientPredictionResults.Queries.GetChurnClientCountByDateQuery;
+using static Business.Handlers.ChurnClientPredictionResults.Queries.GetChurnClientCountByOfferQuery;
 using Entities.Concrete;
-using static Business.Handlers.ChurnClientPredictionResults.Queries.GetChurnClientPredictionResultsQuery;
-using static Business.Handlers.ChurnClientPredictionResults.Commands.CreateChurnClientPredictionResultCommand;
-using Business.Handlers.ChurnClientPredictionResults.Commands;
 using Business.Constants;
-using static Business.Handlers.ChurnClientPredictionResults.Commands.UpdateChurnClientPredictionResultCommand;
-using static Business.Handlers.ChurnClientPredictionResults.Commands.DeleteChurnClientPredictionResultCommand;
 using MediatR;
 using System.Linq;
+using Entities.Dtos;
 using FluentAssertions;
 using MongoDB.Bson;
 
@@ -35,27 +32,40 @@ namespace Tests.Business.HandlersTest
         }
 
         [Test]
-        public async Task ChurnClientPredictionResult_GetQuery_Success()
+        public async Task ChurnClientPredictionResult_GetByDateQuery_Success()
         {
             //Arrange
-            var query = new GetChurnClientPredictionResultQuery();
+            var query = new GetChurnClientCountByDateQuery();
+            query.ProjectId = "dfsdfgsgfjlsd";
+            query.StartTime = DateTime.Now;
+            query.FinishTime = DateTime.Now;
+                
+            _churnClientPredictionResultRepository.Setup(x =>
+                    x.GetListAsync(It.IsAny<Expression<Func<ChurnClientPredictionResult, bool>>>()))
+                .ReturnsAsync(new List<ChurnClientPredictionResult> {
+                    new ChurnClientPredictionResult(){
+                        ChurnPredictionDate = new DateTime(),
+                        ClientId = "sdfsfas",
+                        ClientsOfferModelDto = new ClientsOfferModelDto[]
+                        {
+                            new ClientsOfferModelDto()
 
-            _churnClientPredictionResultRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>())).ReturnsAsync(new ChurnClientPredictionResult()
-//propertyler buraya yazılacak
-//{																		
-//ChurnClientPredictionResultId = 1,
-//ChurnClientPredictionResultName = "Test"
-//}
-);
+                        },
+                        Id = new ObjectId(),
+                        ProjectId = "dfsdfgsgfjlsd"
 
-            var handler = new GetChurnClientPredictionResultQueryHandler(_churnClientPredictionResultRepository.Object, _mediator.Object);
+                },
+
+                }.AsQueryable());
+
+            var handler = new GetChurnClientCountByDateQueryHandler(_churnClientPredictionResultRepository.Object, _mediator.Object);
 
             //Act
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
 
             //Asset
             x.Success.Should().BeTrue();
-            //x.Data.ChurnClientPredictionResultId.Should().Be(1);
+            x.Data.Should().Be(1);
 
         }
 
@@ -63,102 +73,47 @@ namespace Tests.Business.HandlersTest
         public async Task ChurnClientPredictionResult_GetQueries_Success()
         {
             //Arrange
-            var query = new GetChurnClientPredictionResultsQuery();
+            var query = new GetChurnClientCountByOfferQuery();
+            query.Name = "test";
+            query.FinishTime = DateTime.Now;
+            query.ProjectId = "dfsdfgsgfjlsd";
+            query.Version = 1;
 
-            _churnClientPredictionResultRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ChurnClientPredictionResult, bool>>>()))
-                        .ReturnsAsync(new List<ChurnClientPredictionResult> { new ChurnClientPredictionResult() { /*TODO:propertyler buraya yazılacak ChurnClientPredictionResultId = 1, ChurnClientPredictionResultName = "test"*/ } }.AsQueryable());
+            _churnClientPredictionResultRepository.Setup(x =>
+                    x.GetListAsync(It.IsAny<Expression<Func<ChurnClientPredictionResult, bool>>>()))
+                        .ReturnsAsync(new List<ChurnClientPredictionResult>
+                        {
+                            new ChurnClientPredictionResult(){
+                                ChurnPredictionDate = new DateTime(),
+                                ClientId = "sdfsfas",
+                                ClientsOfferModelDto = new ClientsOfferModelDto[]
+                                {
+                                    new ClientsOfferModelDto()
+                                    {
+                                        FinishTime = DateTime.Now,
+                                        OfferName = "test",
+                                        StartTime = DateTime.Now,
+                                        Version = 1
+                                    }
 
-            var handler = new GetChurnClientPredictionResultsQueryHandler(_churnClientPredictionResultRepository.Object, _mediator.Object);
+                                },
+                                Id = new ObjectId(),
+                                ProjectId = "dfsdfgsgfjlsd"
+
+                            },
+                        }.AsQueryable());
+
+            var handler = new GetChurnClientCountByOfferQueryHandler(_churnClientPredictionResultRepository.Object, _mediator.Object);
 
             //Act
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
 
             //Asset
             x.Success.Should().BeTrue();
-            ((List<ChurnClientPredictionResult>)x.Data).Count.Should().BeGreaterThan(1);
+            x.Data.Should().Be(1);
 
         }
 
-        [Test]
-        public async Task ChurnClientPredictionResult_CreateCommand_Success()
-        {
-            ChurnClientPredictionResult rt = null;
-            //Arrange
-            var command = new CreateChurnClientPredictionResultCommand();
-            //propertyler buraya yazılacak
-            //command.ChurnClientPredictionResultName = "deneme";
-
-            _churnClientPredictionResultRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(rt);
-
-            _churnClientPredictionResultRepository.Setup(x => x.Add(It.IsAny<ChurnClientPredictionResult>()));
-
-            var handler = new CreateChurnClientPredictionResultCommandHandler(_churnClientPredictionResultRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
-
-
-            x.Success.Should().BeTrue();
-            x.Message.Should().Be(Messages.Added);
-        }
-
-        [Test]
-        public async Task ChurnClientPredictionResult_CreateCommand_NameAlreadyExist()
-        {
-            //Arrange
-            var command = new CreateChurnClientPredictionResultCommand();
-            //propertyler buraya yazılacak 
-            //command.ChurnClientPredictionResultName = "test";
-
-            _churnClientPredictionResultRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ChurnClientPredictionResult, bool>>>()))
-                                           .ReturnsAsync(new List<ChurnClientPredictionResult> { new ChurnClientPredictionResult() { /*TODO:propertyler buraya yazılacak ChurnClientPredictionResultId = 1, ChurnClientPredictionResultName = "test"*/ } }.AsQueryable());
-
-            _churnClientPredictionResultRepository.Setup(x => x.Add(It.IsAny<ChurnClientPredictionResult>()));
-
-            var handler = new CreateChurnClientPredictionResultCommandHandler(_churnClientPredictionResultRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
-
-            x.Success.Should().BeFalse();
-            x.Message.Should().Be(Messages.NameAlreadyExist);
-        }
-
-        [Test]
-        public async Task ChurnClientPredictionResult_UpdateCommand_Success()
-        {
-            //Arrange
-            var command = new UpdateChurnClientPredictionResultCommand();
-            //command.ChurnClientPredictionResultName = "test";
-
-            _churnClientPredictionResultRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ChurnClientPredictionResult() { /*TODO:propertyler buraya yazılacak ChurnClientPredictionResultId = 1, ChurnClientPredictionResultName = "deneme"*/ });
-
-            _churnClientPredictionResultRepository.Setup(x => x.UpdateAsync(It.IsAny<ObjectId>(), It.IsAny<ChurnClientPredictionResult>()));
-
-            var handler = new UpdateChurnClientPredictionResultCommandHandler(_churnClientPredictionResultRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
-
-
-            x.Success.Should().BeTrue();
-            x.Message.Should().Be(Messages.Updated);
-        }
-
-        [Test]
-        public async Task ChurnClientPredictionResult_DeleteCommand_Success()
-        {
-            //Arrange
-            var command = new DeleteChurnClientPredictionResultCommand();
-
-            _churnClientPredictionResultRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                        .ReturnsAsync(new ChurnClientPredictionResult() { /*TODO:propertyler buraya yazılacak ChurnClientPredictionResultId = 1, ChurnClientPredictionResultName = "deneme"*/});
-
-            _churnClientPredictionResultRepository.Setup(x => x.Delete(It.IsAny<ChurnClientPredictionResult>()));
-
-            var handler = new DeleteChurnClientPredictionResultCommandHandler(_churnClientPredictionResultRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
-
-
-            x.Success.Should().BeTrue();
-            x.Message.Should().Be(Messages.Deleted);
-        }
     }
 }
 
