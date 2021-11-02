@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Utilities.Results;
 
 namespace WebAPI.Controllers
 {
@@ -23,8 +24,8 @@ namespace WebAPI.Controllers
         ///<return>List LevelBaseDieDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelBaseDieData>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelBaseDieData>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(string ProjectId)
         {
@@ -34,9 +35,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         ///<summary>
@@ -46,8 +47,8 @@ namespace WebAPI.Controllers
         ///<return>List LevelBaseDieDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelbaseFailDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseFailDto>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getLevelbaseFailDtoByProjectId")]
         public async Task<IActionResult> GetLevelbaseFailDtoByProjectId(string ProjectId)
         {
@@ -57,9 +58,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
 
@@ -71,8 +72,8 @@ namespace WebAPI.Controllers
         ///<return>List LevelBaseDieDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DailyDieCountDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<DailyDieCountDto>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getDailyDieCountDto")]
         public async Task<IActionResult> GetDailyDieCountDto(string ProjectId)
         {
@@ -82,9 +83,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         
@@ -94,17 +95,17 @@ namespace WebAPI.Controllers
         /// <param name="deleteLevelBaseDieData"></param>
         /// <returns></returns>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
         public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteLevelBaseDieDataByProjectIdCommand deleteLevelBaseDieData)
         {
             var result = await Mediator.Send(deleteLevelBaseDieData);
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
     }
 }

@@ -6,6 +6,7 @@ using Entities.Concrete;
 using System.Collections.Generic;
 using MongoDB.Bson;
 using Business.Handlers.MlResults.Queries;
+using Core.Utilities.Results;
 
 namespace WebAPI.Controllers
 {
@@ -24,8 +25,8 @@ namespace WebAPI.Controllers
         ///<return>List MlResultModels</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChurnBlokerMlResult>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<ChurnBlokerMlResult>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getListbyProductIdAndProjectId")]
         public async Task<IActionResult> GetListByProductIdAndProjectId(string ProjectId, int ProductId)
         {
@@ -37,9 +38,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Utilities.Results;
 
 namespace WebAPI.Controllers
 {
@@ -23,8 +24,8 @@ namespace WebAPI.Controllers
         ///<return>List AdvEvents</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AdvEvent>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<AdvEvent>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(string ProjectId)
         {
@@ -35,9 +36,9 @@ namespace WebAPI.Controllers
 
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         ///<summary>
@@ -47,8 +48,8 @@ namespace WebAPI.Controllers
         ///<return>List AdvEvents</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClickbaseAdvEventDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<ClickbaseAdvEventDto>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getClickbaseAdvEventByProjectId")]
         public async Task<IActionResult> getClickbaseAdvEventDtoListQuery(string ProjectId)
         {
@@ -59,9 +60,9 @@ namespace WebAPI.Controllers
 
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
         
 
@@ -71,17 +72,17 @@ namespace WebAPI.Controllers
         /// <param name="deleteAdvEvent"></param>
         /// <returns></returns>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
         public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteAdvEventByProjectIdCommand deleteAdvEvent)
         {
             var result = await Mediator.Send(deleteAdvEvent);
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
     }

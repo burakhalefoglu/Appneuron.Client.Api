@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Utilities.Results;
 
 namespace WebAPI.Controllers
 {
@@ -23,8 +24,8 @@ namespace WebAPI.Controllers
         ///<return>List LevelBaseSessionDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelBaseSessionData>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelBaseSessionData>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(string ProjectId)
         {
@@ -34,9 +35,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
 
@@ -47,8 +48,8 @@ namespace WebAPI.Controllers
         ///<return>List LevelBaseSessionDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelbaseSessionWithPlayingTimeDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseSessionWithPlayingTimeDto>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getLevelbaseSessionWithPlayingTimeDtoByProjectId")]
         public async Task<IActionResult> GetLevelbaseSessionWithPlayingTimeDtoByProjectId(string ProjectId)
         {
@@ -58,9 +59,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
 
@@ -71,8 +72,8 @@ namespace WebAPI.Controllers
         ///<return>List LevelBaseSessionDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelbaseSessionDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseSessionDto>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getSessionDtoByProjectId")]
         public async Task<IActionResult> GetSessionDtoByProjectId(string ProjectId)
         {
@@ -82,9 +83,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         /// <summary>
@@ -93,17 +94,17 @@ namespace WebAPI.Controllers
         /// <param name="deleteLevelBaseSessionData"></param>
         /// <returns></returns>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
         public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteLevelBaseSessionDataByProjectIdCommand deleteLevelBaseSessionData)
         {
             var result = await Mediator.Send(deleteLevelBaseSessionData);
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
     }
 }

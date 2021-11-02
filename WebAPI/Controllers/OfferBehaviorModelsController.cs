@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Entities.Concrete;
 using System.Collections.Generic;
+using Core.Utilities.Results;
 using MongoDB.Bson;
 namespace WebAPI.Controllers
 {
@@ -25,8 +26,8 @@ namespace WebAPI.Controllers
         ///<return>List OfferBehaviorModels</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OfferBehaviorModel>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<OfferBehaviorModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<OfferBehaviorModel>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getDtoList")]
         public async Task<IActionResult> GetDtoList(string projectId,
             string name,

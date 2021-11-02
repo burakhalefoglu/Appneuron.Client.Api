@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Entities.Concrete;
 using System.Collections.Generic;
+using Core.Utilities.Results;
 using MongoDB.Bson;
 namespace WebAPI.Controllers
 {
@@ -26,8 +27,8 @@ namespace WebAPI.Controllers
         ///<return>List Clients</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClientDataModel>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<ClientDataModel>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("GetListByProject")]
         public async Task<IActionResult> GetListByProject(string ProjectId)
         {
@@ -37,9 +38,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
     }
 }

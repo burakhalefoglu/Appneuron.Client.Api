@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Utilities.Results;
 
 namespace WebAPI.Controllers
 {
@@ -23,8 +24,8 @@ namespace WebAPI.Controllers
         ///<return>List EveryLoginLevelDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EveryLoginLevelData>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<EveryLoginLevelData>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(string ProjectId)
         {
@@ -35,9 +36,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         ///<summary>
@@ -47,8 +48,8 @@ namespace WebAPI.Controllers
         ///<return>List EveryLoginLevelDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TotalPowerUsageDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<TotalPowerUsageDto>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getTotalPowerUsageDtoByProjectId")]
         public async Task<IActionResult> GetTotalPowerUsageDtoByProjectId(string ProjectId)
         {
@@ -58,9 +59,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
 
@@ -71,8 +72,8 @@ namespace WebAPI.Controllers
         ///<return>List EveryLoginLevelDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelbasePowerUsageDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbasePowerUsageDto>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getLevelbasePowerUsageDtoByProjectIdQuery")]
         public async Task<IActionResult> GetLevelbasePowerUsageDtoByProjectId(string ProjectId)
         {
@@ -82,9 +83,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
 
@@ -95,8 +96,8 @@ namespace WebAPI.Controllers
         ///<return>List EveryLoginLevelDatas</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LevelbaseFinishScoreDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseFinishScoreDto>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getLevelbaseFinishScoreByProjectIdQuery")]
         public async Task<IActionResult> GetLevelbaseFinishScoreByProjectId(string ProjectId)
         {
@@ -106,9 +107,9 @@ namespace WebAPI.Controllers
             });
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         
@@ -118,17 +119,17 @@ namespace WebAPI.Controllers
         /// <param name="deleteEveryLoginLevelData"></param>
         /// <returns></returns>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
         public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteEveryLoginLevelDataByProjectIdCommand deleteEveryLoginLevelData)
         {
             var result = await Mediator.Send(deleteEveryLoginLevelData);
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
     }
 }
