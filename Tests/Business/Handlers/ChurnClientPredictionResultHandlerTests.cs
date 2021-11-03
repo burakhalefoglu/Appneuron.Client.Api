@@ -70,14 +70,15 @@ namespace Tests.Business.HandlersTest
         }
 
         [Test]
-        public async Task ChurnClientPredictionResult_GetQueries_Success()
+        public async Task ChurnClientPredictionResult_GetByOfferQueries_Success()
         {
             //Arrange
             var query = new GetChurnClientCountByOfferQuery();
             query.Name = "test";
-            query.FinishTime = DateTime.Now;
+            query.FinishTime = new DateTime(2000, 4, 20);
             query.ProjectId = "dfsdfgsgfjlsd";
             query.Version = 1;
+            query.StartTime =new DateTime(2000, 4, 16);
 
             _churnClientPredictionResultRepository.Setup(x =>
                     x.GetListAsync(It.IsAny<Expression<Func<ChurnClientPredictionResult, bool>>>()))
@@ -90,11 +91,29 @@ namespace Tests.Business.HandlersTest
                                 {
                                     new ClientsOfferModelDto()
                                     {
+                                        FinishTime = new DateTime(2000, 4, 19),
+                                        OfferName = "test",
+                                        StartTime = new DateTime(2000, 4, 17),
+                                        Version = 1
+                                    },                                    new ClientsOfferModelDto()
+                                    {
+                                        FinishTime = DateTime.Now,
+                                        OfferName = "test",
+                                        StartTime = DateTime.Now,
+                                        Version = 2
+                                    },                                    new ClientsOfferModelDto()
+                                    {
                                         FinishTime = DateTime.Now,
                                         OfferName = "test",
                                         StartTime = DateTime.Now,
                                         Version = 1
-                                    }
+                                    },                                    new ClientsOfferModelDto()
+                                    {
+                                        FinishTime = new DateTime(2000, 4, 19),
+                                        OfferName = "test",
+                                        StartTime = new DateTime(2000, 4, 18),
+                                        Version = 1
+                                    },
 
                                 },
                                 Id = new ObjectId(),
@@ -110,7 +129,7 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            x.Data.Should().Be(1);
+            x.Data.Should().Be(2);
 
         }
 

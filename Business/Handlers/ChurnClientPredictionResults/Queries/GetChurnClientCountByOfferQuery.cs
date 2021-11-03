@@ -36,14 +36,28 @@ namespace Business.Handlers.ChurnClientPredictionResults.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<int>> Handle(GetChurnClientCountByOfferQuery request, CancellationToken cancellationToken)
             {
-                var result = await _churnClientPredictionResultRepository.GetListAsync(
-                    c => c.ClientsOfferModelDto.ToList().Exists(c => c.OfferName == request.Name &&
-                     c.Version == request.Version &&
-                     c.StartTime >= request.StartTime &&
-                     c.FinishTime <= request.FinishTime) && c.ProjectId == request.ProjectId);
+                var counter = 0;
 
-                return new SuccessDataResult<int>(
-                    result.ToList().Count);
+                var result = await
+                    _churnClientPredictionResultRepository.GetListAsync(
+                        c => c.ProjectId == request.ProjectId);
+
+                result.ToList().ForEach(x =>
+                {
+                    x.ClientsOfferModelDto.ToList().ForEach(c =>
+                    {
+                        if (c.OfferName == request.Name &&
+                            c.Version == request.Version &&
+                            c.StartTime >= request.StartTime &&
+                            c.FinishTime <= request.FinishTime)
+                        {
+                            counter += 1;
+                        }
+                    });
+
+                });
+
+                return new SuccessDataResult<int>(counter);
             }
         }
     }

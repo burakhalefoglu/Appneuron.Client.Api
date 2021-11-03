@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Security;
+using Core.Entities.Dtos;
+using Newtonsoft.Json;
 
 namespace Business.BusinessAspects
 {
@@ -33,7 +34,7 @@ namespace Business.BusinessAspects
             _operationClaimCrypto = Configuration.GetSection("OperationClaimCrypto").Get<OperationClaimCrypto>();
         }
 
-        protected override void OnBefore(IInvocation invocation)
+        protected override async void OnBefore(IInvocation invocation)
         {
 
             var userId = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type.EndsWith("nameidentifier"))?.Value;
@@ -52,6 +53,8 @@ namespace Business.BusinessAspects
                 throw new SecurityException(Messages.AuthorizationsDenied);
 
 
+            var entity = invocation.Arguments[0];
+            var projectIdModel = JsonConvert.DeserializeObject<ProjectIdDto>(JsonConvert.SerializeObject(entity));
 
             if (_httpContextAccessor.HttpContext?.Request.Query["ProjectId"].ToString().Length > 0)
             {
@@ -64,6 +67,19 @@ namespace Business.BusinessAspects
                 });
 
                 if (!ProjectIdList.Contains(ProjectId))
+                    throw new SecurityException(Messages.AuthorizationsDenied);
+            }
+            
+            if (projectIdModel.ProjectId != "")
+            {
+                var projectList = _httpContextAccessor.HttpContext?.User.Claims.Where(x => x.Type.EndsWith("ProjectId")).ToList();
+                List<string> ProjectIdList = new List<string>();
+                projectList.ForEach((x) =>
+                {
+                    ProjectIdList.Add(x.Value.ToString());
+                });
+
+                if (!ProjectIdList.Contains(projectIdModel.ProjectId))
                     throw new SecurityException(Messages.AuthorizationsDenied);
             }
 
