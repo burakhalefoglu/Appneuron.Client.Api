@@ -22,10 +22,10 @@ namespace WebAPI.Controllers
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
-        [HttpGet()]
+        [HttpGet("get")]
         public Task<IActionResult> CheckHealth()
         {
-            return Task.FromResult<IActionResult>(Ok(new SuccessResult("Success")));
+            return Task.FromResult<IActionResult>(Ok(new SuccessResult()));
         }
     }
 }

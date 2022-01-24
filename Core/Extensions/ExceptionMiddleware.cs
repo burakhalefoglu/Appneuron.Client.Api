@@ -58,6 +58,7 @@ namespace Core.Extensions
             else
             {
                 message = ExceptionMessage.InternalServerError;
+                //message = e.Message;
             }
 
             await httpContext.Response.WriteAsync(message);
