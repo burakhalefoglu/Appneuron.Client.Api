@@ -31,7 +31,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Commands
             }
 
             [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(LogstashLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteLevelBaseSessionDataByProjectIdCommand request, CancellationToken cancellationToken)
             {

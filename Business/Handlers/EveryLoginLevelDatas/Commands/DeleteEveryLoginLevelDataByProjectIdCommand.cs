@@ -31,7 +31,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
             }
 
             [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(LogstashLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteEveryLoginLevelDataByProjectIdCommand request, CancellationToken cancellationToken)
             {

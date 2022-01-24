@@ -24,7 +24,7 @@ namespace Business.Handlers.ChurnDates.Queries
                 _churnDateRepository = churnDateRepository;
                 _mediator = mediator;
             }
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(LogstashLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<ChurnDate>> Handle(GetChurnDateByProjectIdQuery request, CancellationToken cancellationToken)
             {

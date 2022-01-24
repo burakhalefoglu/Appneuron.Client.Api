@@ -30,7 +30,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
 
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(LogstashLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelBaseSessionData>>> Handle(GetLevelBaseSessionDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {

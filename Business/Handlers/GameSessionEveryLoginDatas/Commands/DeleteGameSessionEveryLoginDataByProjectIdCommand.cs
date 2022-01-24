@@ -31,7 +31,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
             }
 
             [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(LogstashLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteGameSessionEveryLoginDataByProjectIdCommand request, CancellationToken cancellationToken)
             {

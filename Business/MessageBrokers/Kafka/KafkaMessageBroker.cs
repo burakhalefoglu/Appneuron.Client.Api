@@ -24,7 +24,7 @@ namespace Business.MessageBrokers.Kafka
         {
             _mediator = mediator;
             Configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
-            kafkaOptions = Configuration.GetSection("ApacheKafka").Get<KafkaOptions>();
+            kafkaOptions = Configuration.GetSection("MessageBrokerOptions").Get<KafkaOptions>();
 
         }
 

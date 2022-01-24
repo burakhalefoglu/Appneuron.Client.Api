@@ -35,7 +35,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
 
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(LogstashLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<RetentionDataWithSessionDto>> Handle(GetRetentionDataDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {

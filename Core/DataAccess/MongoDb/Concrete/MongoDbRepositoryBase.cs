@@ -19,13 +19,10 @@ namespace Core.DataAccess.MongoDb.Concrete
         protected MongoDbRepositoryBase(MongoConnectionSettings mongoConnectionSetting, string collectionName)
         {
             CollectionName = collectionName;
-
-            ConnectionSettingControl(mongoConnectionSetting);
-
-            var client = mongoConnectionSetting.GetMongoClientSettings() == null ?
-                                new MongoClient(mongoConnectionSetting.ConnectionString) :
-                                new MongoClient(mongoConnectionSetting.GetMongoClientSettings());
-
+            var url =
+                $"mongodb://{mongoConnectionSetting.UserName}:{mongoConnectionSetting.Password}@{mongoConnectionSetting.Host}:{mongoConnectionSetting.Port}/?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+            var client = new MongoClient(url);
+            
             var database = client.GetDatabase(mongoConnectionSetting.DatabaseName);
             _collection = database.GetCollection<T>(collectionName);
         }
@@ -134,19 +131,7 @@ namespace Core.DataAccess.MongoDb.Concrete
         {
             await _collection.FindOneAndReplaceAsync(predicate, record);
         }
-
-        private void ConnectionSettingControl(MongoConnectionSettings settings)
-        {
-            if (settings.GetMongoClientSettings() != null &&
-                        (string.IsNullOrEmpty(CollectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
-                throw new Exception(DocumentDbMessages.NullOremptyMessage);
-
-            if (string.IsNullOrEmpty(CollectionName) ||
-                        string.IsNullOrEmpty(settings.ConnectionString) ||
-                        string.IsNullOrEmpty(settings.DatabaseName))
-                throw new Exception(DocumentDbMessages.NullOremptyMessage);
-        }
-
+        
         public bool Any(Expression<Func<T, bool>> predicate = null)
         {
             var data = predicate == null

@@ -32,7 +32,7 @@ namespace Business.Handlers.ChurnClientPredictionResults.Queries
                 _churnClientPredictionResultRepository = churnClientPredictionResultRepository;
                 _mediator = mediator;
             }
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(LogstashLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<int>> Handle(GetChurnClientCountByOfferQuery request, CancellationToken cancellationToken)
             {
