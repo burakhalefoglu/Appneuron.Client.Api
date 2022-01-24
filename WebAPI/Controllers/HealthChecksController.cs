@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,11 +21,11 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
         [HttpGet()]
         public Task<IActionResult> CheckHealth()
         {
-            return Task.FromResult<IActionResult>(Ok("ok"));
+            return Task.FromResult<IActionResult>(Ok(new SuccessResult("Success")));
         }
     }
 }
