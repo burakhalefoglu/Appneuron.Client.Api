@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class MlResultController : BaseApiController
+    public class MlResultsController : BaseApiController
     {
 
         ///<summary>
