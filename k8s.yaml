@@ -34,7 +34,7 @@ spec:
         app: client-server 
     spec:
       nodeSelector:
-        dedicated: deamond
+        dedicated: spot
       volumes:
         - name: appconfig
           secret:
