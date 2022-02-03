@@ -33,7 +33,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
 
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(LogstashLogger))]
+            [LogAspect(typeof(ConsoleLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbaseFailDto>>> Handle(GetLevelbaseFailDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {

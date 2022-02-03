@@ -29,7 +29,7 @@ namespace Business.Handlers.BuyingEvents.Queries
 
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(LogstashLogger))]
+            [LogAspect(typeof(ConsoleLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<BuyingEvent>>> Handle(GetBuyingEventsByProjectIdQuery request, CancellationToken cancellationToken)
             {

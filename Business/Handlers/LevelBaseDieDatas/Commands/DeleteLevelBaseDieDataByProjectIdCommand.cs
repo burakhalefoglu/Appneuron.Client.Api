@@ -31,7 +31,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Commands
             }
 
             [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(LogstashLogger))]
+            [LogAspect(typeof(ConsoleLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteLevelBaseDieDataByProjectIdCommand request, CancellationToken cancellationToken)
             {

@@ -34,7 +34,7 @@ namespace Business.Handlers.ChurnDates.Commands
 
             [ValidationAspect(typeof(CreateChurnDateValidator), Priority = 1)]
             [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(LogstashLogger))]
+            [LogAspect(typeof(ConsoleLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateChurnDateCommand request, CancellationToken cancellationToken)
             {

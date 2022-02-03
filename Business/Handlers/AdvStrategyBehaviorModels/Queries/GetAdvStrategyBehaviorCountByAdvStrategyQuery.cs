@@ -30,7 +30,7 @@ namespace Business.Handlers.AdvStrategyBehaviorModels.Queries
                 _advStrategyBehaviorModelRepository = advStrategyBehaviorModelRepository;
                 _mediator = mediator;
             }
-            [LogAspect(typeof(LogstashLogger))]
+            [LogAspect(typeof(ConsoleLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<int>> Handle(GetAdvStrategyBehaviorCountByAdvStrategyQuery request, CancellationToken cancellationToken)
             {

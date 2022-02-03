@@ -30,7 +30,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
 
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(LogstashLogger))]
+            [LogAspect(typeof(ConsoleLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<GameSessionEveryLoginData>>> Handle(GetGameSessionEveryLoginDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
