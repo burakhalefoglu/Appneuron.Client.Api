@@ -22,12 +22,10 @@ namespace Business.Handlers.ChurnClientPredictionResults.Queries
         public class GetChurnClientCountByDateQueryHandler : IRequestHandler<GetChurnClientCountByDateQuery, IDataResult<int>>
         {
             private readonly IChurnClientPredictionResultRepository _churnClientPredictionResultRepository;
-            private readonly IMediator _mediator;
 
-            public GetChurnClientCountByDateQueryHandler(IChurnClientPredictionResultRepository churnClientPredictionResultRepository, IMediator mediator)
+            public GetChurnClientCountByDateQueryHandler(IChurnClientPredictionResultRepository churnClientPredictionResultRepository)
             {
                 _churnClientPredictionResultRepository = churnClientPredictionResultRepository;
-                _mediator = mediator;
             }
             [LogAspect(typeof(ConsoleLogger))]
             [SecuredOperation(Priority = 1)]
@@ -36,7 +34,8 @@ namespace Business.Handlers.ChurnClientPredictionResults.Queries
                 var result = await _churnClientPredictionResultRepository.GetListAsync(
                         c => c.ProjectId == request.ProjectId &&
                              c.ChurnPredictionDate >= request.StartTime &&
-                             c.ChurnPredictionDate <= request.FinishTime);
+                             c.ChurnPredictionDate <= request.FinishTime &&
+                             c.Status == true);
                
 
                 return new SuccessDataResult<int>(

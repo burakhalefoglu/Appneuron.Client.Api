@@ -15,16 +15,14 @@ namespace Business.Handlers.BuyingEvents.Queries
 {
     public class GetBuyingEventsByProjectIdQuery : IRequest<IDataResult<IEnumerable<BuyingEvent>>>
     {
-        public string ProjectID { get; set; }
+        public string ProjectId { get; set; }
         public class GetBuyingEventsByProjectIdQueryHandler : IRequestHandler<GetBuyingEventsByProjectIdQuery, IDataResult<IEnumerable<BuyingEvent>>>
         {
             private readonly IBuyingEventRepository _buyingEventRepository;
-            private readonly IMediator _mediator;
 
-            public GetBuyingEventsByProjectIdQueryHandler(IBuyingEventRepository buyingEventRepository, IMediator mediator)
+            public GetBuyingEventsByProjectIdQueryHandler(IBuyingEventRepository buyingEventRepository)
             {
                 _buyingEventRepository = buyingEventRepository;
-                _mediator = mediator;
             }
 
             [PerformanceAspect(5)]
@@ -34,8 +32,9 @@ namespace Business.Handlers.BuyingEvents.Queries
             public async Task<IDataResult<IEnumerable<BuyingEvent>>> Handle(GetBuyingEventsByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<BuyingEvent>>
-                    (await _buyingEventRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
+                    (await _buyingEventRepository.GetListAsync(p=>p.ProjectId == request.ProjectId && p.Status == true));
             }
         }
     }
 }
+

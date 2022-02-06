@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
         {
             var result = await Mediator.Send(new GetBuyingEventsByProjectIdQuery { 
             
-                ProjectID = ProjectId
+                ProjectId = ProjectId
             });
             
             if (result.Success)
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         [HttpGet("getBuyingEventdtoByProjectId")]
         public async Task<IActionResult> GetBuyingEventdtoByProjectId(string ProjectId)
         {
-            var result = await Mediator.Send(new GetBuyingEventdtoByProjectIdQuery
+            var result = await Mediator.Send(new GetBuyingEventByProjectIdQuery
             {
 
                 ProjectId = ProjectId

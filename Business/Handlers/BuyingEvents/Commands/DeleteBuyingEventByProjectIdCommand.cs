@@ -1,4 +1,5 @@
-﻿using Business.BusinessAspects;
+﻿using System.Linq;
+using Business.BusinessAspects;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
@@ -16,7 +17,7 @@ namespace Business.Handlers.BuyingEvents.Commands
     /// </summary>
     public class DeleteBuyingEventByProjectIdCommand : IRequest<IResult>
     {
-        public string ProjectID { get; set; }
+        public string ProjectId { get; set; }
 
         public class DeleteBuyingEventByProjectIdCommandHandler : IRequestHandler<DeleteBuyingEventByProjectIdCommand, IResult>
         {
@@ -32,7 +33,14 @@ namespace Business.Handlers.BuyingEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteBuyingEventByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _buyingEventRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
+                var repos =await _buyingEventRepository.GetListAsync(p => p.ProjectId == request.ProjectId);
+                foreach (var buyingEvent in repos.ToList())
+                {
+                    buyingEvent.Status = false;
+                    await _buyingEventRepository.UpdateAsync(buyingEvent, p=>p.ProjectId == request.ProjectId);
+  
+                }
+                
 
                 return new SuccessResult(Messages.Deleted);
             }

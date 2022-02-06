@@ -8,10 +8,11 @@ namespace Entities.Concrete
         public string ClientId { get; set; }
         public string ProjectId { get; set; }
         public string CustomerId { get; set; }
-        public string TrigersInlevelName { get; set; }
+        public string TriggersLevelName { get; set; }
         public string AdvType { get; set; }
         public int DifficultyLevel { get; set; }
         public float InMinutes { get; set; }
-        public DateTime TrigerdTime { get; set; }
+        public DateTime TriggerTime { get; set; }
+        public bool Status = true;
     }
 }

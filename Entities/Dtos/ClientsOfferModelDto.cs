@@ -10,5 +10,6 @@ namespace Entities.Dtos
         public string OfferName { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
+        public bool Status = true;
     }
 }

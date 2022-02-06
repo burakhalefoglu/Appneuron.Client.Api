@@ -20,15 +20,14 @@ namespace Business.Handlers.AdvEvents.Queries
     public class GetClickBaseAdvEventDtoListQuery : IRequest<IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
     {
         public string ProjectId { get; set; }
-        public class GetClickBaseAdvEventDtoListQueryHandler : IRequestHandler<GetClickBaseAdvEventDtoListQuery, IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
+        public class GetClickBaseAdvEventDtoListQueryHandler : IRequestHandler<GetClickBaseAdvEventDtoListQuery, 
+            IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
         {
             private readonly IAdvEventRepository _advEventRepository;
-            private readonly IMediator _mediator;
 
-            public GetClickBaseAdvEventDtoListQueryHandler(IAdvEventRepository advEventRepository, IMediator mediator)
+            public GetClickBaseAdvEventDtoListQueryHandler(IAdvEventRepository advEventRepository)
             {
                 _advEventRepository = advEventRepository;
-                _mediator = mediator;
             }
 
             [PerformanceAspect(5)]
@@ -37,31 +36,32 @@ namespace Business.Handlers.AdvEvents.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<ClickbaseAdvEventDto>>> Handle(GetClickBaseAdvEventDtoListQuery request, CancellationToken cancellationToken)
             {
-                var advEventList = await _advEventRepository.GetListAsync(adv => adv.ProjectId == request.ProjectId);
-                var clickbaseAdvEventDtoList = new List<ClickbaseAdvEventDto>();
+                var advEventList = await _advEventRepository.GetListAsync(adv 
+                    => adv.ProjectId == request.ProjectId && adv.Status == true);
+                var clickBaseAdvEventDtoList = new List<ClickbaseAdvEventDto>();
                 advEventList.ToList().ForEach(adv =>
                 {
-                    var filterDate = new DateTime(adv.TrigerdTime.Day,
-                        adv.TrigerdTime.Month,
-                        adv.TrigerdTime.Year);
-                    var resultEvent = clickbaseAdvEventDtoList.FirstOrDefault(c => c.TrigerdDay == filterDate);
+                    var filterDate = new DateTime(adv.TriggerTime.Day,
+                        adv.TriggerTime.Month,
+                        adv.TriggerTime.Year);
+                    var resultEvent = clickBaseAdvEventDtoList.FirstOrDefault(c => c.TrigerdDay == filterDate);
                     if (resultEvent == null)
                     {
-                        var clickbaseAdvEventDto = new ClickbaseAdvEventDto();
-                        clickbaseAdvEventDto.ClientClickDtoList.Append(new ClientClickDto
+                        var clickBaseAdvEventDto = new ClickbaseAdvEventDto();
+                        _ = clickBaseAdvEventDto.ClientClickDtoList.Append(new ClientClickDto
                         {
                             ClickCount = 1,
                             ClientId = adv.ClientId
                         });
-                        clickbaseAdvEventDto.TrigerdDay = filterDate;
-                        clickbaseAdvEventDtoList.Add(clickbaseAdvEventDto);
+                        clickBaseAdvEventDto.TrigerdDay = filterDate;
+                        clickBaseAdvEventDtoList.Add(clickBaseAdvEventDto);
                     }
                     else
                     {
                         var clientResult = resultEvent.ClientClickDtoList.FirstOrDefault(c => c.ClientId == adv.ClientId);
                         if(clientResult == null)
                         {
-                            resultEvent.ClientClickDtoList.Append(new ClientClickDto
+                            _ = resultEvent.ClientClickDtoList.Append(new ClientClickDto
                             {
                                 ClientId = adv.ClientId,
                                 ClickCount = 1
@@ -75,7 +75,7 @@ namespace Business.Handlers.AdvEvents.Queries
                 });
 
 
-                return new SuccessDataResult<IEnumerable<ClickbaseAdvEventDto>>(clickbaseAdvEventDtoList);
+                return new SuccessDataResult<IEnumerable<ClickbaseAdvEventDto>>(clickBaseAdvEventDtoList);
             }
         }
     }

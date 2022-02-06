@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
         {
             var result = await Mediator.Send(new GetAdvEventsByProjectIdQuery { 
             
-                ProjectID = ProjectId
+                ProjectId = ProjectId
             });
 
             if (result.Success)

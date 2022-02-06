@@ -15,7 +15,7 @@ namespace Business.Handlers.AdvEvents.Queries
 {
     public class GetAdvEventsByProjectIdQuery : IRequest<IDataResult<IEnumerable<AdvEvent>>>
     {
-        public string ProjectID { get; set; }
+        public string ProjectId { get; set; }
 
         public class GetAdvEventsByProjectIdQueryHandler : IRequestHandler<GetAdvEventsByProjectIdQuery, IDataResult<IEnumerable<AdvEvent>>>
         {
@@ -34,7 +34,8 @@ namespace Business.Handlers.AdvEvents.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<AdvEvent>>> Handle(GetAdvEventsByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<IEnumerable<AdvEvent>>(await _advEventRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
+                return new SuccessDataResult<IEnumerable<AdvEvent>>(await _advEventRepository
+                    .GetListAsync(p=>p.ProjectId == request.ProjectId && p.Status == true));
             }
         }
     }

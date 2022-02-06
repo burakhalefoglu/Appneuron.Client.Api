@@ -10,5 +10,6 @@ namespace Entities.Concrete
         public string ProjectId { get; set; }
         public DateTime ChurnPredictionDate { get; set; }
         public ClientsOfferModelDto[] ClientsOfferModelDto { get; set; }
+        public bool Status = true;
     }
 }
