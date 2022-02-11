@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface ILevelBaseDieDataRepository : IDocumentDbRepository<LevelBaseDieData>
+    public interface ILevelBaseDieDataRepository : IRepository<LevelBaseDieData>
     {
     }
 }

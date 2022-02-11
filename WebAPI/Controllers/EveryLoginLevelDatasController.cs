@@ -27,11 +27,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<EveryLoginLevelData>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
-        public async Task<IActionResult> GetByProjectId(string ProjectId)
+        public async Task<IActionResult> GetByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetEveryLoginLevelDatasByProjectIdQuery { 
             
-                ProjectID = ProjectId
+                ProjectId = projectId
 
             });
             if (result.Success)
@@ -51,11 +51,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<TotalPowerUsageDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getTotalPowerUsageDtoByProjectId")]
-        public async Task<IActionResult> GetTotalPowerUsageDtoByProjectId(string ProjectId)
+        public async Task<IActionResult> GetTotalPowerUsageDtoByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetTotalPowerUsageDtoByProjectIdQuery
             {
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {
@@ -74,12 +74,12 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbasePowerUsageDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpGet("getLevelbasePowerUsageDtoByProjectIdQuery")]
-        public async Task<IActionResult> GetLevelbasePowerUsageDtoByProjectId(string ProjectId)
+        [HttpGet("getLevelBasePowerUsageDtoByProjectIdQuery")]
+        public async Task<IActionResult> GetLevelBasePowerUsageDtoByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetLevelbasePowerUsageDtoByProjectIdQuery
             {
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {
@@ -98,12 +98,12 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseFinishScoreDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpGet("getLevelbaseFinishScoreByProjectIdQuery")]
-        public async Task<IActionResult> GetLevelbaseFinishScoreByProjectId(string ProjectId)
+        [HttpGet("getLevelBaseFinishScoreByProjectIdQuery")]
+        public async Task<IActionResult> GetLevelBaseFinishScoreByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetLevelbaseFinishScoreByProjectIdQuery
             {
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {

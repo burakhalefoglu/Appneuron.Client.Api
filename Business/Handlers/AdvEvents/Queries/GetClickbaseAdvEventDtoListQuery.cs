@@ -19,7 +19,7 @@ namespace Business.Handlers.AdvEvents.Queries
 
     public class GetClickBaseAdvEventDtoListQuery : IRequest<IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetClickBaseAdvEventDtoListQueryHandler : IRequestHandler<GetClickBaseAdvEventDtoListQuery, 
             IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
         {

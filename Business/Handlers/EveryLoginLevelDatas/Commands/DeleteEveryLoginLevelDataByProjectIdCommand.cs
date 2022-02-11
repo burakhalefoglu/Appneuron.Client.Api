@@ -17,7 +17,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
     /// </summary>
     public class DeleteEveryLoginLevelDataByProjectIdCommand : IRequest<IResult>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class DeleteEveryLoginLevelDataByProjectIdCommandHandler : IRequestHandler<DeleteEveryLoginLevelDataByProjectIdCommand, IResult>
         {
@@ -35,8 +35,12 @@ namespace Business.Handlers.EveryLoginLevelDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteEveryLoginLevelDataByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _everyLoginLevelDataRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
-
+                var result = await _everyLoginLevelDataRepository.GetAsync(p=>p.ProjectId == request.ProjectId && p.Status == true);
+                if (result is null)
+                    return new ErrorResult(Messages.NotFound);
+                result.Status = false;
+                
+                await _everyLoginLevelDataRepository.UpdateAsync(result);
                 return new SuccessResult(Messages.Deleted);
             }
         }

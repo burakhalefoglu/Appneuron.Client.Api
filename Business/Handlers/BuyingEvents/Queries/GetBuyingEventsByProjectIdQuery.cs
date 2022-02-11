@@ -15,7 +15,7 @@ namespace Business.Handlers.BuyingEvents.Queries
 {
     public class GetBuyingEventsByProjectIdQuery : IRequest<IDataResult<IEnumerable<BuyingEvent>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetBuyingEventsByProjectIdQueryHandler : IRequestHandler<GetBuyingEventsByProjectIdQuery, IDataResult<IEnumerable<BuyingEvent>>>
         {
             private readonly IBuyingEventRepository _buyingEventRepository;

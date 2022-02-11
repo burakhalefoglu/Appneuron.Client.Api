@@ -17,7 +17,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Commands
     /// </summary>
     public class DeleteLevelBaseSessionDataByProjectIdCommand : IRequest<IResult>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class DeleteLevelBaseSessionDataByProjectIdCommandHandler : IRequestHandler<DeleteLevelBaseSessionDataByProjectIdCommand, IResult>
         {
@@ -35,8 +35,12 @@ namespace Business.Handlers.LevelBaseSessionDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteLevelBaseSessionDataByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _levelBaseSessionDataRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
-
+                var result = await _levelBaseSessionDataRepository.GetAsync(p=>p.ProjectId == request.ProjectId && p.Status == true);
+                if (result is null)
+                    return new ErrorResult(Messages.NotFound);
+                result.Status = false;
+                
+                await _levelBaseSessionDataRepository.UpdateAsync(result);
                 return new SuccessResult(Messages.Deleted);
             }
         }

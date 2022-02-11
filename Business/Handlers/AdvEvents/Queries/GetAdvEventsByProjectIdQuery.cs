@@ -15,7 +15,7 @@ namespace Business.Handlers.AdvEvents.Queries
 {
     public class GetAdvEventsByProjectIdQuery : IRequest<IDataResult<IEnumerable<AdvEvent>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
         public class GetAdvEventsByProjectIdQueryHandler : IRequestHandler<GetAdvEventsByProjectIdQuery, IDataResult<IEnumerable<AdvEvent>>>
         {

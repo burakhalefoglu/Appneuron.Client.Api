@@ -1,20 +1,18 @@
-﻿
-using DataAccess.Abstract;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Entities.Concrete;
-using static Business.Internals.Handlers.Clients.CreateClientInternalCommand;
 using Business.Constants;
-using static Business.Internals.Handlers.Clients.GetClientByProjectIdInternalQuery;
-using MediatR;
 using Business.Internals.Handlers.Clients;
+using DataAccess.Abstract;
+using Entities.Concrete;
 using FluentAssertions;
-using MongoDB.Bson;
+using MediatR;
+using Moq;
+using NUnit.Framework;
+using static Business.Internals.Handlers.Clients.CreateClientInternalCommand;
+using static Business.Internals.Handlers.Clients.GetClientByProjectIdInternalQuery;
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
     [TestFixture]
     public class ClientHandlerTests
@@ -33,16 +31,15 @@ namespace Tests.Business.HandlersTest
         {
             //Arrange
             var query = new GetClientByProjectIdInternalQuery();
-            query.ClientId = "asdas";
-            query.ProjectId = "asfdzs";
+            query.ClientId = 1;
+            query.ProjectId = 21;
 
-            _clientRepository.Setup(x => x.GetByFilterAsync(
+            _clientRepository.Setup(x => x.GetAsync(
                     It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
                 .ReturnsAsync(new ClientDataModel()
                 {
-                    Id = new ObjectId(),
-                    ProjectId = "asfdzs",
-                    ClientId = "asdas",
+                    Id = 1,
+                    ProjectId = 21,
                     CreatedAt = new DateTime(),
                     IsPaidClient = 0,
                     PaidTime = DateTime.Now
@@ -55,7 +52,7 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            x.Data.ProjectId.Should().Be("asfdzs");
+            x.Data.ProjectId.Should().Be(21);
 
         }
 
@@ -63,11 +60,13 @@ namespace Tests.Business.HandlersTest
         [Test]
         public async Task Client_CreateCommand_Success()
         {
-            var command = new CreateClientInternalCommand();
-            command.ClientId = "sdfdsf";
-            command.ProjectKey = "sfd";
-            command.CreatedAt = new DateTime();
-            command.IsPaidClient = 0;
+            var command = new CreateClientInternalCommand
+            {
+                ClientId = 1,
+                ProjectId = 21,
+                CreatedAt = new DateTime(),
+                IsPaidClient = 0
+            };
 
             _clientRepository.Setup(x => x
                     .Any(It.IsAny<Expression<Func<ClientDataModel, bool>>>()))
@@ -84,8 +83,8 @@ namespace Tests.Business.HandlersTest
         public async Task Client_CreateCommand_NameAlreadyExist()
         {
             var command = new CreateClientInternalCommand();
-            command.ClientId = "sdfdsf";
-            command.ProjectKey = "sfd";
+            command.ClientId = 1;
+            command.ProjectId = 21;
             command.CreatedAt = new DateTime();
             command.IsPaidClient = 0;
 

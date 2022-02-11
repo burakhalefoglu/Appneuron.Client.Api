@@ -18,7 +18,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
 
     public class GetTotalPowerUsageDtoByProjectIdQuery : IRequest<IDataResult<IEnumerable<TotalPowerUsageDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetTotalPowerUsageDtoByProjectIdHandler : IRequestHandler<GetTotalPowerUsageDtoByProjectIdQuery, IDataResult<IEnumerable<TotalPowerUsageDto>>>
         {
             private readonly IEveryLoginLevelDataRepository _everyLoginLevelDataRepository;
@@ -42,7 +42,8 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
 
                 everyLoginLevelDataList.ToList().ForEach(e =>
                 {
-                    var resultPowerUsageDto = totalPowerUsageDtoList.FirstOrDefault(t => t.ClientId == e.ClientId && t.Date == e.DateTime);
+                    var resultPowerUsageDto = totalPowerUsageDtoList.FirstOrDefault(
+                        t => t.ClientId == e.ClientId && t.Date == e.DateTime && e.Status == true);
                    
                     if(resultPowerUsageDto!= null)
                     {

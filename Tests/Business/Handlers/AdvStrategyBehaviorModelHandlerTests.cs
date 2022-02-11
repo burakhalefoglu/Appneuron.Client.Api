@@ -1,20 +1,18 @@
-﻿
-using Business.Handlers.AdvStrategyBehaviorModels.Queries;
-using DataAccess.Abstract;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.AdvStrategyBehaviorModels.Queries.GetAdvStrategyBehaviorCountByAdvStrategyQuery;
+using Business.Handlers.AdvStrategyBehaviorModels.Queries;
+using DataAccess.Abstract;
 using Entities.Concrete;
-using MediatR;
-using System.Linq;
 using FluentAssertions;
-using MongoDB.Bson;
+using MediatR;
+using Moq;
+using NUnit.Framework;
+using static Business.Handlers.AdvStrategyBehaviorModels.Queries.GetAdvStrategyBehaviorCountByAdvStrategyQuery;
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
     [TestFixture]
     public class AdvStrategyBehaviorModelHandlerTests
@@ -41,10 +39,10 @@ namespace Tests.Business.HandlersTest
                             new AdvStrategyBehaviorModel()
                             {
                                 DateTime = DateTime.Now,
-                                ProjectId = "afasfdasd",
+                                ProjectId = 1,
                                 Version = 1,
-                                ClientId = "ascdsad",
-                                Id = new ObjectId(),
+                                ClientId = 12,
+                                Id = 2,
                                 Name = "dfsd"
                             }
                         }.AsQueryable());

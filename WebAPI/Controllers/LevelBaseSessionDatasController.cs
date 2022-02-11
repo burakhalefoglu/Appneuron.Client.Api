@@ -27,11 +27,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelBaseSessionData>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
-        public async Task<IActionResult> GetByProjectId(string ProjectId)
+        public async Task<IActionResult> GetByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetLevelBaseSessionDatasByProjectIdQuery
             {
-                ProjectID = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {
@@ -50,12 +50,12 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseSessionWithPlayingTimeDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpGet("getLevelbaseSessionWithPlayingTimeDtoByProjectId")]
-        public async Task<IActionResult> GetLevelbaseSessionWithPlayingTimeDtoByProjectId(string ProjectId)
+        [HttpGet("getLevelBaseSessionWithPlayingTimeDtoByProjectId")]
+        public async Task<IActionResult> GetLevelBaseSessionWithPlayingTimeDtoByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetLevelbaseSessionWithPlayingTimeDtoByProjectIdQuery
             {
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {
@@ -75,11 +75,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseSessionDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getSessionDtoByProjectId")]
-        public async Task<IActionResult> GetSessionDtoByProjectId(string ProjectId)
+        public async Task<IActionResult> GetSessionDtoByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetLevelBaseSessionDtoDatasByProjectIdQuery
             {
-                ProjectID = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {

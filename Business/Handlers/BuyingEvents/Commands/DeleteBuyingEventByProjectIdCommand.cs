@@ -17,7 +17,7 @@ namespace Business.Handlers.BuyingEvents.Commands
     /// </summary>
     public class DeleteBuyingEventByProjectIdCommand : IRequest<IResult>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
         public class DeleteBuyingEventByProjectIdCommandHandler : IRequestHandler<DeleteBuyingEventByProjectIdCommand, IResult>
         {
@@ -33,11 +33,11 @@ namespace Business.Handlers.BuyingEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteBuyingEventByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                var repos =await _buyingEventRepository.GetListAsync(p => p.ProjectId == request.ProjectId);
+                var repos =await _buyingEventRepository.GetListAsync(p => p.ProjectId == request.ProjectId && p.Status == true);
                 foreach (var buyingEvent in repos.ToList())
                 {
                     buyingEvent.Status = false;
-                    await _buyingEventRepository.UpdateAsync(buyingEvent, p=>p.ProjectId == request.ProjectId);
+                    await _buyingEventRepository.UpdateAsync(buyingEvent);
   
                 }
                 

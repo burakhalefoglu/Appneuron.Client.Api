@@ -11,6 +11,7 @@ using Entities.Dtos;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
 {
     public class GetRetentionDataDtoByProjectIdQuery : IRequest<IDataResult<RetentionDataWithSessionDto>>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class GetRetentionDataDtoByProjectIdQueryHandler : IRequestHandler<GetRetentionDataDtoByProjectIdQuery, IDataResult<RetentionDataWithSessionDto>>
         {
@@ -41,8 +42,9 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
             {
 
 
-                var sessionData = await _gameSessionEveryLoginDataRepository.GetListAsync(p => p.ProjectId == request.ProjectID);
-                if(sessionData.Count() == 0)
+                var sessionData = await _gameSessionEveryLoginDataRepository.GetListAsync(
+                    p => p.ProjectId == request.ProjectId && p.Status == true);
+                if(!sessionData.Any())
                     return new ErrorDataResult<RetentionDataWithSessionDto>();
 
                 var minSessionDate = DateTime.Parse(sessionData.ToList().Min(s => s.SessionFinishTime).ToString("dd, MM , yyyy"));
@@ -51,37 +53,39 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
 
                 for (DateTime date = minSessionDate; date <= maxSessionDate; date.AddDays(1))
                 {
-                    var retentionDataDto = new RetentionDataDto();
-                    retentionDataDto.Day = date;
+                    var retentionDataDto = new RetentionDataDto
+                    {
+                        Day = date
+                    };
 
                     foreach (var item in sessionData)
                     {
-
-                        if(item.SessionFinishTime.ToString("dd, MM , yyyy") == date.ToString())
+                        if (item.SessionFinishTime.ToString("dd, MM , yyyy") !=
+                            date.ToString(CultureInfo.InvariantCulture)) continue;
+                        var clientResult = await _mediator.Send(new GetClientByProjectIdInternalQuery
                         {
+                            ClientId = item.ClientId,
+                            ProjectId = item.ProjectId
+                        }, cancellationToken);
 
-                            var clientResult = await _mediator.Send(new GetClientByProjectIdInternalQuery
-                            {
-                                ClientId = item.ClientId,
-                                ProjectId = item.ProjectId
-                            });
+                        _ = retentionDataDto.ClientDtoList.Append(new ChurnClientDto
+                        {
+                            ClientId = item.ClientId,
+                            ProjectId = item.ProjectId,
+                            IsPaidClient = clientResult.Data.IsPaidClient
 
-                            _ = retentionDataDto.ClientDtoList.Append(new ChurnClientDto
-                            {
-                                ClientId = item.ClientId,
-                                ProjectKey = item.ProjectId,
-                                IsPaidClient = clientResult.Data.IsPaidClient
-
-                            });
-                        }
+                        });
                     }
-                    retentionDataList.Append(retentionDataDto);
+
+                    _ = retentionDataList.Append(retentionDataDto);
                 }
 
-                var retentionDataWithSessionDto = new RetentionDataWithSessionDto();
-                retentionDataWithSessionDto.MinSession = minSessionDate;
-                retentionDataWithSessionDto.MaxSession = maxSessionDate;
-                retentionDataWithSessionDto.RetentionDataDtoList = retentionDataList;
+                var retentionDataWithSessionDto = new RetentionDataWithSessionDto
+                {
+                    MinSession = minSessionDate,
+                    MaxSession = maxSessionDate,
+                    RetentionDataDtoList = retentionDataList
+                };
 
                 return new SuccessDataResult<RetentionDataWithSessionDto>(retentionDataWithSessionDto);
             }

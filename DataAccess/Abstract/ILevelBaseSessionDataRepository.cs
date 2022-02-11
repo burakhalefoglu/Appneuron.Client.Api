@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface ILevelBaseSessionDataRepository : IDocumentDbRepository<LevelBaseSessionData>
+    public interface ILevelBaseSessionDataRepository : IRepository<LevelBaseSessionData>
     {
     }
 }

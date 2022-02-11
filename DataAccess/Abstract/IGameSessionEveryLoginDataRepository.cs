@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface IGameSessionEveryLoginDataRepository : IDocumentDbRepository<GameSessionEveryLoginData>
+    public interface IGameSessionEveryLoginDataRepository : IRepository<GameSessionEveryLoginData>
     {
     }
 }

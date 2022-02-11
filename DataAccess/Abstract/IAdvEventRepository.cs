@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface IAdvEventRepository : IDocumentDbRepository<AdvEvent>
+    public interface IAdvEventRepository : IRepository<AdvEvent>
     {
     }
 }

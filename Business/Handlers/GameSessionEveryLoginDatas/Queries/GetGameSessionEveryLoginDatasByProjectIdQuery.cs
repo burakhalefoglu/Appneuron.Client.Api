@@ -15,7 +15,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
 {
     public class GetGameSessionEveryLoginDatasByProjectIdQuery : IRequest<IDataResult<IEnumerable<GameSessionEveryLoginData>>>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class GetGameSessionEveryLoginDatasByProjectIdQueryHandler : IRequestHandler<GetGameSessionEveryLoginDatasByProjectIdQuery, IDataResult<IEnumerable<GameSessionEveryLoginData>>>
         {
@@ -35,7 +35,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Queries
             public async Task<IDataResult<IEnumerable<GameSessionEveryLoginData>>> Handle(GetGameSessionEveryLoginDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<GameSessionEveryLoginData>>
-                    (await _gameSessionEveryLoginDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
+                    (await _gameSessionEveryLoginDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectId && p.Status == true));
             }
         }
     }

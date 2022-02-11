@@ -15,7 +15,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
 {
     public class GetLevelBaseSessionDatasByProjectIdQuery : IRequest<IDataResult<IEnumerable<LevelBaseSessionData>>>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class GetLevelBaseSessionDatasByProjectIdQueryHandler : IRequestHandler<GetLevelBaseSessionDatasByProjectIdQuery, IDataResult<IEnumerable<LevelBaseSessionData>>>
         {
@@ -35,7 +35,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
             public async Task<IDataResult<IEnumerable<LevelBaseSessionData>>> Handle(GetLevelBaseSessionDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<LevelBaseSessionData>>
-                    (await _levelBaseSessionDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
+                    (await _levelBaseSessionDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectId && p.Status == true));
             }
         }
     }

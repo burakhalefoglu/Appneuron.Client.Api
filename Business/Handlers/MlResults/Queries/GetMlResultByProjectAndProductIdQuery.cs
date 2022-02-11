@@ -18,7 +18,7 @@ namespace Business.Handlers.MlResults.Queries
 
     public class GetMlResultByProjectAndProductIdQuery : IRequest<IDataResult<IEnumerable<MlResultDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public int ProductId { get; set; }
         public class GetMlResultByProjectAndProductIdQueryHandler : IRequestHandler<GetMlResultByProjectAndProductIdQuery, IDataResult<IEnumerable<MlResultDto>>>
         {
@@ -37,7 +37,7 @@ namespace Business.Handlers.MlResults.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<MlResultDto>>> Handle(GetMlResultByProjectAndProductIdQuery request, CancellationToken cancellationToken)
             {
-                var mlResultList = await _mlResultRepository.GetListAsync(m => m.ProductId == request.ProductId && m.ProjectId == request.ProjectId);
+                var mlResultList = await _mlResultRepository.GetListAsync(m => m.ProductId == request.ProductId && m.ProjectId == request.ProjectId && m.Status == true);
                 var mlResultDtoList = new List<MlResultDto>();
                 mlResultList.ToList().ForEach(m =>
                 {

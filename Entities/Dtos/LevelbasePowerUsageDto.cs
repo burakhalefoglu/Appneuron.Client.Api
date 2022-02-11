@@ -7,7 +7,7 @@ namespace Entities.Dtos
 {
     public class LevelbasePowerUsageDto : IDto
     {
-        public string ClientId { get; set; }
+        public long ClientId { get; set; }
         public string Levelname { get; set; }
         public int TotalPowerUsage { get; set; }
 

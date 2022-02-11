@@ -15,7 +15,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
 {
     public class GetEveryLoginLevelDatasByProjectIdQuery : IRequest<IDataResult<IEnumerable<EveryLoginLevelData>>>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class GetEveryLoginLevelDatasByProjectIdQueryHandler : IRequestHandler<GetEveryLoginLevelDatasByProjectIdQuery, IDataResult<IEnumerable<EveryLoginLevelData>>>
         {
@@ -35,7 +35,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
             public async Task<IDataResult<IEnumerable<EveryLoginLevelData>>> Handle(GetEveryLoginLevelDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<EveryLoginLevelData>>
-                    (await _everyLoginLevelDataRepository.GetListAsync(p => p.ProjectId == request.ProjectID));
+                    (await _everyLoginLevelDataRepository.GetListAsync(p => p.ProjectId == request.ProjectId && p.Status == true));
             }
         }
     }

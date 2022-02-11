@@ -13,7 +13,7 @@ namespace Business.Handlers.ChurnDates.Queries
 
     public class GetChurnDateByProjectIdQuery : IRequest<IDataResult<ChurnDate>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetChurnDateByProjectIdQueryHandler : IRequestHandler<GetChurnDateByProjectIdQuery, IDataResult<ChurnDate>>
         {
             private readonly IChurnDateRepository _churnDateRepository;
@@ -29,7 +29,7 @@ namespace Business.Handlers.ChurnDates.Queries
             public async Task<IDataResult<ChurnDate>> Handle(GetChurnDateByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 var churnDate = await _churnDateRepository
-                    .GetByFilterAsync(c => c.ProjectId == request.ProjectId);
+                    .GetAsync(c => c.ProjectId == request.ProjectId && c.Status == true);
 
                 return new SuccessDataResult<ChurnDate>(churnDate);
             }

@@ -3,11 +3,8 @@ using Business.Handlers.ChurnDates.Commands;
 using Business.Handlers.ChurnDates.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Entities.Concrete;
-using System.Collections.Generic;
-using MongoDB.Bson;
 using Core.Utilities.Results;
 
 namespace WebAPI.Controllers
@@ -29,7 +26,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<ChurnDate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IDataResult<ChurnDate>))]
         [HttpGet("getByProjectId")]
-        public async Task<IActionResult> GetByProjectId(string projectId)
+        public async Task<IActionResult> GetByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetChurnDateByProjectIdQuery { 
                 ProjectId = projectId

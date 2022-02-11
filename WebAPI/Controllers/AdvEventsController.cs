@@ -27,11 +27,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<AdvEvent>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
-        public async Task<IActionResult> GetByProjectId(string ProjectId)
+        public async Task<IActionResult> GetByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetAdvEventsByProjectIdQuery { 
             
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
 
             if (result.Success)
@@ -50,12 +50,12 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<ClickbaseAdvEventDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpGet("getClickbaseAdvEventByProjectId")]
-        public async Task<IActionResult> getClickbaseAdvEventDtoListQuery(string ProjectId)
+        [HttpGet("getClickBaseAdvEventByProjectId")]
+        public async Task<IActionResult> GetClickBaseAdvEventDtoListQuery(long projectId)
         {
             var result = await Mediator.Send(new GetClickBaseAdvEventDtoListQuery
             {
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
 
             if (result.Success)

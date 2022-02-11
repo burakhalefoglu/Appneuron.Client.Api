@@ -7,7 +7,7 @@ namespace Entities.Dtos
 {
     public class ClientClickDto: IDto
     {
-        public string ClientId { get; set; }
+        public long ClientId { get; set; }
         public int ClickCount { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Entities.Dtos
 {
     public class BuyingEventDto : IDto
     {
-        public string ClientId { get; set; }
+        public long ClientId { get; set; }
         public DateTime TrigerdTime { get; set; }
 
     }

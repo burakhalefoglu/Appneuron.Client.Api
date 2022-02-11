@@ -34,5 +34,6 @@
         public static string TokenProviderException => "TokenProviderException";
         public static string Unknown => "Unknown";
         public static string NewPassword => "NewPassword";
+        public static string NotFound => "Not Found";
     }
 }

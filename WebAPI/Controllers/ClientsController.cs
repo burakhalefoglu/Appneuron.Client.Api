@@ -1,14 +1,12 @@
 ﻿
-using Business.Handlers.Clients.Commands;
 using Business.Handlers.Clients.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Entities.Concrete;
 using System.Collections.Generic;
 using Core.Utilities.Results;
-using MongoDB.Bson;
+
 namespace WebAPI.Controllers
 {
     /// <summary>
@@ -30,11 +28,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<ClientDataModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("GetListByProject")]
-        public async Task<IActionResult> GetListByProject(string ProjectId)
+        public async Task<IActionResult> GetListByProject(long projectId)
         {
             var result = await Mediator.Send(new GetClientsByProjectIdQuery() {
 
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {

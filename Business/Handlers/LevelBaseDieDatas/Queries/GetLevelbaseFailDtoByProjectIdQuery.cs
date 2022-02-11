@@ -3,7 +3,6 @@ using Business.BusinessAspects;
 using Core.Utilities.Results;
 using Core.Aspects.Autofac.Performance;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,16 +18,14 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
 
     public class GetLevelbaseFailDtoByProjectIdQuery : IRequest<IDataResult<IEnumerable<LevelbaseFailDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetLevelbaseFailDtoByProjectIdQueryHandler : IRequestHandler<GetLevelbaseFailDtoByProjectIdQuery, IDataResult<IEnumerable<LevelbaseFailDto>>>
         {
             private readonly ILevelBaseDieDataRepository _levelBaseDieDataRepository;
-            private readonly IMediator _mediator;
 
-            public GetLevelbaseFailDtoByProjectIdQueryHandler(ILevelBaseDieDataRepository levelBaseDieDataRepository, IMediator mediator)
+            public GetLevelbaseFailDtoByProjectIdQueryHandler(ILevelBaseDieDataRepository levelBaseDieDataRepository)
             {
                 _levelBaseDieDataRepository = levelBaseDieDataRepository;
-                _mediator = mediator;
             }
 
             [PerformanceAspect(5)]
@@ -37,7 +34,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbaseFailDto>>> Handle(GetLevelbaseFailDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var levelBaseDieDataList = await _levelBaseDieDataRepository.GetListAsync(l => l.ProjectId == request.ProjectId);
+                var levelBaseDieDataList = await _levelBaseDieDataRepository.GetListAsync(l => l.ProjectId == request.ProjectId && l.Status == true);
                 var levelbaseFailDtoList = new List<LevelbaseFailDto>();
 
                 levelBaseDieDataList.ToList().ForEach(levelBaseFail =>

@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<int>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IDataResult<int>))]
         [HttpGet("getByAdvStrategy")]
-        public async Task<IActionResult> GetByAdvStrategy(string projectId,
+        public async Task<IActionResult> GetByAdvStrategy(long projectId,
             string name, int version, DateTime time)
         {
             var result = await Mediator.Send(new GetAdvStrategyBehaviorCountByAdvStrategyQuery

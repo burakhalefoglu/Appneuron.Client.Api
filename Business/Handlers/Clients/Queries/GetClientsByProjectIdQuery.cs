@@ -17,7 +17,7 @@ namespace Business.Handlers.Clients.Queries
 
     public class GetClientsByProjectIdQuery : IRequest<IDataResult<IEnumerable<ClientDataModel>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
         public class GetClientsByProjectIdQueryHandler : IRequestHandler<GetClientsByProjectIdQuery, IDataResult<IEnumerable<ClientDataModel>>>
         {
@@ -36,7 +36,7 @@ namespace Business.Handlers.Clients.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<ClientDataModel>>> Handle(GetClientsByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var client = await _clientRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
+                var client = await _clientRepository.GetListAsync(c => c.ProjectId == request.ProjectId && c.Status == true);
                 return new SuccessDataResult<IEnumerable<ClientDataModel>>(client);
             }
         }

@@ -19,7 +19,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
 
     public class GetLevelbaseFinishScoreByProjectIdQuery : IRequest<IDataResult<IEnumerable<LevelbaseFinishScoreDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetLevelbaseFinishScoreByProjectIdQueryHandler : IRequestHandler<GetLevelbaseFinishScoreByProjectIdQuery, IDataResult<IEnumerable<LevelbaseFinishScoreDto>>>
         {
             private readonly IEveryLoginLevelDataRepository _everyLoginLevelDataRepository;
@@ -43,7 +43,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
                 everyLoginLevelDataList.ToList().ForEach(e =>
                 {
 
-                    var resultlevelbasePowerUsageDto = levelbaseFinishScoreDtoList.FirstOrDefault(t => t.ClientId == e.ClientId && t.Levelname == e.Levelname);
+                    var resultlevelbasePowerUsageDto = levelbaseFinishScoreDtoList.FirstOrDefault(t => t.ClientId == e.ClientId && t.Levelname == e.LevelName && e.Status == true);
                     if (resultlevelbasePowerUsageDto != null)
                     {
                         resultlevelbasePowerUsageDto.FinishScores += e.AverageScores;
@@ -53,7 +53,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
                         levelbaseFinishScoreDtoList.Add(new LevelbaseFinishScoreDto
                         {
                             ClientId = e.ClientId,
-                            Levelname = e.Levelname,
+                            Levelname = e.LevelName,
                             FinishScores = e.AverageScores
                         });
                     }

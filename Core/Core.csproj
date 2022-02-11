@@ -12,6 +12,7 @@
  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
+    <PackageReference Include="CassandraCSharpDriver" Version="3.17.1" />
     <PackageReference Include="FluentValidation" Version="9.5.1" />
     <PackageReference Include="HaemmerElectronics.SeppPenner.SerilogSinkForPostgreSQL" Version="3.3.7" />
     <PackageReference Include="librdkafka.redist" Version="1.6.1" />

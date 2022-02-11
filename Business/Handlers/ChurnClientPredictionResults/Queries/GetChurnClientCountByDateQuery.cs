@@ -15,7 +15,7 @@ namespace Business.Handlers.ChurnClientPredictionResults.Queries
 
     public class GetChurnClientCountByDateQuery : IRequest<IDataResult<int>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
 

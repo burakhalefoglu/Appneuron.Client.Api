@@ -7,7 +7,7 @@ namespace Entities.Dtos
 {
     public class LevelbaseSessionWithPlayingTimeDto : IDto
     {
-        public string ClientId { get; set; }
+        public long ClientId { get; set; }
         public string LevelName { get; set; }
         public DateTime SessionStartTime { get; set; }
         public float SessionTimeMinute { get; set; }

@@ -9,23 +9,21 @@ using System;
 using System.Threading.Tasks;
 using MediatR;
 using Entities.Concrete;
-using Business.Handlers.Clients.Commands;
 using Business.Internals.Handlers.Clients;
 
 namespace Business.MessageBrokers.Kafka
 {
     public class KafkaMessageBroker : IKafkaMessageBroker
     {
-        IConfiguration Configuration;
         KafkaOptions kafkaOptions;
         private readonly IMediator _mediator;
 
         public KafkaMessageBroker(IMediator mediator)
         {
             _mediator = mediator;
-            Configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
-            kafkaOptions = Configuration.GetSection("MessageBrokerOptions").Get<KafkaOptions>();
-
+            var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
+            if (configuration != null)
+                kafkaOptions = configuration.GetSection("MessageBrokerOptions").Get<KafkaOptions>();
         }
 
         public async Task GetClientCreationMessage()
@@ -78,8 +76,8 @@ namespace Business.MessageBrokers.Kafka
 
                             var result = await _mediator.Send(new CreateClientInternalCommand
                             {
-                                ClientId = client.ClientId,
-                                ProjectKey = client.ProjectId,
+                                ClientId = client.Id,
+                                ProjectId = client.ProjectId,
                                 CreatedAt = client.CreatedAt,
                                 IsPaidClient = client.IsPaidClient
                             });

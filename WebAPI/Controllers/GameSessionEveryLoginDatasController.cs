@@ -27,11 +27,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<GameSessionEveryLoginData>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
-        public async Task<IActionResult> GetByProjectId(string ProjectId)
+        public async Task<IActionResult> GetByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetGameSessionEveryLoginDatasByProjectIdQuery
             {
-                ProjectID = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {
@@ -50,11 +50,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<RetentionDataWithSessionDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getRetentionDataByProjectId")]
-        public async Task<IActionResult> GetRetentionDataDtoByProjectId(string ProjectId)
+        public async Task<IActionResult> GetRetentionDataDtoByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetRetentionDataDtoByProjectIdQuery
             {
-                ProjectID = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {

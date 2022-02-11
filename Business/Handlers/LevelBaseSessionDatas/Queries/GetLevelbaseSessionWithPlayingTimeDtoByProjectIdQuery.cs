@@ -20,7 +20,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
 
     public class GetLevelbaseSessionWithPlayingTimeDtoByProjectIdQuery : IRequest<IDataResult<IEnumerable<LevelbaseSessionWithPlayingTimeDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetLevelbaseSessionWithPlayingTimeDtoByProjectIdQueryHandler : IRequestHandler<GetLevelbaseSessionWithPlayingTimeDtoByProjectIdQuery, IDataResult<IEnumerable<LevelbaseSessionWithPlayingTimeDto>>>
         {
             private readonly ILevelBaseSessionDataRepository _levelBaseSessionDataRepository;
@@ -38,7 +38,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbaseSessionWithPlayingTimeDto>>> Handle(GetLevelbaseSessionWithPlayingTimeDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var sessionData = await _levelBaseSessionDataRepository.GetListAsync(p => p.ProjectId == request.ProjectId);
+                var sessionData = await _levelBaseSessionDataRepository.GetListAsync(p => p.ProjectId == request.ProjectId && p.Status == true);
                 var levelbaseSessionWithPlayingTimeDtoList = new List<LevelbaseSessionWithPlayingTimeDto>();
                 sessionData.ToList().ForEach(s =>
                 {

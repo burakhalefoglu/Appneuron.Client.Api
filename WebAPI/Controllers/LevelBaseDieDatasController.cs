@@ -27,11 +27,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelBaseDieData>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
-        public async Task<IActionResult> GetByProjectId(string ProjectId)
+        public async Task<IActionResult> GetByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetLevelBaseDieDatasByProjectIdQuery
             {
-                ProjectID = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {
@@ -49,12 +49,12 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseFailDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpGet("getLevelbaseFailDtoByProjectId")]
-        public async Task<IActionResult> GetLevelbaseFailDtoByProjectId(string ProjectId)
+        [HttpGet("getLevelBaseFailDtoByProjectId")]
+        public async Task<IActionResult> GetLevelBaseFailDtoByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetLevelbaseFailDtoByProjectIdQuery
             {
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {
@@ -75,11 +75,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<DailyDieCountDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getDailyDieCountDto")]
-        public async Task<IActionResult> GetDailyDieCountDto(string ProjectId)
+        public async Task<IActionResult> GetDailyDieCountDto(long projectId)
         {
             var result = await Mediator.Send(new GetDailyDieCountDtoByProjectIdQuery
             {
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
             if (result.Success)
             {

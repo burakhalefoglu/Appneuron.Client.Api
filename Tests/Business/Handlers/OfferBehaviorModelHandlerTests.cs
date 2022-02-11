@@ -1,32 +1,26 @@
-﻿
-using Business.Handlers.OfferBehaviorModels.Queries;
-using DataAccess.Abstract;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Business.Handlers.OfferBehaviorModels.Queries.GetOfferBehaviorDtoQuery;
+using Business.Handlers.OfferBehaviorModels.Queries;
+using DataAccess.Abstract;
 using Entities.Concrete;
-using Business.Constants;
-using MediatR;
-using System.Linq;
 using FluentAssertions;
-using MongoDB.Bson;
+using Moq;
+using NUnit.Framework;
+using static Business.Handlers.OfferBehaviorModels.Queries.GetOfferBehaviorDtoQuery;
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
     [TestFixture]
     public class OfferBehaviorModelHandlerTests
     {
         Mock<IOfferBehaviorModelRepository> _offerBehaviorModelRepository;
-        Mock<IMediator> _mediator;
         [SetUp]
         public void Setup()
         {
             _offerBehaviorModelRepository = new Mock<IOfferBehaviorModelRepository>();
-            _mediator = new Mock<IMediator>();
         }
 
      
@@ -35,24 +29,26 @@ namespace Tests.Business.HandlersTest
         public async Task OfferBehaviorModel_GetQueries_Success()
         {
             //Arrange
-            var query = new GetOfferBehaviorDtoQuery();
-            query.Name = "hello";
-            query.ProjectId = "fswfs";
-            query.Version = 1;
+            var query = new GetOfferBehaviorDtoQuery
+            {
+                Name = "hello",
+                ProjectId = 12,
+                Version = 1
+            };
 
-           _offerBehaviorModelRepository.Setup(x => x
+            _offerBehaviorModelRepository.Setup(x => x
                     .GetListAsync(It.IsAny<Expression<Func<OfferBehaviorModel, bool>>>()))
                         .ReturnsAsync(new List<OfferBehaviorModel> { 
                         
                             new OfferBehaviorModel()
                         {
                             DateTime = new DateTime(),
-                            Id = new ObjectId(),
-                            ProjectId = "fswfs",
+                            Id = 1,
+                            ProjectId = 21,
                             Version = 1,
                             OfferName = "hello",
-                            ClientId = "aaa",
-                            CustomerId = "bgdghbsdhs",
+                            ClientId = 1,
+                            CustomerId = 2,
                             IsBuyOffer = 0
 
                         }, 
@@ -60,19 +56,19 @@ namespace Tests.Business.HandlersTest
                             new OfferBehaviorModel()
                         {
                             DateTime = new DateTime(),
-                            Id = new ObjectId(),
-                            ProjectId = "fswfs",
-                            Version = 1,
+                            Id = 1,
+                            ProjectId = 22,
+                            Version = 2,
                             OfferName = "hello",
-                            ClientId = "bbb",
-                            CustomerId = "bgdghbsdhs",
-                            IsBuyOffer = 1
+                            ClientId = 2,
+                            CustomerId = 2,
+                            IsBuyOffer = 0
 
                         },
                             
                         }.AsQueryable());
 
-            var handler = new GetOfferBehaviorDtoQueryHandler(_offerBehaviorModelRepository.Object, _mediator.Object);
+            var handler = new GetOfferBehaviorDtoQueryHandler(_offerBehaviorModelRepository.Object);
 
             //Act
             var x = await handler.Handle(query, new System.Threading.CancellationToken());

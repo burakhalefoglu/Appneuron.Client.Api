@@ -15,7 +15,7 @@ namespace Business.Handlers.AdvStrategyBehaviorModels.Queries
 
     public class GetAdvStrategyBehaviorCountByAdvStrategyQuery : IRequest<IDataResult<int>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public string Name { get; set; }
         public int Version { get; set; }
         public DateTime StartTime { get; set; }
@@ -38,7 +38,8 @@ namespace Business.Handlers.AdvStrategyBehaviorModels.Queries
                     a => a.ProjectId == request.ProjectId &&
                          a.Name == request.Name &&
                          a.Version == request.Version &&
-                         a.DateTime == request.StartTime);
+                         a.DateTime == request.StartTime && 
+                         a.Status == true);
 
                 return new SuccessDataResult<int>(result.ToList().Count);
             }

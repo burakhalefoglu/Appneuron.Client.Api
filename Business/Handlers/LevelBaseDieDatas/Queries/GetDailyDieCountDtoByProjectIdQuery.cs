@@ -19,7 +19,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
 
     public class GetDailyDieCountDtoByProjectIdQuery : IRequest<IDataResult<IEnumerable<DailyDieCountDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetDailyDieCountDtoQueryHandler : IRequestHandler<GetDailyDieCountDtoByProjectIdQuery, IDataResult<IEnumerable<DailyDieCountDto>>>
         {
             private readonly ILevelBaseDieDataRepository _levelBaseDieDataRepository;
@@ -37,7 +37,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<DailyDieCountDto>>> Handle(GetDailyDieCountDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var levelBaseDieDataList = await _levelBaseDieDataRepository.GetListAsync(l => l.ProjectId == request.ProjectId);
+                var levelBaseDieDataList = await _levelBaseDieDataRepository.GetListAsync(l => l.ProjectId == request.ProjectId && l.Status == true);
                 var dailyDieCountDtoList = new List<DailyDieCountDto>();
 
                 levelBaseDieDataList.ToList().ForEach(l =>

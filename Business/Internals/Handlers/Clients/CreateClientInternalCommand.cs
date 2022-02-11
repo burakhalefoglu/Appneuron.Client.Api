@@ -19,10 +19,10 @@ namespace Business.Internals.Handlers.Clients
     public class CreateClientInternalCommand : IRequest<IResult>
     {
 
-        public string ClientId { get; set; }
-        public string ProjectKey { get; set; }
+        public long ClientId { get; set; }
+        public long ProjectId { get; set; }
         public System.DateTime CreatedAt { get; set; }
-        public int IsPaidClient { get; set; }
+        public byte IsPaidClient { get; set; }
 
 
         public class CreateClientInternalCommandHandler : IRequestHandler<CreateClientInternalCommand, IResult>
@@ -40,15 +40,15 @@ namespace Business.Internals.Handlers.Clients
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateClientInternalCommand request, CancellationToken cancellationToken)
             {
-                var isThereClientRecord = _clientRepository.Any(u => u.ClientId == request.ClientId);
+                var isThereClientRecord = _clientRepository.Any(u => u.Id == request.ClientId);
 
                 if (isThereClientRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
                 var addedClient = new ClientDataModel
                 {
-                    ClientId = request.ClientId,
-                    ProjectId = request.ProjectKey,
+                    Id = request.ClientId,
+                    ProjectId = request.ProjectId,
                     CreatedAt = request.CreatedAt,
                     IsPaidClient = request.IsPaidClient,
 

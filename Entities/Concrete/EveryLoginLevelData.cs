@@ -3,18 +3,19 @@ using System;
 
 namespace Entities.Concrete
 {
-    public class EveryLoginLevelData : DocumentDbEntity
+    public class EveryLoginLevelData : IEntity
     {
-        public string ClientId { get; set; }
-        public string ProjectId { get; set; }
-        public string CustomerId { get; set; }
-        public string Levelname { get; set; }
-        public int LevelsDifficultylevel { get; set; }
+        public long ClientId { get; set; }
+        public long ProjectId { get; set; }
+        public long CustomerId { get; set; }
+        public string LevelName { get; set; }
+        public int LevelsDifficultyLevel { get; set; }
         public int PlayingTime { get; set; }
         public int AverageScores { get; set; }
         public DateTime DateTime { get; set; }
-        public int IsDead { get; set; }
+        public byte IsDead { get; set; }
         public int TotalPowerUsage { get; set; }
-
+        public bool Status = true;
+        public long Id { get; set; }
     }
 }

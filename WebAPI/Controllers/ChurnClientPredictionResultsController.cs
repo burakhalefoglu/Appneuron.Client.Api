@@ -15,40 +15,6 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ChurnClientPredictionResultsController : BaseApiController
     {
-
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>ChurnClientPredictionResults</remarks>
-        ///<return>ChurnClientPredictionResults List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<int>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IDataResult<int>))]
-        [HttpGet("getPredictionCountByOfferDate")]
-        public async Task<IActionResult> GetPredictionCountByOfferDate(
-            string projectId,
-            string name,
-            int version,
-            DateTime startTime,
-            DateTime finishTime)
-        {
-            var result = await Mediator.Send(new GetChurnClientCountByOfferQuery
-            {
-                ProjectId = projectId,
-                Name = name,
-                Version = version,
-                StartTime = startTime,
-                FinishTime = finishTime
-            });
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-        }
-
         ///<summary>
         ///It brings the details according to its id.
         ///</summary>
@@ -60,7 +26,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IDataResult<int>))]
         [HttpGet("getPredictionCountByDate")]
         public async Task<IActionResult> GetPredictionCountByOfferDate(
-            string projectId,
+            long projectId,
             DateTime startTime,
             DateTime finishTime)
         {

@@ -12,9 +12,6 @@ using Core.Utilities.IoC;
 using Core.Utilities.MessageBrokers.RabbitMq;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
-using DataAccess.Concrete.MongoDb;
-using DataAccess.Concrete.MongoDb.Collections;
-using DataAccess.Concrete.MongoDb.Context;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -25,10 +22,13 @@ using System;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
+using DataAccess.Concrete.Cassandra;
+using DataAccess.Concrete.Cassandra.Contexts;
+using DataAccess.Concrete.Cassandra.Tables;
 
 namespace Business
 {
-    public partial class BusinessStartup
+    public class BusinessStartup
     {
         protected readonly IHostEnvironment HostEnvironment;
 
@@ -47,25 +47,24 @@ namespace Business
         /// It is common to all configurations and must be called. Aspnet core does not call this method because there are other methods.
         /// </remarks>
         /// <param name="services"></param>
-
         public virtual void ConfigureServices(IServiceCollection services)
         {
             Func<IServiceProvider, ClaimsPrincipal> getPrincipal = (sp) =>
-
-                            sp.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
+                sp.GetService<IHttpContextAccessor>()?.HttpContext?.User ??
+                new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
 
             services.AddScoped<IPrincipal>(getPrincipal);
             services.AddMemoryCache();
 
             services.AddDependencyResolvers(Configuration, new ICoreModule[]
             {
-                    new CoreModule()
+                new CoreModule()
             });
 
             services.AddSingleton<ConfigurationManager>();
 
             services.AddTransient<IElasticSearch, ElasticSearchManager>();
-
+            services.AddTransient<IKafkaMessageBroker, KafkaMessageBroker>();
             services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
             services.AddTransient<IMessageConsumer, MqConsumerHelper>();
             services.AddSingleton<ICacheManager, MemoryCacheManager>();
@@ -76,7 +75,8 @@ namespace Business
 
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>
             {
-                return memberInfo.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>()?.GetName();
+                return memberInfo.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>()
+                    ?.GetName();
             };
         }
 
@@ -86,23 +86,47 @@ namespace Business
         /// <param name="services"></param>
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
-            ConfigureServices(services);          
-            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x=> new AdvStrategyBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvStrategyBehaviorModels));
-            services.AddTransient<IChurnClientPredictionResultRepository>(x=> new ChurnClientPredictionResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnClientPredictionResults));
-            services.AddTransient<IOfferBehaviorModelRepository>(x=> new OfferBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OfferBehaviorModels));
-            services.AddTransient<IChurnDateRepository>(x=> new ChurnDateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnDates));
-            services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
-            services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
-            services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
-            services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
-            services.AddTransient<ILevelBaseDieDataRepository>(x => new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
-            services.AddTransient<IEveryLoginLevelDataRepository>(x => new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
-            services.AddTransient<IBuyingEventRepository>(x => new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
-            services.AddTransient<IAdvEventRepository>(x => new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
-            services.AddTransient<IKafkaMessageBroker, KafkaMessageBroker>();
+            ConfigureServices(services);
+
+            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x =>
+                new CassAdvStrategyBehaviorModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.AdvStrategyBehaviorModels));
+            services.AddTransient<IChurnClientPredictionResultRepository>(x =>
+                new CassChurnClientPredictionResultRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnClientPredictionResults));
+            services.AddTransient<IOfferBehaviorModelRepository>(x =>
+                new CassOfferBehaviorModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.OfferBehaviorModels));
+            services.AddTransient<IChurnDateRepository>(x =>
+                new CassChurnDateRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnDates));
+            services.AddTransient<IClientRepository>(x =>
+                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(), CassandraTableQueries.ClientDataModels));
+            services.AddTransient<IMlResultRepository>(x =>
+                new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnBlokerMlResults));
+            services.AddTransient<ILevelBaseSessionDataRepository>(x =>
+                new CassLevelBaseSessionDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseSessionDatas));
+            services.AddTransient<IGameSessionEveryLoginDataRepository>(x =>
+                new CassGameSessionEveryLoginDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.GameSessionEveryLoginDatas));
+            services.AddTransient<ILevelBaseDieDataRepository>(x =>
+                new CassLevelBaseDieDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseDieDatas));
+            services.AddTransient<IEveryLoginLevelDataRepository>(x =>
+                new CassEveryLoginLevelDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EveryLoginLevelDatas));
+            services.AddTransient<IBuyingEventRepository>(x =>
+                new CassBuyingEventRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.BuyingEvents));
+            services.AddTransient<IAdvEventRepository>(x =>
+                new CassAdvEventRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.AdvEvents));
+
 
             services.AddDbContext<ProjectDbContext, DArchInMemory>(ServiceLifetime.Transient);
-            services.AddSingleton<MongoDbContextBase, MongoDbContext>();
+            services.AddSingleton<CassandraContextBase, Cassandracontext>();
         }
 
         /// <summary>
@@ -111,24 +135,48 @@ namespace Business
         /// <param name="services"></param>
         public void ConfigureStagingServices(IServiceCollection services)
         {
-            ConfigureServices(services);           
-            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x=> new AdvStrategyBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvStrategyBehaviorModels));
-            services.AddTransient<IChurnClientPredictionResultRepository>(x=> new ChurnClientPredictionResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnClientPredictionResults));
-            services.AddTransient<IOfferBehaviorModelRepository>(x=> new OfferBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OfferBehaviorModels));
-            services.AddTransient<IChurnDateRepository>(x=> new ChurnDateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnDates));
-            services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
-            services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
-            services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
-            services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
-            services.AddTransient<ILevelBaseDieDataRepository>(x => new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
-            services.AddTransient<IEveryLoginLevelDataRepository>(x => new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
-            services.AddTransient<IBuyingEventRepository>(x => new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
-            services.AddTransient<IAdvEventRepository>(x => new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
-            services.AddTransient<IKafkaMessageBroker, KafkaMessageBroker>();
+            ConfigureServices(services);
 
-            services.AddDbContext<ProjectDbContext>();
+                        services.AddTransient<IAdvStrategyBehaviorModelRepository>(x =>
+                new CassAdvStrategyBehaviorModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.AdvStrategyBehaviorModels));
+            services.AddTransient<IChurnClientPredictionResultRepository>(x =>
+                new CassChurnClientPredictionResultRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnClientPredictionResults));
+            services.AddTransient<IOfferBehaviorModelRepository>(x =>
+                new CassOfferBehaviorModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.OfferBehaviorModels));
+            services.AddTransient<IChurnDateRepository>(x =>
+                new CassChurnDateRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnDates));
+            services.AddTransient<IClientRepository>(x =>
+                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(), CassandraTableQueries.ClientDataModels));
+            services.AddTransient<IMlResultRepository>(x =>
+                new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnBlokerMlResults));
+            services.AddTransient<ILevelBaseSessionDataRepository>(x =>
+                new CassLevelBaseSessionDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseSessionDatas));
+            services.AddTransient<IGameSessionEveryLoginDataRepository>(x =>
+                new CassGameSessionEveryLoginDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.GameSessionEveryLoginDatas));
+            services.AddTransient<ILevelBaseDieDataRepository>(x =>
+                new CassLevelBaseDieDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseDieDatas));
+            services.AddTransient<IEveryLoginLevelDataRepository>(x =>
+                new CassEveryLoginLevelDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EveryLoginLevelDatas));
+            services.AddTransient<IBuyingEventRepository>(x =>
+                new CassBuyingEventRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.BuyingEvents));
+            services.AddTransient<IAdvEventRepository>(x =>
+                new CassAdvEventRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.AdvEvents));
 
-            services.AddSingleton<MongoDbContextBase, MongoDbContext>();
+
+            // services.AddDbContext<ProjectDbContext>();
+
+            services.AddSingleton<CassandraContextBase, Cassandracontext>();
         }
 
         /// <summary>
@@ -138,24 +186,47 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
-            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x=> new AdvStrategyBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvStrategyBehaviorModels));
-            services.AddTransient<IChurnClientPredictionResultRepository>(x=> new ChurnClientPredictionResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnClientPredictionResults));
-            services.AddTransient<IOfferBehaviorModelRepository>(x=> new OfferBehaviorModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OfferBehaviorModels));
-            services.AddTransient<IChurnDateRepository>(x=> new ChurnDateRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ChurnDates));
-            services.AddTransient<IClientRepository>(x=> new ClientRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Clients));
-            services.AddTransient<IMlResultRepository>(x=> new MlResultRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlResultModels));
-         
-            services.AddTransient<ILevelBaseSessionDataRepository>(x => new LevelBaseSessionDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseSessionDatas));
-            services.AddTransient<IGameSessionEveryLoginDataRepository>(x => new GameSessionEveryLoginDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.GameSessionEveryLoginDatas));
-            services.AddTransient<ILevelBaseDieDataRepository>(x => new LevelBaseDieDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.LevelBaseDieDatas));
-            services.AddTransient<IEveryLoginLevelDataRepository>(x => new EveryLoginLevelDataRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.EveryLoginLevelDatas));
-            services.AddTransient<IBuyingEventRepository>(x => new BuyingEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.BuyingEvents));
-            services.AddTransient<IAdvEventRepository>(x => new AdvEventRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.AdvEvents));
-            services.AddTransient<IKafkaMessageBroker, KafkaMessageBroker>();
 
-            services.AddDbContext<ProjectDbContext>();
+            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x =>
+                new CassAdvStrategyBehaviorModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.AdvStrategyBehaviorModels));
+            services.AddTransient<IChurnClientPredictionResultRepository>(x =>
+                new CassChurnClientPredictionResultRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnClientPredictionResults));
+            services.AddTransient<IOfferBehaviorModelRepository>(x =>
+                new CassOfferBehaviorModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.OfferBehaviorModels));
+            services.AddTransient<IChurnDateRepository>(x =>
+                new CassChurnDateRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnDates));
+            services.AddTransient<IClientRepository>(x =>
+                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(), CassandraTableQueries.ClientDataModels));
+            services.AddTransient<IMlResultRepository>(x =>
+                new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ChurnBlokerMlResults));
+            services.AddTransient<ILevelBaseSessionDataRepository>(x =>
+                new CassLevelBaseSessionDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseSessionDatas));
+            services.AddTransient<IGameSessionEveryLoginDataRepository>(x =>
+                new CassGameSessionEveryLoginDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.GameSessionEveryLoginDatas));
+            services.AddTransient<ILevelBaseDieDataRepository>(x =>
+                new CassLevelBaseDieDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseDieDatas));
+            services.AddTransient<IEveryLoginLevelDataRepository>(x =>
+                new CassEveryLoginLevelDataRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EveryLoginLevelDatas));
+            services.AddTransient<IBuyingEventRepository>(x =>
+                new CassBuyingEventRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.BuyingEvents));
+            services.AddTransient<IAdvEventRepository>(x =>
+                new CassAdvEventRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.AdvEvents));
 
-            services.AddSingleton<MongoDbContextBase, MongoDbContext>();
+
+            // services.AddDbContext<ProjectDbContext>();
+
+            services.AddSingleton<CassandraContextBase, Cassandracontext>();
         }
 
         /// <summary>

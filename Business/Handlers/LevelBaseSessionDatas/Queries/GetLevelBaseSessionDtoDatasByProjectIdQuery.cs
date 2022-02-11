@@ -19,7 +19,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
 
     public class GetLevelBaseSessionDtoDatasByProjectIdQuery : IRequest<IDataResult<IEnumerable<LevelbaseSessionDto>>>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class GetLevelBaseSessionDtoDatasByProjectIdQueryHandler : IRequestHandler<GetLevelBaseSessionDtoDatasByProjectIdQuery, IDataResult<IEnumerable<LevelbaseSessionDto>>>
         {
@@ -38,7 +38,7 @@ namespace Business.Handlers.LevelBaseSessionDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbaseSessionDto>>> Handle(GetLevelBaseSessionDtoDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var sessionData = await _levelBaseSessionDataRepository.GetListAsync(p => p.ProjectId == request.ProjectID);
+                var sessionData = await _levelBaseSessionDataRepository.GetListAsync(p => p.ProjectId == request.ProjectId && p.Status == true);
                 var sessionDataDto = new List<LevelbaseSessionDto>();
                 sessionData.ToList().ForEach(s =>
                 {

@@ -1,18 +1,17 @@
-﻿using DataAccess.Abstract;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Entities.Concrete;
-using MediatR;
-using System.Linq;
 using Business.Handlers.MlResults.Queries;
+using DataAccess.Abstract;
+using Entities.Concrete;
 using FluentAssertions;
-using MongoDB.Bson;
+using MediatR;
+using Moq;
+using NUnit.Framework;
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
     [TestFixture]
     public class MlResultModelHandlerTests
@@ -34,26 +33,26 @@ namespace Tests.Business.HandlersTest
             var query = new GetMlResultByProjectAndProductIdQuery
             {
                 ProductId = 1,
-                ProjectId = "sdfsdf"
+                ProjectId = 21
             };
 
             _mlResultModelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ChurnBlokerMlResult, bool>>>()))
                         .ReturnsAsync(new List<ChurnBlokerMlResult> { new ChurnBlokerMlResult()
                         {
                             DateTime = new DateTime(),
-                            ClientId = "sdfsdf",
-                            Id = new ObjectId(),
+                            ClientId = 1,
+                            Id = 1,
                             ProductId = 1,
-                            ProjectId = "sdfsdf",
+                            ProjectId = 21,
                             ResultValue = 1
                         },
                             new ChurnBlokerMlResult()
                             {
                                 DateTime = new DateTime(),
-                                ClientId = "AasdSsd",
-                                Id = new ObjectId(),
+                                ClientId = 2,
+                                Id = 3,
                                 ProductId = 1,
-                                ProjectId = "sdfsdf",
+                                ProjectId = 22,
                                 ResultValue = 2
                             },
 

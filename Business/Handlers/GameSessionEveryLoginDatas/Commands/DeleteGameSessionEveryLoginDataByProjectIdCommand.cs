@@ -17,7 +17,7 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
     /// </summary>
     public class DeleteGameSessionEveryLoginDataByProjectIdCommand : IRequest<IResult>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class DeleteGameSessionEveryLoginDataByProjectIdCommandHandler : IRequestHandler<DeleteGameSessionEveryLoginDataByProjectIdCommand, IResult>
         {
@@ -35,8 +35,11 @@ namespace Business.Handlers.GameSessionEveryLoginDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteGameSessionEveryLoginDataByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _gameSessionEveryLoginDataRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
-
+                var result = await _gameSessionEveryLoginDataRepository.GetAsync(p=>p.ProjectId == request.ProjectId && p.Status == true);
+                if (result is null)
+                    return new ErrorResult(Messages.NotFound);
+                result.Status = false;
+                await _gameSessionEveryLoginDataRepository.UpdateAsync(result);
                 return new SuccessResult(Messages.Deleted);
             }
         }

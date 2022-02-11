@@ -7,9 +7,9 @@ using DataAccess.Concrete.MongoDb.Context;
 using Core.DataAccess.MongoDb.Concrete;
 namespace DataAccess.Concrete.MongoDb
 {
-    public class MlResultRepository : MongoDbRepositoryBase<ChurnBlokerMlResult>, IMlResultRepository
+    public class MDbClientRepository : MongoDbRepositoryBase<ClientDataModel>, IClientRepository
     {
-        public MlResultRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
+        public MDbClientRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
         {
         }
     }

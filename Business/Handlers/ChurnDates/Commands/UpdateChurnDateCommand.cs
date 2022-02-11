@@ -6,14 +6,11 @@ using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 using Core.Aspects.Autofac.Validation;
 using Business.Handlers.ChurnDates.ValidationRules;
-using MongoDB.Bson;
 
 namespace Business.Handlers.ChurnDates.Commands
 {
@@ -21,7 +18,7 @@ namespace Business.Handlers.ChurnDates.Commands
 
     public class UpdateChurnDateCommand : IRequest<IResult>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public int ChurnDateMinutes { get; set; }
         public string DateTypeOnGui { get; set; }
 
@@ -42,22 +39,22 @@ namespace Business.Handlers.ChurnDates.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateChurnDateCommand request, CancellationToken cancellationToken)
             {
-                var result = await _churnDateRepository.GetByFilterAsync(c => c.ProjectId == request.ProjectId);
-                if (result.ProjectId == null)
+                var result = await _churnDateRepository.GetAsync(c => c.ProjectId == request.ProjectId && c.Status == true);
+                if (result is null)
                 {
                     await _mediator.Send(new CreateChurnDateCommand {
                     
-                        churnDateMinutes = request.ChurnDateMinutes,
+                        ChurnDateMinutes = request.ChurnDateMinutes,
                         DateTypeOnGui = request.DateTypeOnGui,
                         ProjectId = request.ProjectId
-                    });
+                    }, cancellationToken);
                     return new SuccessResult(Messages.Added);
                 }
 
                 result.ChurnDateMinutes = request.ChurnDateMinutes;
                 result.DateTypeOnGui = request.DateTypeOnGui;
 
-                await _churnDateRepository.UpdateAsync(result.Id, result);
+                await _churnDateRepository.UpdateAsync(result);
 
                 return new SuccessResult(Messages.Updated);
             }

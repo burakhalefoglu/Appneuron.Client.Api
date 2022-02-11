@@ -3,7 +3,6 @@ using Business.BusinessAspects;
 using Core.Utilities.Results;
 using Core.Aspects.Autofac.Performance;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
 
     public class GetLevelbasePowerUsageDtoByProjectIdQuery : IRequest<IDataResult<IEnumerable<LevelbasePowerUsageDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public class GetLevelbasePowerUsageDtoByProjectIdQueryHandler : IRequestHandler<GetLevelbasePowerUsageDtoByProjectIdQuery, IDataResult<IEnumerable<LevelbasePowerUsageDto>>>
         {
             private readonly IEveryLoginLevelDataRepository _everyLoginLevelDataRepository;
@@ -37,13 +36,15 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<LevelbasePowerUsageDto>>> Handle(GetLevelbasePowerUsageDtoByProjectIdQuery request, CancellationToken cancellationToken)
             {
-                var everyLoginLevelDataList = await _everyLoginLevelDataRepository.GetListAsync(e => e.ProjectId == request.ProjectId);
+                var everyLoginLevelDataList = await _everyLoginLevelDataRepository.GetListAsync(
+                    e => e.ProjectId == request.ProjectId && e.Status == true);
                 var levelbasePowerUsageDtoList = new List<LevelbasePowerUsageDto>();
+
 
                 everyLoginLevelDataList.ToList().ForEach(e =>
                 {
 
-                    var resultlevelbasePowerUsageDto = levelbasePowerUsageDtoList.FirstOrDefault(t => t.ClientId == e.ClientId && t.Levelname == e.Levelname);
+                    var resultlevelbasePowerUsageDto = levelbasePowerUsageDtoList.FirstOrDefault(t => t.ClientId == e.ClientId && t.Levelname == e.LevelName);
                     if(resultlevelbasePowerUsageDto != null)
                     {
                         resultlevelbasePowerUsageDto.TotalPowerUsage += e.TotalPowerUsage;
@@ -53,7 +54,7 @@ namespace Business.Handlers.EveryLoginLevelDatas.Queries
                         levelbasePowerUsageDtoList.Add(new LevelbasePowerUsageDto
                         {
                             ClientId = e.ClientId,
-                            Levelname = e.Levelname,
+                            Levelname = e.LevelName,
                             TotalPowerUsage = e.TotalPowerUsage
                         });
                     }

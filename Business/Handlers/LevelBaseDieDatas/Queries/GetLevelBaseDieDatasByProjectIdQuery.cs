@@ -15,17 +15,15 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
 {
     public class GetLevelBaseDieDatasByProjectIdQuery : IRequest<IDataResult<IEnumerable<LevelBaseDieData>>>
     {
-        public string ProjectID { get; set; }
+        public long ProjectId { get; set; }
 
         public class GetLevelBaseDieDatasByProjectIdQueryHandler : IRequestHandler<GetLevelBaseDieDatasByProjectIdQuery, IDataResult<IEnumerable<LevelBaseDieData>>>
         {
             private readonly ILevelBaseDieDataRepository _levelBaseDieDataRepository;
-            private readonly IMediator _mediator;
 
-            public GetLevelBaseDieDatasByProjectIdQueryHandler(ILevelBaseDieDataRepository levelBaseDieDataRepository, IMediator mediator)
+            public GetLevelBaseDieDatasByProjectIdQueryHandler(ILevelBaseDieDataRepository levelBaseDieDataRepository)
             {
                 _levelBaseDieDataRepository = levelBaseDieDataRepository;
-                _mediator = mediator;
             }
 
             [PerformanceAspect(5)]
@@ -35,7 +33,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Queries
             public async Task<IDataResult<IEnumerable<LevelBaseDieData>>> Handle(GetLevelBaseDieDatasByProjectIdQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<LevelBaseDieData>>
-                    (await _levelBaseDieDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectID));
+                    (await _levelBaseDieDataRepository.GetListAsync(p=>p.ProjectId == request.ProjectId && p.Status == true));
             }
         }
     }

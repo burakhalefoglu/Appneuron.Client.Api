@@ -27,11 +27,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<BuyingEvent>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
-        public async Task<IActionResult> GetByProjectId(string ProjectId)
+        public async Task<IActionResult> GetByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetBuyingEventsByProjectIdQuery { 
             
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
             
             if (result.Success)
@@ -50,13 +50,13 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<BuyingEventDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpGet("getBuyingEventdtoByProjectId")]
-        public async Task<IActionResult> GetBuyingEventdtoByProjectId(string ProjectId)
+        [HttpGet("getBuyingEventDtoByProjectId")]
+        public async Task<IActionResult> GetBuyingEventDtoByProjectId(long projectId)
         {
             var result = await Mediator.Send(new GetBuyingEventByProjectIdQuery
             {
 
-                ProjectId = ProjectId
+                ProjectId = projectId
             });
 
             if (result.Success)

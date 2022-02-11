@@ -18,19 +18,17 @@ namespace Business.Handlers.OfferBehaviorModels.Queries
 
     public class GetOfferBehaviorDtoQuery : IRequest<IDataResult<IEnumerable<OfferBehaviorDto>>>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public string Name { get; set; }
         public int Version { get; set; }
 
         public class GetOfferBehaviorDtoQueryHandler : IRequestHandler<GetOfferBehaviorDtoQuery, IDataResult<IEnumerable<OfferBehaviorDto>>>
         {
             private readonly IOfferBehaviorModelRepository _offerBehaviorModelRepository;
-            private readonly IMediator _mediator;
 
-            public GetOfferBehaviorDtoQueryHandler(IOfferBehaviorModelRepository offerBehaviorModelRepository, IMediator mediator)
+            public GetOfferBehaviorDtoQueryHandler(IOfferBehaviorModelRepository offerBehaviorModelRepository)
             {
                 _offerBehaviorModelRepository = offerBehaviorModelRepository;
-                _mediator = mediator;
             }
 
             [PerformanceAspect(5)]
@@ -43,7 +41,7 @@ namespace Business.Handlers.OfferBehaviorModels.Queries
                 var offerResult = await _offerBehaviorModelRepository.GetListAsync(
                     o => o.ProjectId == request.ProjectId &&
                     o.OfferName == request.Name &&
-                    o.Version == request.Version);
+                    o.Version == request.Version && o.Status == true);
                 offerResult.ToList().ForEach(o =>
                 {
                     offerDtoList.Add(new OfferBehaviorDto

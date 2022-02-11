@@ -17,7 +17,7 @@ namespace Business.Handlers.LevelBaseDieDatas.Commands
     /// </summary>
     public class DeleteLevelBaseDieDataByProjectIdCommand : IRequest<IResult>
     {
-        public string ProjectID { get; set; }
+        public  long ProjectId { get; set; }
 
         public class DeleteLevelBaseDieDataByProjectIdCommandHandler : IRequestHandler<DeleteLevelBaseDieDataByProjectIdCommand, IResult>
         {
@@ -35,8 +35,12 @@ namespace Business.Handlers.LevelBaseDieDatas.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteLevelBaseDieDataByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                await _levelBaseDieDataRepository.DeleteAsync(p=>p.ProjectId == request.ProjectID);
-
+                var result = await _levelBaseDieDataRepository.GetAsync(p=>p.ProjectId == request.ProjectId && p.Status == true);
+                if (result is null)
+                    return new ErrorResult(Messages.NotFound);
+                result.Status = false;
+                
+                await _levelBaseDieDataRepository.UpdateAsync(result);
                 return new SuccessResult(Messages.Deleted);
             }
         }

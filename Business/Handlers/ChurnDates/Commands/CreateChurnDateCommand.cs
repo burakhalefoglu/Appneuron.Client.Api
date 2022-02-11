@@ -11,25 +11,23 @@ using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
+
 using Business.Handlers.ChurnDates.ValidationRules;
 
 namespace Business.Handlers.ChurnDates.Commands
 {
     public class CreateChurnDateCommand : IRequest<IResult>
     {
-        public string ProjectId { get; set; }
-        public long churnDateMinutes { get; set; }
+        public long ProjectId { get; set; }
+        public long ChurnDateMinutes { get; set; }
         public string DateTypeOnGui { get; set; }
 
         public class CreateChurnDateCommandHandler : IRequestHandler<CreateChurnDateCommand, IResult>
         {
             private readonly IChurnDateRepository _churnDateRepository;
-            private readonly IMediator _mediator;
-            public CreateChurnDateCommandHandler(IChurnDateRepository churnDateRepository, IMediator mediator)
+            public CreateChurnDateCommandHandler(IChurnDateRepository churnDateRepository )
             {
                 _churnDateRepository = churnDateRepository;
-                _mediator = mediator;
             }
 
             [ValidationAspect(typeof(CreateChurnDateValidator), Priority = 1)]
@@ -38,7 +36,7 @@ namespace Business.Handlers.ChurnDates.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateChurnDateCommand request, CancellationToken cancellationToken)
             {
-                var isThereChurnDateRecord = _churnDateRepository.Any(u => u.ProjectId == request.ProjectId);
+                var isThereChurnDateRecord = await _churnDateRepository.AnyAsync(u => u.ProjectId == request.ProjectId && u.Status == true);
 
                 if (isThereChurnDateRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
@@ -46,7 +44,7 @@ namespace Business.Handlers.ChurnDates.Commands
                 var addedChurnDate = new ChurnDate
                 {
                     ProjectId = request.ProjectId,
-                    ChurnDateMinutes = request.churnDateMinutes,
+                    ChurnDateMinutes = request.ChurnDateMinutes,
                     DateTypeOnGui = request.DateTypeOnGui
                 };
 

@@ -9,7 +9,7 @@ namespace Business.Handlers.ChurnDates.ValidationRules
     {
         public CreateChurnDateValidator()
         {
-            RuleFor(x => x.churnDateMinutes).NotEmpty();
+            RuleFor(x => x.ChurnDateMinutes).NotEmpty();
 
         }
     }

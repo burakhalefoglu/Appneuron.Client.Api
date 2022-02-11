@@ -17,7 +17,7 @@ namespace Business.Handlers.AdvEvents.Commands
     /// </summary>
     public class DeleteAdvEventByProjectIdCommand : IRequest<IResult>
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
         public class DeleteAdvEventByProjectIdCommandHandler : IRequestHandler<DeleteAdvEventByProjectIdCommand, IResult>
         {
@@ -35,11 +35,11 @@ namespace Business.Handlers.AdvEvents.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteAdvEventByProjectIdCommand request, CancellationToken cancellationToken)
             {
-                var repos =await _advEventRepository.GetListAsync(p => p.ProjectId == request.ProjectId);
+                var repos =await _advEventRepository.GetListAsync(p => p.ProjectId == request.ProjectId && p.Status == true);
                 foreach (var advEvent in repos.ToList())
                 {
                     advEvent.Status = false;
-                  await _advEventRepository.UpdateAsync(advEvent, a=>a.ObjectId == advEvent.ObjectId);
+                  await _advEventRepository.UpdateAsync(advEvent);
   
                 }
 

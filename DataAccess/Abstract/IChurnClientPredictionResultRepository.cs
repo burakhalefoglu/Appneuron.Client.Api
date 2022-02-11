@@ -4,7 +4,7 @@ using Core.DataAccess;
 using Entities.Concrete;
 namespace DataAccess.Abstract
 {
-    public interface IChurnClientPredictionResultRepository : IDocumentDbRepository<ChurnClientPredictionResult>
+    public interface IChurnClientPredictionResultRepository : IRepository<ChurnClientPredictionResult>
     {
     }
 }

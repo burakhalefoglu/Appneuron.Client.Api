@@ -2,10 +2,12 @@
 
 namespace Entities.Concrete
 {
-    public class ChurnDate: DocumentDbEntity
+    public class ChurnDate: IEntity
     {
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
         public long ChurnDateMinutes { get; set; }
         public string DateTypeOnGui { get; set; }
+        public long Id { get; set; }
+        public bool Status = true;
     }
 }

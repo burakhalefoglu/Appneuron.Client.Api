@@ -4,12 +4,14 @@ using System;
 
 namespace Entities.Concrete
 {
-    public class ChurnClientPredictionResult: DocumentDbEntity
+    public class ChurnClientPredictionResult: IEntity
     {
-        public string ClientId { get; set; }
-        public string ProjectId { get; set; }
+        public long ClientId { get; set; }
+        public long ProjectId { get; set; }
         public DateTime ChurnPredictionDate { get; set; }
-        public ClientsOfferModelDto[] ClientsOfferModelDto { get; set; }
+        
         public bool Status = true;
+        public long Id { get; set; }
     }
 }
+ 
