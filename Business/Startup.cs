@@ -13,7 +13,8 @@ using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.ElasticSearch;
 using Core.Utilities.IoC;
-using Core.Utilities.MessageBrokers.RabbitMq;
+using Core.Utilities.MessageBrokers;
+using Core.Utilities.MessageBrokers.Kafka;
 using DataAccess.Abstract;
 using DataAccess.Concrete.Cassandra;
 using DataAccess.Concrete.Cassandra.Contexts;
@@ -65,8 +66,7 @@ namespace Business
             services.AddSingleton<ConfigurationManager>();
 
             services.AddTransient<IElasticSearch, ElasticSearchManager>();
-            services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
-            services.AddTransient<IMessageConsumer, MqConsumerHelper>();
+            services.AddTransient<IMessageBroker, KafkaMessageBroker>();
             services.AddSingleton<ICacheManager, MemoryCacheManager>();
 
             services.AddAutoMapper(typeof(ConfigurationManager));
