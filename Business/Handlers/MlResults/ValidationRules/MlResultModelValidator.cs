@@ -1,7 +1,3 @@
-﻿
-using FluentValidation;
-
-namespace Business.Handlers.MlResultModels.ValidationRules
+﻿namespace Business.Handlers.MlResultModels.ValidationRules
 {
-
 }

@@ -1,15 +1,15 @@
-﻿using Core.Entities;
-using System;
+﻿using System;
+using Core.Entities;
 
 namespace Entities.Concrete
 {
     public class ClientDataModel : IEntity
     {
+        public bool Status = true;
         public long ProjectId { get; set; }
         public byte IsPaidClient { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime PaidTime { get; set; }
         public long Id { get; set; }
-        public bool Status = true;
     }
 }

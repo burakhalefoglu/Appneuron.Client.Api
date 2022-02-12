@@ -9,7 +9,8 @@ namespace DataAccess.Concrete.Cassandra.Contexts
 
         protected CassandraContextBase(IConfiguration configuration)
         {
-            CassandraConnectionSettings = configuration.GetSection("CassandraConnectionSettings").Get<CassandraConnectionSettings>();
+            CassandraConnectionSettings = configuration.GetSection("CassandraConnectionSettings")
+                .Get<CassandraConnectionSettings>();
         }
     }
-} 
+}

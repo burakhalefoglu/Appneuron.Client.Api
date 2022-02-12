@@ -1,8 +1,5 @@
-﻿using Core.Entities;
-using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Core.Entities;
 
 namespace Entities.Dtos
 {
@@ -10,6 +7,5 @@ namespace Entities.Dtos
     {
         public DateTime Day { get; set; }
         public ChurnClientDto[] ClientDtoList { get; set; }
-
     }
 }

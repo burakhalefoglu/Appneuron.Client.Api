@@ -5,10 +5,12 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.Cassandra
 {
-    public class CassChurnClientPredictionResultRepository : CassandraRepositoryBase<ChurnClientPredictionResult>, IChurnClientPredictionResultRepository
+    public class CassChurnClientPredictionResultRepository : CassandraRepositoryBase<ChurnClientPredictionResult>,
+        IChurnClientPredictionResultRepository
     {
-        public CassChurnClientPredictionResultRepository(CassandraContextBase cassandraContexts, string tableQuery) : base(
-            cassandraContexts.CassandraConnectionSettings, tableQuery)
+        public CassChurnClientPredictionResultRepository(CassandraContextBase cassandraContexts, string tableQuery) :
+            base(
+                cassandraContexts.CassandraConnectionSettings, tableQuery)
         {
         }
     }

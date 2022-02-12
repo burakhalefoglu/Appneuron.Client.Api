@@ -1,21 +1,18 @@
-﻿
-using Business.Constants;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Business.BusinessAspects;
+using Business.Constants;
+using Business.Handlers.ChurnDates.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.ChurnDates.ValidationRules;
 
 namespace Business.Handlers.ChurnDates.Commands
 {
-
-
     public class UpdateChurnDateCommand : IRequest<IResult>
     {
         public long ProjectId { get; set; }
@@ -39,11 +36,12 @@ namespace Business.Handlers.ChurnDates.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateChurnDateCommand request, CancellationToken cancellationToken)
             {
-                var result = await _churnDateRepository.GetAsync(c => c.ProjectId == request.ProjectId && c.Status == true);
+                var result =
+                    await _churnDateRepository.GetAsync(c => c.ProjectId == request.ProjectId && c.Status == true);
                 if (result is null)
                 {
-                    await _mediator.Send(new CreateChurnDateCommand {
-                    
+                    await _mediator.Send(new CreateChurnDateCommand
+                    {
                         ChurnDateMinutes = request.ChurnDateMinutes,
                         DateTypeOnGui = request.DateTypeOnGui,
                         ProjectId = request.ProjectId
@@ -61,4 +59,3 @@ namespace Business.Handlers.ChurnDates.Commands
         }
     }
 }
-

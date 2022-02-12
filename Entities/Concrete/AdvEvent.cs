@@ -1,10 +1,11 @@
-﻿using Core.Entities;
-using System;
+﻿using System;
+using Core.Entities;
 
 namespace Entities.Concrete
-{ 
+{
     public class AdvEvent : IEntity
     {
+        public bool Status = true;
         public long ClientId { get; set; }
         public long ProjectId { get; set; }
         public long CustomerId { get; set; }
@@ -13,7 +14,6 @@ namespace Entities.Concrete
         public int DifficultyLevel { get; set; }
         public float InMinutes { get; set; }
         public DateTime TriggerTime { get; set; }
-        public bool Status = true;
         public long Id { get; set; }
     }
 }

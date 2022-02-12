@@ -1,10 +1,11 @@
-﻿using Core.Entities;
-using System;
+﻿using System;
+using Core.Entities;
 
 namespace Entities.Concrete
 {
     public class EveryLoginLevelData : IEntity
     {
+        public bool Status = true;
         public long ClientId { get; set; }
         public long ProjectId { get; set; }
         public long CustomerId { get; set; }
@@ -15,7 +16,6 @@ namespace Entities.Concrete
         public DateTime DateTime { get; set; }
         public byte IsDead { get; set; }
         public int TotalPowerUsage { get; set; }
-        public bool Status = true;
         public long Id { get; set; }
     }
 }

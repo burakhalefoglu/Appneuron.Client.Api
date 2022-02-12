@@ -1,26 +1,25 @@
-﻿
-using System;
-using Business.Handlers.AdvStrategyBehaviorModels.Queries;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Business.Handlers.AdvStrategyBehaviorModels.Queries;
 using Core.Utilities.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
 namespace WebAPI.Controllers
 {
     /// <summary>
-    /// AdvStrategyBehaviorModels If controller methods will not be Authorize, [AllowAnonymous] is used.
+    ///     AdvStrategyBehaviorModels If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AdvStrategyBehaviorModelsController : BaseApiController
     {
-      
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>AdvStrategyBehaviorModels</remarks>
-        ///<return>AdvStrategyBehaviorModels List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        ///     It brings the details according to its id.
+        /// </summary>
+        /// <remarks>AdvStrategyBehaviorModels</remarks>
+        /// <return>AdvStrategyBehaviorModels List</return>
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<int>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IDataResult<int>))]
@@ -29,19 +28,15 @@ namespace WebAPI.Controllers
             string name, int version, DateTime time)
         {
             var result = await Mediator.Send(new GetAdvStrategyBehaviorCountByAdvStrategyQuery
-            {
-                ProjectId = projectId,
-                Version = version,
-                Name = name,
-                StartTime = time
-            }
+                {
+                    ProjectId = projectId,
+                    Version = version,
+                    Name = name,
+                    StartTime = time
+                }
             );
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
-   
     }
 }

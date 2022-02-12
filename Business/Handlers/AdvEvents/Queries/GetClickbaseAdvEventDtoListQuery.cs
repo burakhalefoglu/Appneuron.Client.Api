@@ -1,26 +1,25 @@
-﻿
-using Business.BusinessAspects;
-using Core.Utilities.Results;
-using Core.Aspects.Autofac.Performance;
-using DataAccess.Abstract;
-using MediatR;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Aspects.Autofac.Logging;
+using Business.BusinessAspects;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Performance;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Dtos;
-using System.Linq;
-using System;
+using MediatR;
 
 namespace Business.Handlers.AdvEvents.Queries
 {
-
     public class GetClickBaseAdvEventDtoListQuery : IRequest<IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
     {
         public long ProjectId { get; set; }
-        public class GetClickBaseAdvEventDtoListQueryHandler : IRequestHandler<GetClickBaseAdvEventDtoListQuery, 
+
+        public class GetClickBaseAdvEventDtoListQueryHandler : IRequestHandler<GetClickBaseAdvEventDtoListQuery,
             IDataResult<IEnumerable<ClickbaseAdvEventDto>>>
         {
             private readonly IAdvEventRepository _advEventRepository;
@@ -33,10 +32,11 @@ namespace Business.Handlers.AdvEvents.Queries
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(ConsoleLogger))]
-            [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<ClickbaseAdvEventDto>>> Handle(GetClickBaseAdvEventDtoListQuery request, CancellationToken cancellationToken)
+            [SecuredOperation(Priority = 1)] 
+            public async Task<IDataResult<IEnumerable<ClickbaseAdvEventDto>>> Handle(
+                GetClickBaseAdvEventDtoListQuery request, CancellationToken cancellationToken)
             {
-                var advEventList = await _advEventRepository.GetListAsync(adv 
+                var advEventList = await _advEventRepository.GetListAsync(adv
                     => adv.ProjectId == request.ProjectId && adv.Status == true);
                 var clickBaseAdvEventDtoList = new List<ClickbaseAdvEventDto>();
                 advEventList.ToList().ForEach(adv =>
@@ -58,19 +58,16 @@ namespace Business.Handlers.AdvEvents.Queries
                     }
                     else
                     {
-                        var clientResult = resultEvent.ClientClickDtoList.FirstOrDefault(c => c.ClientId == adv.ClientId);
-                        if(clientResult == null)
-                        {
+                        var clientResult =
+                            resultEvent.ClientClickDtoList.FirstOrDefault(c => c.ClientId == adv.ClientId);
+                        if (clientResult == null)
                             _ = resultEvent.ClientClickDtoList.Append(new ClientClickDto
                             {
                                 ClientId = adv.ClientId,
                                 ClickCount = 1
                             });
-                        }
                         else
-                        {
                             clientResult.ClickCount += 1;
-                        }
                     }
                 });
 

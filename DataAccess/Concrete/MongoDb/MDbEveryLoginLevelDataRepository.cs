@@ -5,9 +5,11 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.MongoDb
 {
-    public class MDbEveryLoginLevelDataRepository : MongoDbRepositoryBase<EveryLoginLevelData>, IEveryLoginLevelDataRepository
+    public class MDbEveryLoginLevelDataRepository : MongoDbRepositoryBase<EveryLoginLevelData>,
+        IEveryLoginLevelDataRepository
     {
-        public MDbEveryLoginLevelDataRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
+        public MDbEveryLoginLevelDataRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(
+            mongoDbContext.MongoConnectionSettings, collectionName)
         {
         }
     }

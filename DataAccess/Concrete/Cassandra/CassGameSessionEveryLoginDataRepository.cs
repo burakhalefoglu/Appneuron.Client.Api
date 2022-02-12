@@ -5,10 +5,12 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.Cassandra
 {
-    public class CassGameSessionEveryLoginDataRepository : CassandraRepositoryBase<GameSessionEveryLoginData>, IGameSessionEveryLoginDataRepository
+    public class CassGameSessionEveryLoginDataRepository : CassandraRepositoryBase<GameSessionEveryLoginData>,
+        IGameSessionEveryLoginDataRepository
     {
-        public CassGameSessionEveryLoginDataRepository(CassandraContextBase cassandraContexts, string tableQuery) : base(
-            cassandraContexts.CassandraConnectionSettings, tableQuery)
+        public CassGameSessionEveryLoginDataRepository(CassandraContextBase cassandraContexts, string tableQuery) :
+            base(
+                cassandraContexts.CassandraConnectionSettings, tableQuery)
         {
         }
     }

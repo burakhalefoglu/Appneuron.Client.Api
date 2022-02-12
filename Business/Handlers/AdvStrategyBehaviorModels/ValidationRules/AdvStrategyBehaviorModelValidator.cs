@@ -1,8 +1,3 @@
-﻿
-using FluentValidation;
-
-namespace Business.Handlers.AdvStrategyBehaviorModels.ValidationRules
+﻿namespace Business.Handlers.AdvStrategyBehaviorModels.ValidationRules
 {
-
-   
 }

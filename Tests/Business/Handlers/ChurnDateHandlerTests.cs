@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Business.Constants;
 using Business.Handlers.ChurnDates.Commands;
@@ -19,14 +20,15 @@ namespace Tests.Business.Handlers
     [TestFixture]
     public class ChurnDateHandlerTests
     {
-        Mock<IChurnDateRepository> _churnDateRepository;
-        Mock<IMediator> _mediator;
         [SetUp]
         public void Setup()
         {
             _churnDateRepository = new Mock<IChurnDateRepository>();
             _mediator = new Mock<IMediator>();
         }
+
+        private Mock<IChurnDateRepository> _churnDateRepository;
+        private Mock<IMediator> _mediator;
 
         [Test]
         public async Task ChurnDate_GetQuery_Success()
@@ -35,32 +37,29 @@ namespace Tests.Business.Handlers
             var query = new GetChurnDateByProjectIdQuery();
 
             _churnDateRepository.Setup(x =>
-                x.GetAsync(It.IsAny<Expression<Func<ChurnDate, bool>>>()))
-                .ReturnsAsync(new ChurnDate()
-                {
-                    Id = 1,
-                    ChurnDateMinutes = new DateTime().Ticks,
-                    DateTypeOnGui = "Hour",
-                    ProjectId = 12, 
-
-                }
+                    x.GetAsync(It.IsAny<Expression<Func<ChurnDate, bool>>>()))
+                .ReturnsAsync(new ChurnDate
+                    {
+                        Id = 1,
+                        ChurnDateMinutes = new DateTime().Ticks,
+                        DateTypeOnGui = "Hour",
+                        ProjectId = 12
+                    }
                 );
 
             var handler = new GetChurnDateByProjectIdQueryHandler(_churnDateRepository.Object, _mediator.Object);
 
             //Act
-            var x = await handler.Handle(query, new System.Threading.CancellationToken());
+            var x = await handler.Handle(query, new CancellationToken());
 
             //Asset
             x.Success.Should().BeTrue();
             x.Data.ProjectId.Should().Be(12);
-
         }
 
         [Test]
         public async Task ChurnDate_CreateCommand_Success()
         {
-
             //Arrange
             var command = new CreateChurnDateCommand
             {
@@ -69,14 +68,14 @@ namespace Tests.Business.Handlers
                 ChurnDateMinutes = new DateTime().Ticks
             };
 
-            _churnDateRepository.Setup(x => 
+            _churnDateRepository.Setup(x =>
                     x.Any(It.IsAny<Expression<Func<ChurnDate, bool>>>()))
-                    .Returns(false);
+                .Returns(false);
 
             _churnDateRepository.Setup(x => x.Add(It.IsAny<ChurnDate>()));
 
             var handler = new CreateChurnDateCommandHandler(_churnDateRepository.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var x = await handler.Handle(command, new CancellationToken());
 
 
             x.Success.Should().BeTrue();
@@ -94,13 +93,13 @@ namespace Tests.Business.Handlers
             };
 
             _churnDateRepository.Setup(x =>
-                    x.Any(It.IsAny<Expression<Func<ChurnDate, bool>>>()))
-                .Returns(true);
+                    x.AnyAsync(It.IsAny<Expression<Func<ChurnDate, bool>>>()))
+                .ReturnsAsync(true);
 
             _churnDateRepository.Setup(x => x.Add(It.IsAny<ChurnDate>()));
 
             var handler = new CreateChurnDateCommandHandler(_churnDateRepository.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var x = await handler.Handle(command, new CancellationToken());
 
             x.Success.Should().BeFalse();
             x.Message.Should().Be(Messages.NameAlreadyExist);
@@ -117,18 +116,16 @@ namespace Tests.Business.Handlers
 
             _churnDateRepository.Setup(x => x.GetAsync(
                     It.IsAny<Expression<Func<ChurnDate, bool>>>()))
-                        .ReturnsAsync(new ChurnDate()
-                        {
-                        });
+                .ReturnsAsync(new ChurnDate());
 
             _churnDateRepository.Setup(x => x.UpdateAsync(It.IsAny<ChurnDate>()));
 
             var handler = new UpdateChurnDateCommandHandler(_churnDateRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var x = await handler.Handle(command, new CancellationToken());
 
 
             x.Success.Should().BeTrue();
-            x.Message.Should().Be(Messages.Added);
+            x.Message.Should().Be(Messages.Updated);
         }
 
         [Test]
@@ -139,23 +136,16 @@ namespace Tests.Business.Handlers
             //command.ChurnDateName = "test";
 
             _churnDateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<ChurnDate, bool>>>()))
-                .ReturnsAsync(new ChurnDate()
-                {
-                    Id = 1,
-                    ProjectId =12,
-                    ChurnDateMinutes = new DateTime().Ticks,
-                    DateTypeOnGui = "Day"
-                });
+                .ReturnsAsync((ChurnDate) null);
 
             _churnDateRepository.Setup(x => x.UpdateAsync(It.IsAny<ChurnDate>()));
 
             var handler = new UpdateChurnDateCommandHandler(_churnDateRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var x = await handler.Handle(command, new CancellationToken());
 
 
             x.Success.Should().BeTrue();
-            x.Message.Should().Be(Messages.Updated);
+            x.Message.Should().Be(Messages.Added);
         }
     }
 }
-

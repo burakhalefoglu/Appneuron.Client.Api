@@ -2,11 +2,10 @@
 
 namespace DataAccess.Concrete.Cassandra.Contexts
 {
-    public class Cassandracontext: CassandraContextBase
+    public class Cassandracontext : CassandraContextBase
     {
         public Cassandracontext(IConfiguration configuration) : base(configuration)
         {
         }
-        
     }
 }

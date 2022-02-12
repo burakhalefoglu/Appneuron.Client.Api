@@ -16,7 +16,8 @@ namespace Core.DataAccess.Cassandra
     {
         private readonly Table<T> _table;
 
-        protected CassandraRepositoryBase(CassandraConnectionSettings cassandraConnectionSettings, string tableCreateQuery)
+        protected CassandraRepositoryBase(CassandraConnectionSettings cassandraConnectionSettings,
+            string tableCreateQuery)
         {
             var cluster = Cluster.Builder()
                 .AddContactPoints(cassandraConnectionSettings.Host)

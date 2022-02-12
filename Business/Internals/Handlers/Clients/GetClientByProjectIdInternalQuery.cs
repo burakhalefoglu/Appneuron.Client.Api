@@ -14,7 +14,9 @@ namespace Business.Internals.Handlers.Clients
         public long ProjectId { get; set; }
         public long ClientId { get; set; }
 
-        public class GetClientByProjectIdInternalQueryHandler : IRequestHandler<GetClientByProjectIdInternalQuery, IDataResult<ClientDataModel>>
+        public class
+            GetClientByProjectIdInternalQueryHandler : IRequestHandler<GetClientByProjectIdInternalQuery,
+                IDataResult<ClientDataModel>>
         {
             private readonly IClientRepository _clientRepository;
             private readonly IMediator _mediator;
@@ -24,10 +26,13 @@ namespace Business.Internals.Handlers.Clients
                 _clientRepository = clientRepository;
                 _mediator = mediator;
             }
+
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<ClientDataModel>> Handle(GetClientByProjectIdInternalQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<ClientDataModel>> Handle(GetClientByProjectIdInternalQuery request,
+                CancellationToken cancellationToken)
             {
-                var client = await _clientRepository.GetAsync(c => c.Id == request.ClientId && c.ProjectId == request.ProjectId && c.Status == true);
+                var client = await _clientRepository.GetAsync(c =>
+                    c.Id == request.ClientId && c.ProjectId == request.ProjectId && c.Status == true);
                 return new SuccessDataResult<ClientDataModel>(client);
             }
         }

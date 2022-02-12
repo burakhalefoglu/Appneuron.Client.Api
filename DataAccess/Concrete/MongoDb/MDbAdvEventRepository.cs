@@ -7,10 +7,9 @@ namespace DataAccess.Concrete.MongoDb
 {
     public class MDbAdvEventRepository : MongoDbRepositoryBase<AdvEvent>, IAdvEventRepository
     {
-        public MDbAdvEventRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
+        public MDbAdvEventRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(
+            mongoDbContext.MongoConnectionSettings, collectionName)
         {
-
-
         }
     }
 }

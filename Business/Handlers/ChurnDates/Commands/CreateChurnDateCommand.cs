@@ -1,6 +1,8 @@
-﻿
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.ChurnDates.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
@@ -9,10 +11,6 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-
-using Business.Handlers.ChurnDates.ValidationRules;
 
 namespace Business.Handlers.ChurnDates.Commands
 {
@@ -25,7 +23,8 @@ namespace Business.Handlers.ChurnDates.Commands
         public class CreateChurnDateCommandHandler : IRequestHandler<CreateChurnDateCommand, IResult>
         {
             private readonly IChurnDateRepository _churnDateRepository;
-            public CreateChurnDateCommandHandler(IChurnDateRepository churnDateRepository )
+
+            public CreateChurnDateCommandHandler(IChurnDateRepository churnDateRepository)
             {
                 _churnDateRepository = churnDateRepository;
             }
@@ -36,7 +35,8 @@ namespace Business.Handlers.ChurnDates.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateChurnDateCommand request, CancellationToken cancellationToken)
             {
-                var isThereChurnDateRecord = await _churnDateRepository.AnyAsync(u => u.ProjectId == request.ProjectId && u.Status == true);
+                var isThereChurnDateRecord =
+                    await _churnDateRepository.AnyAsync(u => u.ProjectId == request.ProjectId && u.Status == true);
 
                 if (isThereChurnDateRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);

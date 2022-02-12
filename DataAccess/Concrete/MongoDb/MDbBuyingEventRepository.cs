@@ -7,7 +7,8 @@ namespace DataAccess.Concrete.MongoDb
 {
     public class MDbBuyingEventRepository : MongoDbRepositoryBase<BuyingEvent>, IBuyingEventRepository
     {
-        public MDbBuyingEventRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
+        public MDbBuyingEventRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(
+            mongoDbContext.MongoConnectionSettings, collectionName)
         {
         }
     }

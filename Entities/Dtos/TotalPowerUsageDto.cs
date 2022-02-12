@@ -1,7 +1,5 @@
-﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Core.Entities;
 
 namespace Entities.Dtos
 {
@@ -10,6 +8,5 @@ namespace Entities.Dtos
         public long ClientId { get; set; }
         public int TotalPowerUsage { get; set; }
         public DateTime Date { get; set; }
-
     }
 }

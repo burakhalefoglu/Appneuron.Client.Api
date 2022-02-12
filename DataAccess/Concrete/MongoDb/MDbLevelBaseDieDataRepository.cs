@@ -7,7 +7,8 @@ namespace DataAccess.Concrete.MongoDb
 {
     public class MDbLevelBaseDieDataRepository : MongoDbRepositoryBase<LevelBaseDieData>, ILevelBaseDieDataRepository
     {
-        public MDbLevelBaseDieDataRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(mongoDbContext.MongoConnectionSettings, collectionName)
+        public MDbLevelBaseDieDataRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(
+            mongoDbContext.MongoConnectionSettings, collectionName)
         {
         }
     }

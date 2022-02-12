@@ -7,6 +7,5 @@ namespace Entities.Dtos
         public int Version { get; set; }
         public string OfferName { get; set; }
         public int IsBuyOffer { get; set; }
-
     }
 }

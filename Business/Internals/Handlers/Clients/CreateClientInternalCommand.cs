@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Business.Constants;
 using Business.Handlers.Clients.ValidationRules;
@@ -14,14 +15,12 @@ using MediatR;
 namespace Business.Internals.Handlers.Clients
 {
     /// <summary>
-    /// 
     /// </summary>
     public class CreateClientInternalCommand : IRequest<IResult>
     {
-
         public long ClientId { get; set; }
         public long ProjectId { get; set; }
-        public System.DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         public byte IsPaidClient { get; set; }
 
 
@@ -29,6 +28,7 @@ namespace Business.Internals.Handlers.Clients
         {
             private readonly IClientRepository _clientRepository;
             private readonly IMediator _mediator;
+
             public CreateClientInternalCommandHandler(IClientRepository clientRepository, IMediator mediator)
             {
                 _clientRepository = clientRepository;
@@ -40,9 +40,9 @@ namespace Business.Internals.Handlers.Clients
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateClientInternalCommand request, CancellationToken cancellationToken)
             {
-                var isThereClientRecord = _clientRepository.Any(u => u.Id == request.ClientId);
+                var isThereClientRecord = _clientRepository.Any(u => u.Id == request.ClientId && u.Status == true);
 
-                if (isThereClientRecord == true)
+                if (isThereClientRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
                 var addedClient = new ClientDataModel
@@ -50,8 +50,7 @@ namespace Business.Internals.Handlers.Clients
                     Id = request.ClientId,
                     ProjectId = request.ProjectId,
                     CreatedAt = request.CreatedAt,
-                    IsPaidClient = request.IsPaidClient,
-
+                    IsPaidClient = request.IsPaidClient
                 };
 
                 await _clientRepository.AddAsync(addedClient);

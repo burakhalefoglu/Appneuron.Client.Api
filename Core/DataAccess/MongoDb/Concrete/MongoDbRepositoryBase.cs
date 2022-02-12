@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -9,7 +8,7 @@ using MongoDB.Driver;
 
 namespace Core.DataAccess.MongoDb.Concrete
 {
-    public abstract class MongoDbRepositoryBase<T> : IRepository<T>  where T : class, IEntity
+    public abstract class MongoDbRepositoryBase<T> : IRepository<T> where T : class, IEntity
     {
         private readonly IMongoCollection<T> _collection;
 

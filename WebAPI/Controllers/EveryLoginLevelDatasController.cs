@@ -1,52 +1,48 @@
-﻿using Business.Handlers.EveryLoginLevelDatas.Commands;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Business.Handlers.EveryLoginLevelDatas.Commands;
 using Business.Handlers.EveryLoginLevelDatas.Queries;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Core.Utilities.Results;
 
 namespace WebAPI.Controllers
 {
     /// <summary>
-    /// EveryLoginLevelDatas If controller methods will not be Authorize, [AllowAnonymous] is used.
+    ///     EveryLoginLevelDatas If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class EveryLoginLevelDatasController : BaseApiController
     {
-        ///<summary>
-        ///List EveryLoginLevelDatas
-        ///</summary>
-        ///<remarks>EveryLoginLevelDatas</remarks>
-        ///<return>List EveryLoginLevelDatas</return>
-        ///<response code="200"></response>
+        /// <summary>
+        ///     List EveryLoginLevelDatas
+        /// </summary>
+        /// <remarks>EveryLoginLevelDatas</remarks>
+        /// <return>List EveryLoginLevelDatas</return>
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<EveryLoginLevelData>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetEveryLoginLevelDatasByProjectIdQuery { 
-            
-                ProjectId = projectId
-
-            });
-            if (result.Success)
+            var result = await Mediator.Send(new GetEveryLoginLevelDatasByProjectIdQuery
             {
-                return Ok(result);
-            }
+                ProjectId = projectId
+            });
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
-        ///<summary>
-        ///List EveryLoginLevelDatas
-        ///</summary>
-        ///<remarks>EveryLoginLevelDatas</remarks>
-        ///<return>List EveryLoginLevelDatas</return>
-        ///<response code="200"></response>
+        /// <summary>
+        ///     List EveryLoginLevelDatas
+        /// </summary>
+        /// <remarks>EveryLoginLevelDatas</remarks>
+        /// <return>List EveryLoginLevelDatas</return>
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<TotalPowerUsageDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
@@ -57,20 +53,17 @@ namespace WebAPI.Controllers
             {
                 ProjectId = projectId
             });
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
 
-        ///<summary>
-        ///List EveryLoginLevelDatas
-        ///</summary>
-        ///<remarks>EveryLoginLevelDatas</remarks>
-        ///<return>List EveryLoginLevelDatas</return>
-        ///<response code="200"></response>
+        /// <summary>
+        ///     List EveryLoginLevelDatas
+        /// </summary>
+        /// <remarks>EveryLoginLevelDatas</remarks>
+        /// <return>List EveryLoginLevelDatas</return>
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbasePowerUsageDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
@@ -81,22 +74,20 @@ namespace WebAPI.Controllers
             {
                 ProjectId = projectId
             });
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
 
-        ///<summary>
-        ///List EveryLoginLevelDatas
-        ///</summary>
-        ///<remarks>EveryLoginLevelDatas</remarks>
-        ///<return>List EveryLoginLevelDatas</return>
-        ///<response code="200"></response>
+        /// <summary>
+        ///     List EveryLoginLevelDatas
+        /// </summary>
+        /// <remarks>EveryLoginLevelDatas</remarks>
+        /// <return>List EveryLoginLevelDatas</return>
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelbaseFinishScoreDto>>))]
+        [ProducesResponseType(StatusCodes.Status200OK,
+            Type = typeof(IDataResult<IEnumerable<LevelbaseFinishScoreDto>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getLevelBaseFinishScoreByProjectIdQuery")]
         public async Task<IActionResult> GetLevelBaseFinishScoreByProjectId(long projectId)
@@ -105,16 +96,13 @@ namespace WebAPI.Controllers
             {
                 ProjectId = projectId
             });
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
-        
+
         /// <summary>
-        /// Delete EveryLoginLevelData.
+        ///     Delete EveryLoginLevelData.
         /// </summary>
         /// <param name="deleteEveryLoginLevelData"></param>
         /// <returns></returns>
@@ -122,13 +110,11 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
-        public async Task<IActionResult> DeleteByProjectId([FromBody] DeleteEveryLoginLevelDataByProjectIdCommand deleteEveryLoginLevelData)
+        public async Task<IActionResult> DeleteByProjectId(
+            [FromBody] DeleteEveryLoginLevelDataByProjectIdCommand deleteEveryLoginLevelData)
         {
             var result = await Mediator.Send(deleteEveryLoginLevelData);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
     }

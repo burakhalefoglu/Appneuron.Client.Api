@@ -1,7 +1,5 @@
-﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Core.Entities;
 
 namespace Entities.Dtos
 {
@@ -9,6 +7,5 @@ namespace Entities.Dtos
     {
         public ClientClickDto[] ClientClickDtoList { get; set; }
         public DateTime TrigerdDay { get; set; }
-
     }
-} 
+}

@@ -1,4 +1,7 @@
-﻿using Business.BusinessAspects;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
@@ -7,9 +10,6 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using MediatR;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Business.Handlers.AdvEvents.Queries
 {
@@ -17,7 +17,9 @@ namespace Business.Handlers.AdvEvents.Queries
     {
         public long ProjectId { get; set; }
 
-        public class GetAdvEventsByProjectIdQueryHandler : IRequestHandler<GetAdvEventsByProjectIdQuery, IDataResult<IEnumerable<AdvEvent>>>
+        public class
+            GetAdvEventsByProjectIdQueryHandler : IRequestHandler<GetAdvEventsByProjectIdQuery,
+                IDataResult<IEnumerable<AdvEvent>>>
         {
             private readonly IAdvEventRepository _advEventRepository;
             private readonly IMediator _mediator;
@@ -32,10 +34,11 @@ namespace Business.Handlers.AdvEvents.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(ConsoleLogger))]
             [SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<AdvEvent>>> Handle(GetAdvEventsByProjectIdQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<AdvEvent>>> Handle(GetAdvEventsByProjectIdQuery request,
+                CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<AdvEvent>>(await _advEventRepository
-                    .GetListAsync(p=>p.ProjectId == request.ProjectId && p.Status == true));
+                    .GetListAsync(p => p.ProjectId == request.ProjectId && p.Status == true));
             }
         }
     }

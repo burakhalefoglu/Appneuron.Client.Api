@@ -1,6 +1,4 @@
-﻿using MongoDB.Driver;
-
-namespace Core.DataAccess.Cassandra.Configurations
+﻿namespace Core.DataAccess.Cassandra.Configurations
 {
     public class CassandraConnectionSettings
     {
@@ -8,6 +6,5 @@ namespace Core.DataAccess.Cassandra.Configurations
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Keyspace { get; set; }
-        
     }
 }

@@ -13,5 +13,3 @@ namespace DataAccess.Concrete.Cassandra
         }
     }
 }
-
-

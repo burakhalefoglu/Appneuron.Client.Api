@@ -5,7 +5,8 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.Cassandra
 {
-    public class CassLevelBaseSessionDataRepository : CassandraRepositoryBase<LevelBaseSessionData>, ILevelBaseSessionDataRepository
+    public class CassLevelBaseSessionDataRepository : CassandraRepositoryBase<LevelBaseSessionData>,
+        ILevelBaseSessionDataRepository
     {
         public CassLevelBaseSessionDataRepository(CassandraContextBase cassandraContexts, string tableQuery) : base(
             cassandraContexts.CassandraConnectionSettings, tableQuery)

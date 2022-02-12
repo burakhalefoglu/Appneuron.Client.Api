@@ -1,8 +1,12 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Security.Claims;
+using System.Security.Principal;
 using Autofac;
 using Business.Constants;
 using Business.DependencyResolvers;
 using Business.Fakes.DArch;
-using Business.MessageBrokers.Kafka;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Core.DependencyResolvers;
@@ -11,6 +15,9 @@ using Core.Utilities.ElasticSearch;
 using Core.Utilities.IoC;
 using Core.Utilities.MessageBrokers.RabbitMq;
 using DataAccess.Abstract;
+using DataAccess.Concrete.Cassandra;
+using DataAccess.Concrete.Cassandra.Contexts;
+using DataAccess.Concrete.Cassandra.Tables;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using FluentValidation;
 using MediatR;
@@ -18,13 +25,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Reflection;
-using System.Security.Claims;
-using System.Security.Principal;
-using DataAccess.Concrete.Cassandra;
-using DataAccess.Concrete.Cassandra.Contexts;
-using DataAccess.Concrete.Cassandra.Tables;
 
 namespace Business
 {
@@ -41,15 +41,16 @@ namespace Business
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// This method gets called by the runtime. Use this method to add services to the container.
+        ///     This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <remarks>
-        /// It is common to all configurations and must be called. Aspnet core does not call this method because there are other methods.
+        ///     It is common to all configurations and must be called. Aspnet core does not call this method because there are
+        ///     other methods.
         /// </remarks>
         /// <param name="services"></param>
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            Func<IServiceProvider, ClaimsPrincipal> getPrincipal = (sp) =>
+            Func<IServiceProvider, ClaimsPrincipal> getPrincipal = sp =>
                 sp.GetService<IHttpContextAccessor>()?.HttpContext?.User ??
                 new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
 
@@ -64,7 +65,6 @@ namespace Business
             services.AddSingleton<ConfigurationManager>();
 
             services.AddTransient<IElasticSearch, ElasticSearchManager>();
-            services.AddTransient<IKafkaMessageBroker, KafkaMessageBroker>();
             services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
             services.AddTransient<IMessageConsumer, MqConsumerHelper>();
             services.AddSingleton<ICacheManager, MemoryCacheManager>();
@@ -75,13 +75,13 @@ namespace Business
 
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>
             {
-                return memberInfo.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>()
+                return memberInfo.GetCustomAttribute<DisplayAttribute>()
                     ?.GetName();
             };
         }
 
         /// <summary>
-        /// This method gets called by the Development
+        ///     This method gets called by the Development
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureDevelopmentServices(IServiceCollection services)
@@ -101,7 +101,8 @@ namespace Business
                 new CassChurnDateRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnDates));
             services.AddTransient<IClientRepository>(x =>
-                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(), CassandraTableQueries.ClientDataModels));
+                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ClientDataModels));
             services.AddTransient<IMlResultRepository>(x =>
                 new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnBlokerMlResults));
@@ -130,14 +131,14 @@ namespace Business
         }
 
         /// <summary>
-        /// This method gets called by the Staging
+        ///     This method gets called by the Staging
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);
 
-                        services.AddTransient<IAdvStrategyBehaviorModelRepository>(x =>
+            services.AddTransient<IAdvStrategyBehaviorModelRepository>(x =>
                 new CassAdvStrategyBehaviorModelRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.AdvStrategyBehaviorModels));
             services.AddTransient<IChurnClientPredictionResultRepository>(x =>
@@ -150,7 +151,8 @@ namespace Business
                 new CassChurnDateRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnDates));
             services.AddTransient<IClientRepository>(x =>
-                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(), CassandraTableQueries.ClientDataModels));
+                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ClientDataModels));
             services.AddTransient<IMlResultRepository>(x =>
                 new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnBlokerMlResults));
@@ -180,7 +182,7 @@ namespace Business
         }
 
         /// <summary>
-        /// This method gets called by the Production
+        ///     This method gets called by the Production
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureProductionServices(IServiceCollection services)
@@ -200,7 +202,8 @@ namespace Business
                 new CassChurnDateRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnDates));
             services.AddTransient<IClientRepository>(x =>
-                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(), CassandraTableQueries.ClientDataModels));
+                new CassClientRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.ClientDataModels));
             services.AddTransient<IMlResultRepository>(x =>
                 new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnBlokerMlResults));
@@ -230,7 +233,6 @@ namespace Business
         }
 
         /// <summary>
-        ///
         /// </summary>
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
