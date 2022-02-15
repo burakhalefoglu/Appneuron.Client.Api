@@ -26,12 +26,12 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getDtoList")]
         public async Task<IActionResult> GetDtoList(long projectId,
-            string name,
+            int offerId,
             int version)
         {
             var result = await Mediator.Send(new GetOfferBehaviorDtoQuery
             {
-                Name = name,
+                OfferId = offerId,
                 Version = version,
                 ProjectId = projectId
             });

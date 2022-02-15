@@ -32,7 +32,7 @@ namespace Tests.Business.Handlers
             //Arrange
             var query = new GetOfferBehaviorDtoQuery
             {
-                Name = "hello",
+                OfferId = 1,
                 ProjectId = 12,
                 Version = 1
             };
@@ -47,7 +47,7 @@ namespace Tests.Business.Handlers
                         Id = 1,
                         ProjectId = 21,
                         Version = 1,
-                        OfferName = "hello",
+                        OfferId = 1,
                         ClientId = 1,
                         CustomerId = 2,
                         IsBuyOffer = 0
@@ -59,7 +59,7 @@ namespace Tests.Business.Handlers
                         Id = 1,
                         ProjectId = 22,
                         Version = 2,
-                        OfferName = "hello",
+                        OfferId = 1,
                         ClientId = 2,
                         CustomerId = 2,
                         IsBuyOffer = 0
@@ -76,7 +76,6 @@ namespace Tests.Business.Handlers
             x.Data.ToList().Count.Should().Be(2);
             x.Data.ToList()[0].Version.Should().Be(1);
             x.Data.ToList()[0].IsBuyOffer.Should().Be(0);
-            x.Data.ToList()[0].OfferName.Should().Be("hello");
         }
     }
 }

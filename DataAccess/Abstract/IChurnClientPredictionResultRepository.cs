@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface IChurnClientPredictionResultRepository : IRepository<ChurnClientPredictionResult>
+    public interface IChurnClientPredictionResultRepository : IRepository<ChurnPredictionMlResultModel>
     {
     }
 }

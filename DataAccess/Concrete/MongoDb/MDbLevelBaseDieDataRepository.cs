@@ -5,7 +5,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.MongoDb
 {
-    public class MDbLevelBaseDieDataRepository : MongoDbRepositoryBase<LevelBaseDieData>, ILevelBaseDieDataRepository
+    public class MDbLevelBaseDieDataRepository : MongoDbRepositoryBase<EnemyBaseLevelFailModel>, IEnemyBaseLevelFailModelRepository
     {
         public MDbLevelBaseDieDataRepository(MongoDbContextBase mongoDbContext, string collectionName) : base(
             mongoDbContext.MongoConnectionSettings, collectionName)

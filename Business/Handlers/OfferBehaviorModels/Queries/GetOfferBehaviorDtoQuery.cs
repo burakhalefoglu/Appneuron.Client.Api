@@ -17,7 +17,7 @@ namespace Business.Handlers.OfferBehaviorModels.Queries
     public class GetOfferBehaviorDtoQuery : IRequest<IDataResult<IEnumerable<OfferBehaviorDto>>>
     {
         public long ProjectId { get; set; }
-        public string Name { get; set; }
+        public int OfferId { get; set; }
         public int Version { get; set; }
 
         public class GetOfferBehaviorDtoQueryHandler : IRequestHandler<GetOfferBehaviorDtoQuery,
@@ -40,7 +40,7 @@ namespace Business.Handlers.OfferBehaviorModels.Queries
                 var offerDtoList = new List<OfferBehaviorDto>();
                 var offerResult = await _offerBehaviorModelRepository.GetListAsync(
                     o => o.ProjectId == request.ProjectId &&
-                         o.OfferName == request.Name &&
+                         o.OfferId == request.OfferId &&
                          o.Version == request.Version && o.Status == true);
                 offerResult.ToList().ForEach(o =>
                 {
@@ -48,7 +48,7 @@ namespace Business.Handlers.OfferBehaviorModels.Queries
                     {
                         IsBuyOffer = o.IsBuyOffer,
                         Version = o.Version,
-                        OfferName = o.OfferName
+                        OfferId = o.OfferId
                     });
                 });
                 return new SuccessDataResult<IEnumerable<OfferBehaviorDto>>(offerDtoList);

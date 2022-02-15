@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Handlers.GameSessionEveryLoginDatas.Commands;
-using Business.Handlers.GameSessionEveryLoginDatas.Queries;
+using Business.Handlers.GameSessionModels.Commands;
+using Business.Handlers.GameSessionModels.Queries;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -25,12 +25,12 @@ namespace WebAPI.Controllers
         /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK,
-            Type = typeof(IDataResult<IEnumerable<GameSessionEveryLoginData>>))]
+            Type = typeof(IDataResult<IEnumerable<GameSessionModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetGameSessionEveryLoginDatasByProjectIdQuery
+            var result = await Mediator.Send(new GetGameSessionModelByProjectIdQuery
             {
                 ProjectId = projectId
             });
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
         public async Task<IActionResult> DeleteByProjectId(
-            [FromBody] DeleteGameSessionEveryLoginDataByProjectIdCommand deleteGameSessionEveryLoginData)
+            [FromBody] DeleteGameSessionModelByProjectIdCommand deleteGameSessionEveryLoginData)
         {
             var result = await Mediator.Send(deleteGameSessionEveryLoginData);
             if (result.Success) return Ok(result);

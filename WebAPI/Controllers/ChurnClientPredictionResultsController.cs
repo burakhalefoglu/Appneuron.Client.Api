@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Business.Handlers.ChurnClientPredictionResults.Queries;
+using Business.Handlers.ChurnPredictionMlResultModels.Queries;
 using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

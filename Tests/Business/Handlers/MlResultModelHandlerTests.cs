@@ -48,7 +48,7 @@ namespace Tests.Business.Handlers
                         Id = 1,
                         ProductId = 1,
                         ProjectId = 21,
-                        ResultValue = 1
+                        ModelResult = 1
                     },
                     new()
                     {
@@ -57,7 +57,7 @@ namespace Tests.Business.Handlers
                         Id = 3,
                         ProductId = 1,
                         ProjectId = 22,
-                        ResultValue = 2
+                        ModelResult = 2
                     }
                 }.AsQueryable());
 

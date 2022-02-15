@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Handlers.LevelBaseSessionDatas.Commands;
-using Business.Handlers.LevelBaseSessionDatas.Queries;
+using Business.Handlers.LevelBaseSessionModels.Commands;
+using Business.Handlers.LevelBaseSessionModels.Queries;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -24,12 +24,12 @@ namespace WebAPI.Controllers
         /// <return>List LevelBaseSessionDatas</return>
         /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelBaseSessionData>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelBaseSessionModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetLevelBaseSessionDatasByProjectIdQuery
+            var result = await Mediator.Send(new Business.Handlers.LevelBaseSessionModels.Queries.GetLevelBaseSessionModelsByProjectIdQuery
             {
                 ProjectId = projectId
             });
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
         [HttpGet("getSessionDtoByProjectId")]
         public async Task<IActionResult> GetSessionDtoByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetLevelBaseSessionDtoDatasByProjectIdQuery
+            var result = await Mediator.Send(new GetLevelBaseSessionModelsDtoByProjectIdQuery
             {
                 ProjectId = projectId
             });
@@ -90,7 +90,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
         public async Task<IActionResult> DeleteByProjectId(
-            [FromBody] DeleteLevelBaseSessionDataByProjectIdCommand deleteLevelBaseSessionData)
+            [FromBody] DeleteLevelBaseSessionModelByProjectIdCommand deleteLevelBaseSessionData)
         {
             var result = await Mediator.Send(deleteLevelBaseSessionData);
             if (result.Success) return Ok(result);

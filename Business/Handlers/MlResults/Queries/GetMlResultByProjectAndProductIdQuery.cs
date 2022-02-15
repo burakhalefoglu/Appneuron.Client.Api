@@ -48,7 +48,7 @@ namespace Business.Handlers.MlResults.Queries
                     {
                         ClientId = m.ClientId,
                         DateTime = m.DateTime,
-                        ResultValue = m.ResultValue
+                        ResultValue = m.ModelResult
                     });
                 });
                 return new SuccessDataResult<IEnumerable<MlResultDto>>(mlResultDtoList);

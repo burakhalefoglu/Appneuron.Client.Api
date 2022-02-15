@@ -5,7 +5,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.MongoDb
 {
-    public class MDbChurnClientPredictionResultRepository : MongoDbRepositoryBase<ChurnClientPredictionResult>,
+    public class MDbChurnClientPredictionResultRepository : MongoDbRepositoryBase<ChurnPredictionMlResultModel>,
         IChurnClientPredictionResultRepository
     {
         public MDbChurnClientPredictionResultRepository(MongoDbContextBase mongoDbContext, string collectionName) :

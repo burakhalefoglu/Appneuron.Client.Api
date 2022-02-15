@@ -26,8 +26,8 @@ namespace Core.DataAccess.Cassandra
                 .WithCompression(CompressionType.Snappy)
                 .Build();
             var session = cluster.Connect();
-            session.CreateKeyspaceIfNotExists(cassandraConnectionSettings.Keyspace);
-            session.ChangeKeyspace(cassandraConnectionSettings.Keyspace);
+            session.CreateKeyspaceIfNotExists("ClientDatabase");
+            session.ChangeKeyspace("ClientDatabase");
             session.ExecuteAsync(new SimpleStatement(tableCreateQuery)).ConfigureAwait(false);
             _table = new Table<T>(session);
         }

@@ -106,18 +106,18 @@ namespace Business
             services.AddTransient<IMlResultRepository>(x =>
                 new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnBlokerMlResults));
-            services.AddTransient<ILevelBaseSessionDataRepository>(x =>
-                new CassLevelBaseSessionDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.LevelBaseSessionDatas));
-            services.AddTransient<IGameSessionEveryLoginDataRepository>(x =>
-                new CassGameSessionEveryLoginDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.GameSessionEveryLoginDatas));
-            services.AddTransient<ILevelBaseDieDataRepository>(x =>
-                new CassLevelBaseDieDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.LevelBaseDieDatas));
-            services.AddTransient<IEveryLoginLevelDataRepository>(x =>
-                new CassEveryLoginLevelDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.EveryLoginLevelDatas));
+            services.AddTransient<ILevelBaseSessionModelRepository>(x =>
+                new CassLevelBaseSessionModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseSessionModels));
+            services.AddTransient<IGameSessionModelRepository>(x =>
+                new CassGameSessionModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.GameSessionModels));
+            services.AddTransient<IEnemyBaseLevelFailModelRepository>(x =>
+                new CassEnemyBaseLevelFailModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EnemyBaseLevelFailModels));
+            services.AddTransient<IEnemyBaseLoginLevelModelRepository>(x =>
+                new CassEnemyBaseLoginLevelModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EnemyBaseLoginLevelModels));
             services.AddTransient<IBuyingEventRepository>(x =>
                 new CassBuyingEventRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.BuyingEvents));
@@ -156,18 +156,18 @@ namespace Business
             services.AddTransient<IMlResultRepository>(x =>
                 new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnBlokerMlResults));
-            services.AddTransient<ILevelBaseSessionDataRepository>(x =>
-                new CassLevelBaseSessionDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.LevelBaseSessionDatas));
-            services.AddTransient<IGameSessionEveryLoginDataRepository>(x =>
-                new CassGameSessionEveryLoginDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.GameSessionEveryLoginDatas));
-            services.AddTransient<ILevelBaseDieDataRepository>(x =>
-                new CassLevelBaseDieDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.LevelBaseDieDatas));
-            services.AddTransient<IEveryLoginLevelDataRepository>(x =>
-                new CassEveryLoginLevelDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.EveryLoginLevelDatas));
+            services.AddTransient<ILevelBaseSessionModelRepository>(x =>
+                new CassLevelBaseSessionModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseSessionModels));
+            services.AddTransient<IGameSessionModelRepository>(x =>
+                new CassGameSessionModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.GameSessionModels));
+            services.AddTransient<IEnemyBaseLevelFailModelRepository>(x =>
+                new CassEnemyBaseLevelFailModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EnemyBaseLevelFailModels));
+            services.AddTransient<IEnemyBaseLoginLevelModelRepository>(x =>
+                new CassEnemyBaseLoginLevelModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EnemyBaseLoginLevelModels));
             services.AddTransient<IBuyingEventRepository>(x =>
                 new CassBuyingEventRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.BuyingEvents));
@@ -207,18 +207,18 @@ namespace Business
             services.AddTransient<IMlResultRepository>(x =>
                 new CassMlResultRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.ChurnBlokerMlResults));
-            services.AddTransient<ILevelBaseSessionDataRepository>(x =>
-                new CassLevelBaseSessionDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.LevelBaseSessionDatas));
-            services.AddTransient<IGameSessionEveryLoginDataRepository>(x =>
-                new CassGameSessionEveryLoginDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.GameSessionEveryLoginDatas));
-            services.AddTransient<ILevelBaseDieDataRepository>(x =>
-                new CassLevelBaseDieDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.LevelBaseDieDatas));
-            services.AddTransient<IEveryLoginLevelDataRepository>(x =>
-                new CassEveryLoginLevelDataRepository(x.GetRequiredService<CassandraContextBase>(),
-                    CassandraTableQueries.EveryLoginLevelDatas));
+            services.AddTransient<ILevelBaseSessionModelRepository>(x =>
+                new CassLevelBaseSessionModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.LevelBaseSessionModels));
+            services.AddTransient<IGameSessionModelRepository>(x =>
+                new CassGameSessionModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.GameSessionModels));
+            services.AddTransient<IEnemyBaseLevelFailModelRepository>(x =>
+                new CassEnemyBaseLevelFailModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EnemyBaseLevelFailModels));
+            services.AddTransient<IEnemyBaseLoginLevelModelRepository>(x =>
+                new CassEnemyBaseLoginLevelModelRepository(x.GetRequiredService<CassandraContextBase>(),
+                    CassandraTableQueries.EnemyBaseLoginLevelModels));
             services.AddTransient<IBuyingEventRepository>(x =>
                 new CassBuyingEventRepository(x.GetRequiredService<CassandraContextBase>(),
                     CassandraTableQueries.BuyingEvents));

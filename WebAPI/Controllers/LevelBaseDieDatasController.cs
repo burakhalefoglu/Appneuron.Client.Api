@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Handlers.LevelBaseDieDatas.Commands;
+using Business.Handlers.EnemyBaseLevelFailModels.Commands;
+using Business.Handlers.EnemyBaseLevelFailModels.Queries;
 using Business.Handlers.LevelBaseDieDatas.Queries;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -24,12 +25,12 @@ namespace WebAPI.Controllers
         /// <return>List LevelBaseDieDatas</return>
         /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<LevelBaseDieData>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<EnemyBaseLevelFailModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetLevelBaseDieDatasByProjectIdQuery
+            var result = await Mediator.Send(new GetEnemyBaseLevelFailModelsByProjectIdQuery
             {
                 ProjectId = projectId
             });
@@ -49,7 +50,7 @@ namespace WebAPI.Controllers
         [HttpGet("getLevelBaseFailDtoByProjectId")]
         public async Task<IActionResult> GetLevelBaseFailDtoByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetLevelbaseFailDtoByProjectIdQuery
+            var result = await Mediator.Send(new GetEnemyBaseLevelFailModelsDtoByProjectIdQuery
             {
                 ProjectId = projectId
             });
@@ -89,7 +90,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
         public async Task<IActionResult> DeleteByProjectId(
-            [FromBody] DeleteLevelBaseDieDataByProjectIdCommand deleteLevelBaseDieData)
+            [FromBody] DeleteEnemyBaseLevelFailModelByProjectIdCommand deleteLevelBaseDieData)
         {
             var result = await Mediator.Send(deleteLevelBaseDieData);
             if (result.Success) return Ok(result);

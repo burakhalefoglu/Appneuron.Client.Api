@@ -5,12 +5,16 @@ namespace Entities.Concrete
 {
     public class ChurnBlokerMlResult : IEntity
     {
-        public bool Status = true;
+        public long Id { get; set; }
         public long ProjectId { get; set; }
         public long ProductId { get; set; }
         public long ClientId { get; set; }
-        public double ResultValue { get; set; }
+        
+        public string ModelType { get; set; }
+        public float ModelResult { get; set; }
         public DateTime DateTime { get; set; }
-        public long Id { get; set; }
+        
+        public bool Status = true;
+
     }
 }

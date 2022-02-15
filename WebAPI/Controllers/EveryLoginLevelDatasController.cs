@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Handlers.EveryLoginLevelDatas.Commands;
-using Business.Handlers.EveryLoginLevelDatas.Queries;
+using Business.Handlers.EnemyBaseLoginLevelModels.Commands;
+using Business.Handlers.EnemyBaseLoginLevelModels.Queries;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -24,12 +24,12 @@ namespace WebAPI.Controllers
         /// <return>List EveryLoginLevelDatas</return>
         /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<EveryLoginLevelData>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<EnemyBaseLoginLevelModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpGet("getByProjectId")]
         public async Task<IActionResult> GetByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetEveryLoginLevelDatasByProjectIdQuery
+            var result = await Mediator.Send(new GetEnemyBaseLoginLevelModelByProjectIdQuery
             {
                 ProjectId = projectId
             });
@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
         [HttpGet("getLevelBasePowerUsageDtoByProjectIdQuery")]
         public async Task<IActionResult> GetLevelBasePowerUsageDtoByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetLevelbasePowerUsageDtoByProjectIdQuery
+            var result = await Mediator.Send(new GetLevelBasePowerUsageDtoByProjectIdQuery
             {
                 ProjectId = projectId
             });
@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
         [HttpGet("getLevelBaseFinishScoreByProjectIdQuery")]
         public async Task<IActionResult> GetLevelBaseFinishScoreByProjectId(long projectId)
         {
-            var result = await Mediator.Send(new GetLevelbaseFinishScoreByProjectIdQuery
+            var result = await Mediator.Send(new GetLevelBaseFinishScoreByProjectIdQuery
             {
                 ProjectId = projectId
             });
@@ -111,7 +111,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpDelete("deleteByProjectId")]
         public async Task<IActionResult> DeleteByProjectId(
-            [FromBody] DeleteEveryLoginLevelDataByProjectIdCommand deleteEveryLoginLevelData)
+            [FromBody] DeleteEnemyBaseLoginLevelModelByProjectIdCommand deleteEveryLoginLevelData)
         {
             var result = await Mediator.Send(deleteEveryLoginLevelData);
             if (result.Success) return Ok(result);

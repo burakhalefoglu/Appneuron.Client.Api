@@ -5,7 +5,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.Cassandra
 {
-    public class CassChurnClientPredictionResultRepository : CassandraRepositoryBase<ChurnClientPredictionResult>,
+    public class CassChurnClientPredictionResultRepository : CassandraRepositoryBase<ChurnPredictionMlResultModel>,
         IChurnClientPredictionResultRepository
     {
         public CassChurnClientPredictionResultRepository(CassandraContextBase cassandraContexts, string tableQuery) :
