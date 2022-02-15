@@ -12,13 +12,13 @@
             "CREATE TABLE IF NOT EXISTS ClientDatabase.enemy_base_login_level_models(id bigint, client_id bigint, project_id bigint, customer_id bigint, level_name text, level_index int, playing_time int, average_scores int, date_time date, is_dead tinyint, total_power_usage int,  status boolean, PRIMARY KEY(id))";
 
         public static string EnemyBaseLevelFailModels =>
-            "CREATE TABLE IF NOT EXISTS ClientDatabase.enemy_base_level_fail_models(id bigint, client_id bigint, project_id bigint, customer_id bigint, fail_time_after_level_starting int, level_name text, level_index int, diying_difficulty_level int, fail_location_x decimal, fail_location_y decimal, fail_location_z decimal, date_time date,  status boolean, PRIMARY KEY(id))";
+            "CREATE TABLE IF NOT EXISTS ClientDatabase.enemy_base_level_fail_models(id bigint, client_id bigint, project_id bigint, customer_id bigint, fail_time_after_level_starting int, level_name text, level_index int, fail_location_x decimal, fail_location_y decimal, fail_location_z decimal, date_time date,  status boolean, PRIMARY KEY(id))";
 
         public static string GameSessionModels =>
             "CREATE TABLE IF NOT EXISTS ClientDatabase.game_session_models(id bigint, client_id bigint, project_id bigint, customer_id bigint, session_start_time date, session_finish_time date, session_time_minute decimal, status boolean, PRIMARY KEY(id))";
 
         public static string LevelBaseSessionModels =>
-            "CREATE TABLE IF NOT EXISTS ClientDatabase.level_base_session_models(id bigint, client_id bigint, project_id bigint, customer_id bigint, level_name text, level_index int, difficulty_level int, session_time_minute decimal, session_start_time date, session_finish_time date, status boolean, PRIMARY KEY(id))";
+            "CREATE TABLE IF NOT EXISTS ClientDatabase.level_base_session_models(id bigint, client_id bigint, project_id bigint, customer_id bigint, level_name text, level_index int, session_time_minute decimal, session_start_time date, session_finish_time date, status boolean, PRIMARY KEY(id))";
 
         public static string ClientDataModels =>
             "CREATE TABLE IF NOT EXISTS ClientDatabase.client_data_models(id bigint, project_id bigint, is_paid_client tinyint, created_at date, paid_time date,  status boolean, PRIMARY KEY(id))";
