@@ -1,7 +1,7 @@
-﻿namespace Core.Entities
+﻿namespace Core.Entities;
+
+public interface IEntity
 {
-    public interface IEntity
-    {
-        public long Id { get; set; }
-    }
+    public long Id { get; set; }
+    public bool Status { get; set; }
 }

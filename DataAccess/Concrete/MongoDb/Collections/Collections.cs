@@ -1,18 +1,16 @@
-namespace DataAccess.Concrete.MongoDb.Collections
+﻿namespace DataAccess.Concrete.MongoDb.Collections;
+
+public class Collections
 {
-    public static class Collections
-    {
-        public static string AdvEvents => "advEvents";
-        public static string BuyingEvents => "buyingEvents";
-        public static string EveryLoginLevelDatas => "everyLoginLevelDatas";
-        public static string LevelBaseDieDatas => "levelBaseDieDatas";
-        public static string GameSessionEveryLoginDatas => "gameSessionEveryLoginDatas";
-        public static string LevelBaseSessionDatas => "levelBaseSessionDatas";
-        public static string Clients => "clients";
-        public static string MlResultModels => "mlResultModels";
-        public static string ChurnDates => "churnDates";
-        public static string OfferBehaviorModels => "offerBehaviorModels";
-        public static string ChurnClientPredictionResults => "churnClientPredictionResults";
-        public static string AdvStrategyBehaviorModels => "advStrategyBehaviorModels";
-    }
+    public static string UserProject => "userProjects";
+    public static string Client => "clients";
+    public static string Group => "groups";
+    public static string GroupClaim => "groupClaims";
+    public static string Language => "languages";
+    public static string Log => "logs";
+    public static string OperationClaim => "operationClaims";
+    public static string Translate => "translates";
+    public static string User => "users";
+    public static string UserClaim => "userClaims";
+    public static string UserGroup => "userGroups";
 }

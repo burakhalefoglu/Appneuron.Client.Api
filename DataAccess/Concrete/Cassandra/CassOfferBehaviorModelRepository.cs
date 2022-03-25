@@ -1,16 +1,15 @@
-﻿using Core.DataAccess.Cassandra;
+﻿using Cassandra.Mapping;
+using Core.DataAccess.Cassandra;
 using DataAccess.Abstract;
-using DataAccess.Concrete.Cassandra.Contexts;
+using DataAccess.Concrete.Cassandra.TableMappers;
 using Entities.Concrete;
 
-namespace DataAccess.Concrete.Cassandra
-{
-    public class CassOfferBehaviorModelRepository : CassandraRepositoryBase<OfferBehaviorModel>,
+namespace DataAccess.Concrete.Cassandra;
+
+public class CassOfferBehaviorModelRepository: CassandraRepositoryBase<OfferBehaviorModel>, 
         IOfferBehaviorModelRepository
     {
-        public CassOfferBehaviorModelRepository(CassandraContextBase cassandraContexts, string tableQuery) : base(
-            cassandraContexts.CassandraConnectionSettings, tableQuery)
+        public CassOfferBehaviorModelRepository() : base(MappingConfiguration.Global.Define<LogMapper>())
         {
         }
     }
-}

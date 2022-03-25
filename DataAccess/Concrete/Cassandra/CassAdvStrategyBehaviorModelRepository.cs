@@ -1,16 +1,15 @@
-﻿using Core.DataAccess.Cassandra;
+﻿using Cassandra.Mapping;
+using Core.DataAccess.Cassandra;
 using DataAccess.Abstract;
-using DataAccess.Concrete.Cassandra.Contexts;
+using DataAccess.Concrete.Cassandra.TableMappers;
 using Entities.Concrete;
 
-namespace DataAccess.Concrete.Cassandra
+namespace DataAccess.Concrete.Cassandra;
+
+public class CassAdvStrategyBehaviorModelRepository: CassandraRepositoryBase<AdvStrategyBehaviorModel>, 
+    IAdvStrategyBehaviorModelRepository
 {
-    public class CassAdvStrategyBehaviorModelRepository : CassandraRepositoryBase<AdvStrategyBehaviorModel>,
-        IAdvStrategyBehaviorModelRepository
+    public CassAdvStrategyBehaviorModelRepository() : base(MappingConfiguration.Global.Define<LogMapper>())
     {
-        public CassAdvStrategyBehaviorModelRepository(CassandraContextBase cassandraContexts, string tableQuery) : base(
-            cassandraContexts.CassandraConnectionSettings, tableQuery)
-        {
-        }
     }
 }
