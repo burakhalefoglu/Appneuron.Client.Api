@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Net.Sockets;
 using Core.Utilities.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -7,9 +6,9 @@ using IResult = Core.Utilities.Results.IResult;
 
 namespace Business.Handlers;
 
-public class GetIpQuery : IRequest<IResult>
+public class GetIpQuery : IRequest< IDataResult< Dictionary<string,string>>>
 {
-    public class GetIpQueryHandler : IRequestHandler<GetIpQuery, IResult>
+    public class GetIpQueryHandler : IRequestHandler<GetIpQuery, IDataResult< Dictionary<string,string>>>
     {
 
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -19,23 +18,17 @@ public class GetIpQuery : IRequest<IResult>
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<IResult> Handle(GetIpQuery request,
+        public async Task< IDataResult< Dictionary<string,string>>> Handle(GetIpQuery request,
             CancellationToken cancellationToken)
         {
-
-            return new SuccessResult(GetIPAddress());
-        }
-    }
-    public static string GetIPAddress()
-    {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ip in host.AddressList)
-        {
-            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            var headers = _httpContextAccessor.HttpContext.Request.Headers;
+            Dictionary<string, string> requestHeaders =
+                new Dictionary<string, string>();
+            foreach (var header in headers)
             {
-                return ip.ToString();
+                requestHeaders.Add(header.Key, header.Value);
             }
+            return new SuccessDataResult<Dictionary<string,string>>(requestHeaders);
         }
-        throw new Exception("No network adapters with an IPv4 address in the system!");
     }
 }
