@@ -7,6 +7,7 @@ namespace Entities.Concrete
     {
         public bool Status { get; set; }
         public DateTime DateTime { get; set; }
+        
         public long ClientId { get; set; }
         public long ProjectId { get; set; }
         public int Version { get; set; }

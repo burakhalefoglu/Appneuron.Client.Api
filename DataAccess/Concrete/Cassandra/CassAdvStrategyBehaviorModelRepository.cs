@@ -9,7 +9,8 @@ namespace DataAccess.Concrete.Cassandra;
 public class CassAdvStrategyBehaviorModelRepository: CassandraRepositoryBase<AdvStrategyBehaviorModel>, 
     IAdvStrategyBehaviorModelRepository
 {
-    public CassAdvStrategyBehaviorModelRepository() : base(MappingConfiguration.Global.Define<LogMapper>())
+    public CassAdvStrategyBehaviorModelRepository() : 
+        base(MappingConfiguration.Global.Define<AdvStrategyBehaviorModelMapper>())
     {
     }
 }

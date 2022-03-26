@@ -14,6 +14,15 @@ public class AutofacBusinessModule : Module
     protected override void Load(ContainerBuilder builder)
     {
         builder.RegisterType<CassLogRepository>().As<ILogRepository>().SingleInstance();
+        builder.RegisterType<CassAdvStrategyBehaviorModelRepository>()
+            .As<IAdvStrategyBehaviorModelRepository>().SingleInstance();
+        builder.RegisterType<CassChurnClientPredictionResultRepository>()
+            .As<IChurnClientPredictionResultRepository>().SingleInstance();
+        builder.RegisterType<CassClientRepository>().As<IClientRepository>().SingleInstance();
+        builder.RegisterType<CassLevelBaseSessionModelRepository>()
+            .As<CassLevelBaseSessionModelRepository>().SingleInstance();
+        builder.RegisterType<CassOfferBehaviorModelRepository>()
+            .As<IOfferBehaviorModelRepository>().SingleInstance();
 
         var assembly = Assembly.GetExecutingAssembly();
 
