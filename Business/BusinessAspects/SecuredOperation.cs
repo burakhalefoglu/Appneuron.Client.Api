@@ -68,8 +68,6 @@ public class SecuredOperationAttribute : MethodInterceptionAttribute
             throw new SecurityException(Messages.AuthorizationsDenied);
         if (projectId == 0) return;
         if (!ProjectIdValidation.ValidateProjectId(httpUrl, token))
-        {
             throw new SecurityException(Messages.AuthorizationsDenied);
-        }
     }
 }

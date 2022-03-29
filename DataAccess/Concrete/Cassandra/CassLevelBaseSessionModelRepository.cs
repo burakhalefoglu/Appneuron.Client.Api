@@ -5,7 +5,8 @@ using DataAccess.Concrete.Cassandra.TableMappers;
 using Entities.Concrete;
 
 namespace DataAccess.Concrete.Cassandra;
-public class CassLevelBaseSessionModelRepository: CassandraRepositoryBase<LevelBaseSessionModel>, 
+
+public class CassLevelBaseSessionModelRepository : CassandraRepositoryBase<LevelBaseSessionModel>,
     ILevelBaseSessionModelRepository
 {
     public CassLevelBaseSessionModelRepository() : base(MappingConfiguration.Global.Define<LogMapper>())

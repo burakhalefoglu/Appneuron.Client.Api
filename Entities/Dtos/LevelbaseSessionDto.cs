@@ -1,12 +1,10 @@
-﻿using System;
-using Core.Entities;
+﻿using Core.Entities;
 
-namespace Entities.Dtos
+namespace Entities.Dtos;
+
+public class LevelbaseSessionDto : IDto
 {
-    public class LevelbaseSessionDto : IDto
-    {
-        public long ClientId { get; set; }
-        public string LevelName { get; set; }
-        public DateTime SessionStartTime { get; set; }
-    }
+    public long ClientId { get; set; }
+    public string LevelName { get; set; }
+    public DateTime SessionStartTime { get; set; }
 }

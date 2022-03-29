@@ -6,10 +6,10 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.Cassandra;
 
-public class CassAdvStrategyBehaviorModelRepository: CassandraRepositoryBase<AdvStrategyBehaviorModel>, 
+public class CassAdvStrategyBehaviorModelRepository : CassandraRepositoryBase<AdvStrategyBehaviorModel>,
     IAdvStrategyBehaviorModelRepository
 {
-    public CassAdvStrategyBehaviorModelRepository() : 
+    public CassAdvStrategyBehaviorModelRepository() :
         base(MappingConfiguration.Global.Define<AdvStrategyBehaviorModelMapper>())
     {
     }

@@ -10,7 +10,7 @@ public static class FormFileExtensions
         await formFile.CopyToAsync(memoryStream);
         return memoryStream.ToArray();
     }
-    
+
     public static IFormFile GetFormFile(this byte[] bytes)
     {
         using var stream = new MemoryStream(bytes);

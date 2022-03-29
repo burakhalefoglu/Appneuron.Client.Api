@@ -1,3 +1,1 @@
-﻿namespace Business.Handlers.OfferBehaviorModels.ValidationRules
-{
-}
+﻿namespace Business.Handlers.OfferBehaviorModels.ValidationRules;

@@ -6,11 +6,11 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.Cassandra;
 
-public class CassChurnPredictionMlResultRepository: CassandraRepositoryBase<ChurnPredictionMlResultModel>, 
+public class CassChurnPredictionMlResultRepository : CassandraRepositoryBase<ChurnPredictionMlResultModel>,
     IChurnPredictionMlResultRepository
+{
+    public CassChurnPredictionMlResultRepository()
+        : base(MappingConfiguration.Global.Define<ChurnPredictionMlResultMapper>())
     {
-        public CassChurnPredictionMlResultRepository() 
-            : base(MappingConfiguration.Global.Define<ChurnPredictionMlResultMapper>())
-        {
-        }
     }
+}

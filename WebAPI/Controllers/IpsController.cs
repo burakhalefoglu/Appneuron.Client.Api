@@ -1,5 +1,4 @@
 ﻿using Business.Handlers;
-using Core.Utilities.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using IResult = Core.Utilities.Results.IResult;
@@ -8,7 +7,7 @@ namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class IpsController: BaseApiController
+public class IpsController : BaseApiController
 {
     /// <summary>
     ///     List Logs
@@ -20,7 +19,7 @@ public class IpsController: BaseApiController
     [Produces("application/json", "text/plain")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-    [HttpGet()]
+    [HttpGet]
     public Task<IActionResult> Get()
     {
         var result = Mediator.Send(new GetIpQuery());
