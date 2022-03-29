@@ -16,8 +16,8 @@ public class AutofacBusinessModule : Module
         builder.RegisterType<CassLogRepository>().As<ILogRepository>().SingleInstance();
         builder.RegisterType<CassAdvStrategyBehaviorModelRepository>()
             .As<IAdvStrategyBehaviorModelRepository>().SingleInstance();
-        builder.RegisterType<CassChurnClientPredictionResultRepository>()
-            .As<IChurnClientPredictionResultRepository>().SingleInstance();
+        builder.RegisterType<CassChurnPredictionMlResultRepository>()
+            .As<IChurnPredictionMlResultRepository>().SingleInstance();
         builder.RegisterType<CassClientRepository>().As<IClientRepository>().SingleInstance();
         builder.RegisterType<CassLevelBaseSessionModelRepository>()
             .As<CassLevelBaseSessionModelRepository>().SingleInstance();
