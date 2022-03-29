@@ -23,6 +23,6 @@ public class ChurnPredictionMlResultMapper : Mappings
             .Column(u => u.ProjectId, cm => cm.WithName("project_id").WithDbType(typeof(long)))
             .Column(u => u.Value, cm => cm.WithName("value").WithDbType(typeof(float)))
             .Column(u => u.Status, cm => cm.WithName("status").WithDbType(typeof(bool)))
-            .Column(u => u.CreatedAt, cm => cm.WithName("created_at").WithDbType(typeof(bool)));
+            .Column(u => u.CreatedAt, cm => cm.WithName("created_at").WithDbType(typeof(DateTimeOffset)));
     }
 }
