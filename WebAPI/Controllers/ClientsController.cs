@@ -9,7 +9,7 @@ namespace WebAPI.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class ClientsController: BaseApiController
+public class ClientsController : BaseApiController
 {
     /// <summary>
     ///     total client count
@@ -21,14 +21,17 @@ public class ClientsController: BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<long>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
     [HttpGet("GetTotalClient")]
-    public async Task<IActionResult> GetTotalClient()
+    public async Task<IActionResult> GetTotalClient(long projectId)
     {
-        var result = await Mediator.Send(new GetTotalClientCountByProjectIdQuery());
+        var result = await Mediator.Send(new GetTotalClientCountByProjectIdQuery
+        {
+            ProjectId = projectId
+        });
         if (result.Success) return Ok(result);
 
         return BadRequest(result);
     }
-    
+
     /// <summary>
     ///     total client count
     /// </summary>
@@ -39,9 +42,12 @@ public class ClientsController: BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<long>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
     [HttpGet("GetPaidClient")]
-    public async Task<IActionResult> GetPaidClient()
+    public async Task<IActionResult> GetPaidClient(long projectId)
     {
-        var result = await Mediator.Send(new GetPaidClientCountByProjectIdQuery());
+        var result = await Mediator.Send(new GetPaidClientCountByProjectIdQuery
+        {
+            ProjectId = projectId
+        });
         if (result.Success) return Ok(result);
 
         return BadRequest(result);
