@@ -9,7 +9,7 @@ namespace DataAccess.Concrete.Cassandra;
 public class CassClientRepository : CassandraRepositoryBase<ClientDataModel>,
     IClientRepository
 {
-    public CassClientRepository() : base(MappingConfiguration.Global.Define<LogMapper>())
+    public CassClientRepository() : base(MappingConfiguration.Global.Define<ClientMapper>())
     {
     }
 }
