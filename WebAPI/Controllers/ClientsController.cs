@@ -33,10 +33,10 @@ public class ClientsController : BaseApiController
     }
 
     /// <summary>
-    ///     total client count
+    ///     paid client count
     /// </summary>
     /// <remarks> </remarks>
-    /// <return> total client count</return>
+    /// <return> paid client count</return>
     /// <response code="200"></response>
     [Produces("application/json", "text/plain")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<long>))]
@@ -45,6 +45,48 @@ public class ClientsController : BaseApiController
     public async Task<IActionResult> GetPaidClient(long projectId)
     {
         var result = await Mediator.Send(new GetPaidClientCountByProjectIdQuery
+        {
+            ProjectId = projectId
+        });
+        if (result.Success) return Ok(result);
+
+        return BadRequest(result);
+    }
+    
+    /// <summary>
+    ///     paid client count
+    /// </summary>
+    /// <remarks> </remarks>
+    /// <return> paid client count</return>
+    /// <response code="200"></response>
+    [Produces("application/json", "text/plain")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<long>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
+    [HttpGet("GetTotalClientLastSevenDayCount")]
+    public async Task<IActionResult> GetTotalClientLastSevenDayCount(long projectId)
+    {
+        var result = await Mediator.Send(new GetTotalClientLastSevenDayCountQuery()
+        {
+            ProjectId = projectId
+        });
+        if (result.Success) return Ok(result);
+
+        return BadRequest(result);
+    }
+    
+    /// <summary>
+    ///     paid client count
+    /// </summary>
+    /// <remarks> </remarks>
+    /// <return> paid client count</return>
+    /// <response code="200"></response>
+    [Produces("application/json", "text/plain")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<long>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
+    [HttpGet("GetPaidClientLastSevenDayCount")]
+    public async Task<IActionResult> GetPaidClientLastSevenDayCount(long projectId)
+    {
+        var result = await Mediator.Send(new GetPaidClientLastSevenDayCountQuery()
         {
             ProjectId = projectId
         });
