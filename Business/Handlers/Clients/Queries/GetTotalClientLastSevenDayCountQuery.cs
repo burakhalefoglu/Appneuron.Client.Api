@@ -34,9 +34,20 @@ public class GetTotalClientLastSevenDayCountQuery: IRequest<IDataResult<long[]>>
                 await _clientRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
             for (var i = 0; i < 7; i++)
             {
-                clients.Add(client.Where(x=> x.CreatedAt.Ticks <= DateTime.Now.AddDays(-i).Ticks).ToList().Count);
+                clients.Add(client.Where(x=> CompareDate(x.CreatedAt, DateTimeOffset.Now.AddDays(-i))).ToList().Count);
             }
             return new SuccessDataResult<long[]>(clients.ToArray());
+        }
+
+        private bool CompareDate(DateTimeOffset createdAt, DateTimeOffset now)
+        {
+            if (createdAt.Year < now.Year)
+                return true;
+            if (createdAt.Year == now.Year && createdAt.Month < now.Month)
+                return true;
+            if (createdAt.Year == now.Year && createdAt.Month == now.Month && createdAt.Day <= now.Day)
+                return true;
+            return false;
         }
     }
 }
