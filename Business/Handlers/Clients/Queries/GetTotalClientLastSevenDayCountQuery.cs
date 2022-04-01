@@ -35,8 +35,8 @@ public class GetTotalClientLastSevenDayCountQuery : IRequest<IDataResult<long[]>
                 await _clientRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
             for (var i = 0; i < 7; i++)
             {
-                clients.Add(client.Where(x => x.CreatedAt < DateTimeOffset.Now.AddDays(-i) &&
-                                              x.CreatedAt > DateTimeOffset.Now.AddDays(-i - 1)).ToList().Count);
+                clients.Add(client.Where(x => x.CreatedAt.Ticks < DateTimeOffset.Now.AddDays(-i).Ticks &&
+                                              x.CreatedAt.Ticks > DateTimeOffset.Now.AddDays(-i - 1).Ticks).ToList().Count);
             }
 
             return new SuccessDataResult<long[]>(clients.ToArray());
