@@ -25,6 +25,7 @@ public class GameSessionMapper: Mappings
             .Column(u => u.SessionStartTime, cm => cm.WithName("session_start_time").WithDbType(typeof(DateTimeOffset)))
             .Column(u => u.SessionFinishTime, cm => cm.WithName("session_finish_time").WithDbType(typeof(DateTimeOffset)))
             .Column(u => u.SessionTime, cm => cm.WithName("session_time").WithDbType(typeof(float)))
+            .Column(u => u.CreatedAt, cm => cm.WithName("session_time").WithDbType(typeof(DateTimeOffset)))
             .Column(u => u.Status, cm => cm.WithName("status").WithDbType(typeof(bool)));
     }
 }

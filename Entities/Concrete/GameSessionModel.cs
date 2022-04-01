@@ -12,6 +12,6 @@ namespace Entities.Concrete
         public DateTimeOffset SessionStartTime { get; set; }
         public DateTimeOffset SessionFinishTime { get; set; }
         public float SessionTime { get; set; }
-
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }
