@@ -35,8 +35,8 @@ public class GetDailySessionsQuery: IRequest<IDataResult<long[]>>
                 await _gameSessionRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
             for (var i = 0; i < 7; i++)
             {
-                clients.Add(client.ToList().Where(x=> x.SessionStartTime < DateTimeOffset.Now.AddDays(-i) &&
-                                                      x.SessionStartTime > DateTimeOffset.Now.AddDays(-i - 1)).ToList().Count);
+                clients.Add(client.ToList().Where(x=> x.CreatedAt.ToString("MM/dd/yyyy") ==
+                                                      DateTimeOffset.Now.AddDays(-i).ToString("MM/dd/yyyy")).ToList().Count);
             }
             return new SuccessDataResult<long[]>(clients.ToArray());
         }
