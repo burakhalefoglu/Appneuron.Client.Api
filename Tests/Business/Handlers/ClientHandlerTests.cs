@@ -236,7 +236,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(0),
+                    CreatedAt = DateTimeOffset.Now.AddDays(0).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -245,7 +245,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(0),
+                    CreatedAt = DateTimeOffset.Now.AddDays(0).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -254,7 +254,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(0),
+                    CreatedAt = DateTimeOffset.Now.AddDays(0).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -263,7 +263,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-1),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-1).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
@@ -272,7 +272,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-2),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-2).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -281,7 +281,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-2),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-2).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -290,7 +290,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-3),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-3).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
@@ -299,7 +299,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-4),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-4).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -308,7 +308,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-5),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-5).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -317,7 +317,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-6),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-6).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
@@ -326,9 +326,8 @@ public class ClientHandlerTests
 
         var result = await _getPaidClientLastSevenDayCountQueryHandler.Handle(query, new CancellationToken());
         result.Success.Should().BeTrue();
-        result.Data[0].Should().Be(3);
-        result.Data[2].Should().Be(2);
-        result.Data[4].Should().Be(1);
+        result.Data[0].Should().Be(7);
+        result.Data[2].Should().Be(4);
     }
        
     [Test]
@@ -347,7 +346,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(0),
+                    CreatedAt = DateTimeOffset.Now.AddDays(0).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -356,7 +355,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(0),
+                    CreatedAt = DateTimeOffset.Now.AddDays(0).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
@@ -365,7 +364,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(0),
+                    CreatedAt = DateTimeOffset.Now.AddDays(0).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -374,7 +373,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-1),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-1).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
@@ -383,7 +382,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-2),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-2).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
@@ -392,7 +391,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-2),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-2).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -401,7 +400,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-3),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-3).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
@@ -410,7 +409,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-4),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-4).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -419,7 +418,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-5),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-5).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
@@ -428,7 +427,7 @@ public class ClientHandlerTests
                 {
                     Id = 1,
                     Status = true,
-                    CreatedAt = DateTimeOffset.Now.AddDays(-6),
+                    CreatedAt = DateTimeOffset.Now.AddDays(-6).AddHours(-10),
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
@@ -437,9 +436,9 @@ public class ClientHandlerTests
 
         var result = await _getTotalClientLastSevenDayCountQueryHandler.Handle(query, new CancellationToken());
         result.Success.Should().BeTrue();
-        result.Data[0].Should().Be(3);
-        result.Data[2].Should().Be(2);
-        result.Data[4].Should().Be(1);
+        result.Data[0].Should().Be(10);
+        result.Data[2].Should().Be(6);
+        result.Data[4].Should().Be(3);
     }
     
 }
