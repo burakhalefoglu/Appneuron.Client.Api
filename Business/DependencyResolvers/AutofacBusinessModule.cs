@@ -19,10 +19,10 @@ public class AutofacBusinessModule : Module
         builder.RegisterType<CassChurnPredictionMlResultRepository>()
             .As<IChurnPredictionMlResultRepository>().SingleInstance();
         builder.RegisterType<CassClientRepository>().As<IClientRepository>().SingleInstance();
-        builder.RegisterType<CassLevelBaseSessionModelRepository>()
-            .As<CassLevelBaseSessionModelRepository>().SingleInstance();
         builder.RegisterType<CassOfferBehaviorModelRepository>()
             .As<IOfferBehaviorModelRepository>().SingleInstance();
+        builder.RegisterType<CassGameSessionRepository>()
+            .As<IGameSessionRepository>().SingleInstance();
 
         var assembly = Assembly.GetExecutingAssembly();
 

@@ -11,6 +11,7 @@
         <Folder Include="Handlers\AdvStrategyBehaviorModels\Commands" />
         <Folder Include="Handlers\ChurnPredictionMlResultModels\Commands" />
         <Folder Include="Handlers\ChurnPredictionMlResultModels\ValidationRules" />
+        <Folder Include="Handlers\GameSessions\Commands" />
         <Folder Include="Handlers\OfferBehaviorModels\Commands" />
         <Folder Include="Internals\Handlers" />
         <Folder Include="MessageBrokers\Manager" />
