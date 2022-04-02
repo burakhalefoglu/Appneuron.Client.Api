@@ -49,7 +49,7 @@ public class GetRetentionQuery : IRequest<IDataResult<long[]>>
                     clientSessions = client.ToList().Where(x
                         => x.SessionStartTime.ToString("MM/dd/yyyy") ==
                            request.SessionDate.ToString("MM/dd/yyyy")).ToList();
-                    retentions.Add(100);
+                    retentions.Add(clientSessions.Count > 0 ? 100 : 0);
                     continue;
                 }
 
