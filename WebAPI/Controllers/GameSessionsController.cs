@@ -9,7 +9,7 @@ namespace WebAPI.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class GameSessionsController: BaseApiController
+public class GameSessionsController : BaseApiController
 {
     /// <summary>
     ///     daily game session
@@ -31,7 +31,7 @@ public class GameSessionsController: BaseApiController
 
         return BadRequest(result);
     }
-    
+
     /// <summary>
     ///     retention
     /// </summary>

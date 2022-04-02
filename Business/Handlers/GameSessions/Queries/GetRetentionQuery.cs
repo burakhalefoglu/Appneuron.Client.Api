@@ -40,13 +40,16 @@ public class GetRetentionQuery : IRequest<IDataResult<long[]>>
                 };
             var clientSessions = new List<GameSessionModel>();
 
-            var client =
+            var totalSession =
                 await _gameSessionRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
+            if(!totalSession.Any())
+                return new SuccessDataResult<long[]>(new long[]{0, 0, 0, 0, 0, 0});
+
             for (var i = 0; i < retentionStrategy.Length; i++)
             {
                 if (i == 0)
                 {
-                    clientSessions = client.ToList().Where(x
+                    clientSessions = totalSession.ToList().Where(x
                         => x.SessionStartTime.ToString("MM/dd/yyyy") ==
                            request.SessionDate.ToString("MM/dd/yyyy")).ToList();
                     retentions.Add(clientSessions.Count > 0 ? 100 : 0);
@@ -56,7 +59,7 @@ public class GetRetentionQuery : IRequest<IDataResult<long[]>>
                 var clientCount = 0;
                 clientSessions.ForEach(c =>
                 {
-                    if (client.ToList().Any(x
+                    if (totalSession.ToList().Any(x
                             => x.SessionStartTime.ToString("MM/dd/yyyy") ==
                                request.SessionDate.AddDays(retentionStrategy[i]).ToString("MM/dd/yyyy") &&
                                x.ClientId == c.ClientId))
