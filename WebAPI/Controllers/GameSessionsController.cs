@@ -42,12 +42,12 @@ public class GameSessionsController: BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<long[]>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
     [HttpGet("GetRetention")]
-    public async Task<IActionResult> GetRetention(long projectId, DateTimeOffset date)
+    public async Task<IActionResult> GetRetention(long projectId, string date)
     {
         var result = await Mediator.Send(new GetRetentionQuery
         {
             ProjectId = projectId,
-            SessionDate = date
+            SessionDate = Convert.ToDateTime(date)
         });
         if (result.Success) return Ok(result);
 
