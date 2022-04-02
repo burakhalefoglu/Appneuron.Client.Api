@@ -64,7 +64,9 @@ public class GetRetentionQuery : IRequest<IDataResult<long[]>>
                         clientCount++;
                     }  
                 });
-                var percent = 100 * clientCount / clientSessions.Count;
+                var percent = 0;
+                    if(clientCount !=0 && clientSessions.Count != 0)
+                        percent = 100 * clientCount / clientSessions.Count;
                 retentions.Add(percent);
             }
 
