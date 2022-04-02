@@ -23,6 +23,8 @@ public class AutofacBusinessModule : Module
             .As<IOfferBehaviorModelRepository>().SingleInstance();
         builder.RegisterType<CassGameSessionRepository>()
             .As<IGameSessionRepository>().SingleInstance();
+        builder.RegisterType<CassOfferBehaviorModelRepository>()
+            .As<IOfferBehaviorModelRepository>().SingleInstance();
 
         var assembly = Assembly.GetExecutingAssembly();
 

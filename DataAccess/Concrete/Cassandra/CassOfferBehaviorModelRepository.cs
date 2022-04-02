@@ -9,7 +9,7 @@ namespace DataAccess.Concrete.Cassandra;
 public class CassOfferBehaviorModelRepository : CassandraRepositoryBase<OfferBehaviorModel>,
     IOfferBehaviorModelRepository
 {
-    public CassOfferBehaviorModelRepository() : base(MappingConfiguration.Global.Define<LogMapper>())
+    public CassOfferBehaviorModelRepository() : base(MappingConfiguration.Global.Define<OfferBehaviorMapper>())
     {
     }
 }
