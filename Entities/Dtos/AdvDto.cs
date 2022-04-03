@@ -2,7 +2,7 @@
 
 namespace Entities.Dtos;
 
-public class OfferDto: IDto
+public class AdvDto: IDto
 {
     public string Name { get; set; }
     public string Version { get; set; }

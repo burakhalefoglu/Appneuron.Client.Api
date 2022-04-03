@@ -9,7 +9,6 @@ public class OfferBehaviorModel : IEntity
     public short Version { get; set; }
     public int OfferId { get; set; }
     public byte IsBuyOffer { get; set; }
-    
     public DateTime CreatedAt { get; set; }
     public long Id { get; set; }
     public bool Status { get; set; }

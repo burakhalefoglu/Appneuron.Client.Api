@@ -12,7 +12,7 @@ namespace Business.Handlers.OfferBehaviorModels.Commands;
 
 public class OfferBehaviorSuccessCommand : IRequest<IDataResult<OfferBehaviorSuccessDto>>
 {
-    public long ProjectId { get; set; }
+    public long ProjectId { get; set; } 
 
     public OfferDto[] OfferDtos { get; set; }
 
@@ -45,7 +45,7 @@ public class OfferBehaviorSuccessCommand : IRequest<IDataResult<OfferBehaviorSuc
                     offerResult.Count(x => x.IsBuyOffer == 1);
                 if (totalOffer == 0 || successOffer == 0)
                 {
-                    offerDto.OfferNames.Add(requestOfferDto.Name);
+                    offerDto.OfferNames.Add(requestOfferDto.Name + requestOfferDto.Version);
                     offerDto.SuccessPercents.Add(0);
                     continue;
                 }

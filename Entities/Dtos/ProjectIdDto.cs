@@ -1,6 +1,8 @@
-﻿namespace Entities.Dtos;
+﻿using Core.Entities;
 
-public class ProjectIdDto
+namespace Entities.Dtos;
+
+public class ProjectIdDto: IDto
 {
     public long ProjectId { get; set; }
 }
