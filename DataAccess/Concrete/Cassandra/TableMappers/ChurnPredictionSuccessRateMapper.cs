@@ -1,21 +1,21 @@
 ﻿using Cassandra.Mapping;
 using Core.DataAccess.Cassandra.Configurations;
-using Core.Utilities.IoC;
+using Core.Utilities.IoC; 
 using Entities.Concrete;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccess.Concrete.Cassandra.TableMappers;
 
-public class ChurnPredictionMlResultMapper : Mappings
+public class ChurnPredictionSuccessRateMapper : Mappings
 {
-    public ChurnPredictionMlResultMapper()
+    public ChurnPredictionSuccessRateMapper()
     {
         var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
         var cassandraConnectionSettings =
             configuration.GetSection("CassandraConnectionSettings").Get<CassandraConnectionSettings>();
-        For<ChurnPredictionMlResultModel>()
-            .TableName("churn_prediction_ml_results")
+        For<ChurnPredictionSuccessRateModel>()
+            .TableName("churn_prediction_success_rates")
             .KeyspaceName(cassandraConnectionSettings.Keyspace)
             .PartitionKey("project_id")
             .ClusteringKey(new Tuple<string, SortOrder>("created_at", SortOrder.Descending))

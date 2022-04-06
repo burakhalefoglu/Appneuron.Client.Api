@@ -22,6 +22,7 @@ public class OfferBehaviorMapper : Mappings
             .Column(u => u.Id, cm => cm.WithName("id").WithDbType(typeof(long)))
             .Column(u => u.ProjectId, cm => cm.WithName("project_id").WithDbType(typeof(long)))
             .Column(u => u.ClientId, cm => cm.WithName("client_id").WithDbType(typeof(long)))
+            .Column(u => u.CustomerId, cm => cm.WithName("customer_id").WithDbType(typeof(long)))
             .Column(u => u.Version, cm => cm.WithName("version").WithDbType(typeof(short)))
             .Column(u => u.OfferId, cm => cm.WithName("offer_id").WithDbType(typeof(int)))
             .Column(u => u.IsBuyOffer, cm => cm.WithName("is_buy_offer").WithDbType(typeof(byte)))

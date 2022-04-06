@@ -2,7 +2,7 @@
 
 namespace Entities.Concrete;
 
-public class ChurnPredictionMlResultModel : IEntity
+public class ChurnPredictionSuccessRateModel : IEntity
 {
     public long ProjectId { get; set; }
     public float Value { get; set; }

@@ -13,9 +13,9 @@ public class GetMlResultQuery : IRequest<IDataResult<float>>
 
     public class GetMlResultQueryHandler : IRequestHandler<GetMlResultQuery, IDataResult<float>>
     {
-        private readonly IChurnPredictionMlResultRepository _churnPredictionMlResultRepository;
+        private readonly IChurnPredictionSuccessRateRepository _churnPredictionMlResultRepository;
 
-        public GetMlResultQueryHandler(IChurnPredictionMlResultRepository churnPredictionMlResultRepository)
+        public GetMlResultQueryHandler(IChurnPredictionSuccessRateRepository churnPredictionMlResultRepository)
         {
             _churnPredictionMlResultRepository = churnPredictionMlResultRepository;
         }

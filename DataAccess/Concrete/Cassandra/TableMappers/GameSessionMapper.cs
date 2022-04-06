@@ -22,6 +22,7 @@ public class GameSessionMapper: Mappings
             .Column(u => u.Id, cm => cm.WithName("id").WithDbType(typeof(long)))
             .Column(u => u.ProjectId, cm => cm.WithName("project_id").WithDbType(typeof(long)))
             .Column(u => u.ClientId, cm => cm.WithName("client_id").WithDbType(typeof(long)))
+            .Column(u => u.CustomerId, cm => cm.WithName("customer_id").WithDbType(typeof(long)))
             .Column(u => u.SessionStartTime, cm => cm.WithName("session_start_time").WithDbType(typeof(DateTimeOffset)))
             .Column(u => u.SessionFinishTime, cm => cm.WithName("session_finish_time").WithDbType(typeof(DateTimeOffset)))
             .Column(u => u.SessionTime, cm => cm.WithName("session_time").WithDbType(typeof(float)))
