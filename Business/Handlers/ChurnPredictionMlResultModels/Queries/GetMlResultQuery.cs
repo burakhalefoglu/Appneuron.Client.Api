@@ -28,7 +28,7 @@ public class GetMlResultQuery : IRequest<IDataResult<float>>
             var result = await _churnPredictionMlResultRepository.GetAsync(
                 c => c.ProjectId == request.ProjectId);
             return new SuccessDataResult<float>(
-                result.Value);
+                result is null ? 0 : result.Value);
         }
     }
 }
