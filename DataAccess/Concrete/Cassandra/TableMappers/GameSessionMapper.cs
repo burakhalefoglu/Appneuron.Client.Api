@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccess.Concrete.Cassandra.TableMappers;
 
-public class GameSessionMapper: Mappings
+public class GameSessionMapper : Mappings
 {
     public GameSessionMapper()
     {
@@ -24,7 +24,8 @@ public class GameSessionMapper: Mappings
             .Column(u => u.ClientId, cm => cm.WithName("client_id").WithDbType(typeof(long)))
             .Column(u => u.CustomerId, cm => cm.WithName("customer_id").WithDbType(typeof(long)))
             .Column(u => u.SessionStartTime, cm => cm.WithName("session_start_time").WithDbType(typeof(DateTimeOffset)))
-            .Column(u => u.SessionFinishTime, cm => cm.WithName("session_finish_time").WithDbType(typeof(DateTimeOffset)))
+            .Column(u => u.SessionFinishTime,
+                cm => cm.WithName("session_finish_time").WithDbType(typeof(DateTimeOffset)))
             .Column(u => u.SessionTime, cm => cm.WithName("session_time").WithDbType(typeof(float)))
             .Column(u => u.CreatedAt, cm => cm.WithName("created_at").WithDbType(typeof(DateTimeOffset)))
             .Column(u => u.Status, cm => cm.WithName("status").WithDbType(typeof(bool)));

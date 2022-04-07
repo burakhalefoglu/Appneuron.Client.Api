@@ -5,11 +5,9 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Business.Handlers.Clients.Queries;
-using Business.Handlers.Logs.Queries;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using FluentAssertions;
-using MediatR;
 using Moq;
 using NUnit.Framework;
 using static Business.Handlers.Clients.Queries.GetPaidClientCountByProjectIdQuery;
@@ -26,10 +24,14 @@ public class ClientHandlerTests
     public void Setup()
     {
         _clientRepository = new Mock<IClientRepository>();
-        _getPaidClientCountByProjectIdQueryHandler = new GetPaidClientCountByProjectIdQueryHandler(_clientRepository.Object);
-        _getPaidClientLastSevenDayCountQueryHandler = new GetPaidClientLastSevenDayCountQueryHandler(_clientRepository.Object);
-        _getTotalClientCountByProjectIdQueryHandler = new GetTotalClientCountByProjectIdQueryHandler(_clientRepository.Object);
-        _getTotalClientLastSevenDayCountQueryHandler = new GetTotalClientLastSevenDayCountQueryHandler(_clientRepository.Object);
+        _getPaidClientCountByProjectIdQueryHandler =
+            new GetPaidClientCountByProjectIdQueryHandler(_clientRepository.Object);
+        _getPaidClientLastSevenDayCountQueryHandler =
+            new GetPaidClientLastSevenDayCountQueryHandler(_clientRepository.Object);
+        _getTotalClientCountByProjectIdQueryHandler =
+            new GetTotalClientCountByProjectIdQueryHandler(_clientRepository.Object);
+        _getTotalClientLastSevenDayCountQueryHandler =
+            new GetTotalClientLastSevenDayCountQueryHandler(_clientRepository.Object);
     }
 
     private Mock<IClientRepository> _clientRepository;
@@ -67,7 +69,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -85,7 +87,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -94,7 +96,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -103,7 +105,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -121,18 +123,18 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },
+                }
             }.AsQueryable());
 
         var result = await _getPaidClientCountByProjectIdQueryHandler.Handle(query, new CancellationToken());
         result.Success.Should().BeTrue();
         result.Data.Should().Be(5);
     }
-    
+
     [Test]
     public async Task TotalClientCount_GetQuery_Success()
     {
-        var query = new GetTotalClientCountByProjectIdQuery()
+        var query = new GetTotalClientCountByProjectIdQuery
         {
             ProjectId = 1
         };
@@ -158,7 +160,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -176,7 +178,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -185,7 +187,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -194,7 +196,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -212,18 +214,18 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },
+                }
             }.AsQueryable());
 
         var result = await _getTotalClientCountByProjectIdQueryHandler.Handle(query, new CancellationToken());
         result.Success.Should().BeTrue();
         result.Data.Should().Be(8);
     }
-        
+
     [Test]
     public async Task PaidClientLastSevenDayCount_GetQuery_Success()
     {
-        var query = new GetPaidClientLastSevenDayCountQuery()
+        var query = new GetPaidClientLastSevenDayCountQuery
         {
             ProjectId = 1
         };
@@ -249,7 +251,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                }, 
+                },
                 new()
                 {
                     Id = 1,
@@ -267,7 +269,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -285,7 +287,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -294,7 +296,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -303,7 +305,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -321,7 +323,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },
+                }
             }.AsQueryable());
 
         var result = await _getPaidClientLastSevenDayCountQueryHandler.Handle(query, new CancellationToken());
@@ -329,11 +331,11 @@ public class ClientHandlerTests
         result.Data[0].Should().Be(7);
         result.Data[2].Should().Be(4);
     }
-       
+
     [Test]
     public async Task TotalClientLastSevenDayCount_GetQuery_Success()
     {
-        var query = new GetTotalClientLastSevenDayCountQuery()
+        var query = new GetTotalClientLastSevenDayCountQuery
         {
             ProjectId = 1
         };
@@ -359,7 +361,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                }, 
+                },
                 new()
                 {
                     Id = 1,
@@ -377,7 +379,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -395,7 +397,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -404,7 +406,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -413,7 +415,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 1
-                },                
+                },
                 new()
                 {
                     Id = 1,
@@ -431,7 +433,7 @@ public class ClientHandlerTests
                     PaidTime = DateTimeOffset.Now,
                     ProjectId = 1,
                     IsPaidClient = 0
-                },
+                }
             }.AsQueryable());
 
         var result = await _getTotalClientLastSevenDayCountQueryHandler.Handle(query, new CancellationToken());
@@ -440,5 +442,4 @@ public class ClientHandlerTests
         result.Data[2].Should().Be(6);
         result.Data[4].Should().Be(3);
     }
-    
 }

@@ -2,7 +2,7 @@
 
 namespace Entities.Dtos;
 
-public class AdvStrategyShownCountDto: IDto
+public class AdvStrategyShownCountDto : IDto
 {
     public AdvStrategyShownCountDto()
     {
@@ -11,5 +11,5 @@ public class AdvStrategyShownCountDto: IDto
     }
 
     public List<string> StrategyNames { get; set; }
-    public  List<int>  Counts { get; set; }
+    public List<int> Counts { get; set; }
 }

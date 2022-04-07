@@ -52,7 +52,7 @@ public class ClientsController : BaseApiController
 
         return BadRequest(result);
     }
-    
+
     /// <summary>
     ///     paid client count
     /// </summary>
@@ -65,7 +65,7 @@ public class ClientsController : BaseApiController
     [HttpGet("GetTotalClientLastSevenDayCount")]
     public async Task<IActionResult> GetTotalClientLastSevenDayCount(long projectId)
     {
-        var result = await Mediator.Send(new GetTotalClientLastSevenDayCountQuery()
+        var result = await Mediator.Send(new GetTotalClientLastSevenDayCountQuery
         {
             ProjectId = projectId
         });
@@ -73,7 +73,7 @@ public class ClientsController : BaseApiController
 
         return BadRequest(result);
     }
-    
+
     /// <summary>
     ///     paid client count
     /// </summary>
@@ -86,7 +86,7 @@ public class ClientsController : BaseApiController
     [HttpGet("GetPaidClientLastSevenDayCount")]
     public async Task<IActionResult> GetPaidClientLastSevenDayCount(long projectId)
     {
-        var result = await Mediator.Send(new GetPaidClientLastSevenDayCountQuery()
+        var result = await Mediator.Send(new GetPaidClientLastSevenDayCountQuery
         {
             ProjectId = projectId
         });

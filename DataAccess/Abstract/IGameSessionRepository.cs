@@ -3,6 +3,6 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract;
 
-public interface IGameSessionRepository: IRepository<GameSessionModel>
+public interface IGameSessionRepository : IRepository<GameSessionModel>
 {
 }

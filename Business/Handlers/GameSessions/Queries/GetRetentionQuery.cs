@@ -35,15 +35,15 @@ public class GetRetentionQuery : IRequest<IDataResult<long[]>>
         {
             var retentions = new List<long>();
             var retentionStrategy = new[]
-                {
-                    0, 1, 3, 7, 14, 30
-                };
+            {
+                0, 1, 3, 7, 14, 30
+            };
             var clientSessions = new List<GameSessionModel>();
 
             var totalSession =
                 await _gameSessionRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
-            if(!totalSession.Any())
-                return new SuccessDataResult<long[]>(new long[]{0, 0, 0, 0, 0, 0});
+            if (!totalSession.Any())
+                return new SuccessDataResult<long[]>(new long[] {0, 0, 0, 0, 0, 0});
 
             for (var i = 0; i < retentionStrategy.Length; i++)
             {
@@ -63,13 +63,11 @@ public class GetRetentionQuery : IRequest<IDataResult<long[]>>
                             => x.SessionStartTime.ToString("MM/dd/yyyy") ==
                                request.SessionDate.AddDays(retentionStrategy[i]).ToString("MM/dd/yyyy") &&
                                x.ClientId == c.ClientId))
-                    {
                         clientCount++;
-                    }  
                 });
                 var percent = 0;
-                    if(clientCount !=0 && clientSessions.Count != 0)
-                        percent = 100 * clientCount / clientSessions.Count;
+                if (clientCount != 0 && clientSessions.Count != 0)
+                    percent = 100 * clientCount / clientSessions.Count;
                 retentions.Add(percent);
             }
 

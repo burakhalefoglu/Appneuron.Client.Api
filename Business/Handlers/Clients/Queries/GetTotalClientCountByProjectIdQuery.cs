@@ -27,7 +27,7 @@ public class GetTotalClientCountByProjectIdQuery : IRequest<IDataResult<long>>
         [CacheAspect(10)]
         [LogAspect(typeof(ConsoleLogger))]
         [SecuredOperation(Priority = 1)]
-        public async Task<IDataResult<long>>Handle(GetTotalClientCountByProjectIdQuery request,
+        public async Task<IDataResult<long>> Handle(GetTotalClientCountByProjectIdQuery request,
             CancellationToken cancellationToken)
         {
             var client =

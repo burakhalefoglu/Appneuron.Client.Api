@@ -11,5 +11,5 @@ public class OfferBehaviorSuccessDto : IDto
     }
 
     public List<string> OfferNames { get; set; }
-    public  List<int>  SuccessPercents { get; set; }
+    public List<int> SuccessPercents { get; set; }
 }

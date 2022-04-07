@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Business.Handlers.Clients.Queries;
 
-public class GetPaidClientCountByProjectIdQuery: IRequest<IDataResult<long>>
+public class GetPaidClientCountByProjectIdQuery : IRequest<IDataResult<long>>
 {
     public long ProjectId { get; set; }
 
@@ -27,12 +27,12 @@ public class GetPaidClientCountByProjectIdQuery: IRequest<IDataResult<long>>
         [CacheAspect(10)]
         [LogAspect(typeof(ConsoleLogger))]
         [SecuredOperation(Priority = 1)]
-        public async Task<IDataResult<long>>Handle(GetPaidClientCountByProjectIdQuery request,
+        public async Task<IDataResult<long>> Handle(GetPaidClientCountByProjectIdQuery request,
             CancellationToken cancellationToken)
         {
             var client =
                 (await _clientRepository.GetListAsync(c => c.ProjectId == request.ProjectId)).Where(
-                    x=> x.IsPaidClient == 1);
+                    x => x.IsPaidClient == 1);
             return new SuccessDataResult<long>(client.ToList().Count);
         }
     }

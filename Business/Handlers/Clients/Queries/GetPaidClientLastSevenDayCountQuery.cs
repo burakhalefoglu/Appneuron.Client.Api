@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Business.Handlers.Clients.Queries;
 
-public class GetPaidClientLastSevenDayCountQuery: IRequest<IDataResult<long[]>>
+public class GetPaidClientLastSevenDayCountQuery : IRequest<IDataResult<long[]>>
 {
     public long ProjectId { get; set; }
 
@@ -27,17 +27,15 @@ public class GetPaidClientLastSevenDayCountQuery: IRequest<IDataResult<long[]>>
         [CacheAspect(10)]
         [LogAspect(typeof(ConsoleLogger))]
         [SecuredOperation(Priority = 1)]
-        public async Task<IDataResult<long[]>>Handle(GetPaidClientLastSevenDayCountQuery request,
+        public async Task<IDataResult<long[]>> Handle(GetPaidClientLastSevenDayCountQuery request,
             CancellationToken cancellationToken)
         {
             var clients = new List<long>();
             var client =
                 await _clientRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
             for (var i = 0; i < 7; i++)
-            {
-                clients.Add(client.ToList().Where(x=> x.CreatedAt.Ticks <= DateTime.Now.AddDays(-i).Ticks
-                && x.IsPaidClient == 1).ToList().Count);
-            }
+                clients.Add(client.ToList().Where(x => x.CreatedAt.Ticks <= DateTime.Now.AddDays(-i).Ticks
+                                                       && x.IsPaidClient == 1).ToList().Count);
             return new SuccessDataResult<long[]>(clients.ToArray());
         }
     }

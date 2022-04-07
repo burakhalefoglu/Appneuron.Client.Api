@@ -53,8 +53,8 @@ public class GameSessionsController : BaseApiController
 
         return BadRequest(result);
     }
-    
-    
+
+
     /// <summary>
     ///     retention
     /// </summary>

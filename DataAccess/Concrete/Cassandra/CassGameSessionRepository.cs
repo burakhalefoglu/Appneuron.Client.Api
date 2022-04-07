@@ -6,7 +6,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.Cassandra;
 
-public class CassGameSessionRepository: CassandraRepositoryBase<GameSessionModel>, IGameSessionRepository
+public class CassGameSessionRepository : CassandraRepositoryBase<GameSessionModel>, IGameSessionRepository
 {
     public CassGameSessionRepository() : base(MappingConfiguration.Global.Define<GameSessionMapper>())
     {

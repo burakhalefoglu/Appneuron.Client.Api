@@ -14,7 +14,7 @@ namespace WebAPI.Controllers;
 public class AdvStrategiesController : BaseApiController
 {
     /// <summary>
-    ///    AdvStrategyShownCount
+    ///     AdvStrategyShownCount
     /// </summary>
     /// <remarks></remarks>
     /// <return>AdvStrategyShownCount</return>
@@ -23,7 +23,8 @@ public class AdvStrategiesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<AdvStrategyShownCountDto>>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
     [HttpPost("AdvStrategyShownCount")]
-    public async Task<IActionResult> GetAdvStrategyShownCount([FromBody] AdvStrategyShownCommand advStrategyShownCommand)
+    public async Task<IActionResult> GetAdvStrategyShownCount(
+        [FromBody] AdvStrategyShownCommand advStrategyShownCommand)
     {
         var result = await Mediator.Send(advStrategyShownCommand);
         if (result.Success) return Ok(result);

@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Business.Handlers.GameSessions.Queries;
 
-public class GetDailySessionsQuery: IRequest<IDataResult<long[]>>
+public class GetDailySessionsQuery : IRequest<IDataResult<long[]>>
 {
     public long ProjectId { get; set; }
 
@@ -27,17 +27,16 @@ public class GetDailySessionsQuery: IRequest<IDataResult<long[]>>
         [CacheAspect(10)]
         [LogAspect(typeof(ConsoleLogger))]
         [SecuredOperation(Priority = 1)]
-        public async Task<IDataResult<long[]>>Handle(GetDailySessionsQuery request,
+        public async Task<IDataResult<long[]>> Handle(GetDailySessionsQuery request,
             CancellationToken cancellationToken)
         {
             var clients = new List<long>();
             var client =
                 await _gameSessionRepository.GetListAsync(c => c.ProjectId == request.ProjectId);
             for (var i = 0; i < 7; i++)
-            {
-                clients.Add(client.ToList().Where(x=> x.CreatedAt.ToString("MM/dd/yyyy") ==
-                                                      DateTimeOffset.Now.AddDays(-i).ToString("MM/dd/yyyy")).ToList().Count);
-            }
+                clients.Add(client.ToList().Where(x => x.CreatedAt.ToString("MM/dd/yyyy") ==
+                                                       DateTimeOffset.Now.AddDays(-i).ToString("MM/dd/yyyy")).ToList()
+                    .Count);
             return new SuccessDataResult<long[]>(clients.ToArray());
         }
     }

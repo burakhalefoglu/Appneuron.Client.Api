@@ -12,7 +12,7 @@ namespace Business.Handlers.OfferBehaviorModels.Commands;
 
 public class OfferBehaviorSuccessCommand : IRequest<IDataResult<OfferBehaviorSuccessDto>>
 {
-    public long ProjectId { get; set; } 
+    public long ProjectId { get; set; }
 
     public OfferDto[] OfferDtos { get; set; }
 
@@ -49,6 +49,7 @@ public class OfferBehaviorSuccessCommand : IRequest<IDataResult<OfferBehaviorSuc
                     offerDto.SuccessPercents.Add(0);
                     continue;
                 }
+
                 var offerSuccessPercent = successOffer * 100 / totalOffer;
                 offerDto.OfferNames.Add(requestOfferDto.Name);
                 offerDto.SuccessPercents.Add(offerSuccessPercent);

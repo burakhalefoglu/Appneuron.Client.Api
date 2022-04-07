@@ -14,7 +14,7 @@ namespace WebAPI.Controllers;
 public class OfferBehaviorsController : BaseApiController
 {
     /// <summary>
-    ///    Offer behavior success
+    ///     Offer behavior success
     /// </summary>
     /// <remarks></remarks>
     /// <return>offerBehaviors List</return>
@@ -23,7 +23,8 @@ public class OfferBehaviorsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<OfferBehaviorSuccessDto>>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
     [HttpPost("OfferBehaviorSuccess")]
-    public async Task<IActionResult> GetOfferBehaviorSuccessQuery([FromBody] OfferBehaviorSuccessCommand offerBehaviorSuccessCommand)
+    public async Task<IActionResult> GetOfferBehaviorSuccessQuery(
+        [FromBody] OfferBehaviorSuccessCommand offerBehaviorSuccessCommand)
     {
         var result = await Mediator.Send(offerBehaviorSuccessCommand);
         if (result.Success) return Ok(result);

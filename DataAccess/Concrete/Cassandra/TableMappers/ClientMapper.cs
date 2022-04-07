@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccess.Concrete.Cassandra.TableMappers;
 
-public class ClientMapper: Mappings
+public class ClientMapper : Mappings
 {
     public ClientMapper()
     {
