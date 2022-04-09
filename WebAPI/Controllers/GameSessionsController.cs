@@ -65,7 +65,7 @@ public class GameSessionsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<long[]>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
     [HttpGet("GetSessionTimeByDate")]
-    public async Task<IActionResult> GetSessionTimeByDate(long projectId, int date)
+    public async Task<IActionResult> GetSessionTimeByDate(long projectId, long date)
     {
         var result = await Mediator.Send(new GetSessionTimeByDateQuery
         {
